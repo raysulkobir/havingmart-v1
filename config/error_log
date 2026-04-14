@@ -1,0 +1,4 @@
+[30-Mar-2026 23:06:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/database.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/database.php on line 16
