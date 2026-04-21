@@ -40,10 +40,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // return filter_products(Product::where(['published' => 1, 'new_product' => 1])->latest())->limit(12)->get();
         $todays_deal_products = Cache::rememberForever('todays_deal_products', function () {
             return filter_products(Product::where('published', 1)->where('todays_deal', '1'))->get();
         });
 
+       
         $new_products = Cache::remember('new_products', 3600, function () {
             return filter_products(Product::where(['published' => 1, 'new_product' => 1])->latest())->limit(12)->get();
         });
@@ -53,7 +55,25 @@ class HomeController extends Controller
 
         $flash_deal = FlashDeal::where('status', 1)->where('featured', 1)->first();
 
-        return view('frontend.index', compact('todays_deal_products', 'new_products', 'popularCategories', 'banner_1_imags', 'flash_deal'));
+
+        $featured_products = Cache::remember('featured_products', 3600, function () {
+            return filter_products(\App\Models\Product::where(['published' => 1, 'featured' => 1]))->limit(12)->get();
+        });
+
+        $home_categories = Cache::remember(
+            'setting.home_categories',
+            now()->addMinutes(5),
+            function () {
+                $value = get_setting('home_categories');
+                return $value ? json_decode($value) : [];
+            }
+        );
+
+        $best_selling_products = Cache::remember('best_selling_products', 86400, function () {
+            return filter_products(\App\Models\Product::where(['published' => 1, 'best_selling' => 1])->orderBy('num_of_sale', 'desc'))->limit(20)->get();
+        });
+
+        return view('frontend.index', compact('todays_deal_products', 'new_products', 'popularCategories', 'banner_1_imags', 'flash_deal', 'featured_products', 'home_categories', 'best_selling_products'));
     }
 
     public function login()

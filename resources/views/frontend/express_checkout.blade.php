@@ -1,6 +1,47 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+<!-- Shipping Information Banner -->
+<section class="py-3 bg-info bg-opacity-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-info mb-0">
+                    <h5 class="mb-3">
+                        <i class="las la-truck mr-2"></i>
+                        ЁЯУж ржбрзЗрж▓рж┐ржнрж╛рж░рж┐ рждржерзНржп
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2">
+                                    <strong>ржврж╛ржХрж╛рж░ ржнрж┐рждрж░рзЗ:</strong> рз│рзмрзж (рззтАУрзи ржжрж┐ржи)
+                                </li>
+                                <li class="mb-2">
+                                    <strong>ржврж╛ржХрж╛рж░ ржмрж╛ржЗрж░рзЗ:</strong> рз│рззрзирзж (рзитАУрзк ржжрж┐ржи)
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2">
+                                    <strong>ржПржХрзНрж╕ржкрзНрж░рзЗрж╕ ржбрзЗрж▓рж┐ржнрж╛рж░рж┐ ржЙржкрж▓ржмрзНржз</strong> (ржЪрж╛рж░рзНржЬ ржкрзНрж░ржпрзЛржЬрзНржп)
+                                </li>
+                                <li class="mb-2">
+                                    <strong>рз│рзйрзжрзжрзж+ ржЕрж░рзНржбрж╛рж░рзЗ ржлрзНрж░рж┐ ржбрзЗрж▓рж┐ржнрж╛рж░рж┐</strong>
+                                </li>
+                                <li class="mb-0">
+                                    <strong>ржХрзНржпрж╛рж╢ ржЕржи ржбрзЗрж▓рж┐ржнрж╛рж░рж┐ рж╕рзБржмрж┐ржзрж╛ рж░рзЯрзЗржЫрзЗ</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 
 <section class="pt-5 mb-4">
     <div class="container">
         <div class="row">
@@ -16,7 +57,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <section class="mb-4 gry-bg">
     <div class="container">
@@ -91,6 +132,23 @@
                             </table>
                         </div>
                     </div>
+                     <!-- Shipping Charge Selection -->
+                    <div class="shadow-sm bg-white p-4 rounded mb-4">
+                        <h4 class="mb-3">{{ translate('Shipping Charge') }}</h4>
+                        <div class="form-group">
+                            <label class="mb-2">{{ translate('Select Delivery Area') }} *</label>
+                            <select name="shipping_charge" class="form-control" id="shipping-charge-select" required>
+                                <option value="">{{ translate('Select delivery area') }}</option>
+                                <option value="inside_dhaka">{{ translate('Inside Dhaka') }} - рз│рзмрзж</option>
+                                <option value="outside_dhaka">{{ translate('Outside Dhaka') }} - рз│рззрзирзж</option>
+                            </select>
+                            <small class="text-muted">
+                                <i class="las la-info-circle"></i>
+                                {{ translate('Inside Dhaka: 1-2 days delivery') }} | {{ translate('Outside Dhaka: 2-4 days delivery') }}
+                            </small>
+                        </div>
+                    </div>
+
 
                     <!-- Shipping Information -->
                     <div class="shadow-sm bg-white p-4 rounded mb-4">
@@ -166,6 +224,7 @@
                         @endif
                     </div>
 
+                   
                     <!-- Hidden Shipping Method - Auto Home Delivery -->
                     <input type="hidden" name="shipping_method" value="home_delivery">
 
@@ -352,13 +411,61 @@ function add_new_address() {
     window.location.href = '{{ route("addresses.index") }}';
 }
 
+// Shipping charge calculation
+document.getElementById('shipping-charge-select').addEventListener('change', function() {
+    var shippingCharge = 0;
+    var selectedOption = this.value;
+    
+    if (selectedOption === 'inside_dhaka') {
+        shippingCharge = 60;
+    } else if (selectedOption === 'outside_dhaka') {
+        shippingCharge = 120;
+    }
+    
+    // Update shipping cost display
+    document.getElementById('shipping-cost').textContent = formatPrice(shippingCharge);
+    
+    // Calculate and update grand total
+    updateGrandTotal();
+});
+
+// Format price function
+function formatPrice(amount) {
+    return 'рз│' + amount.toFixed(2);
+}
+
+// Update grand total
+function updateGrandTotal() {
+    var subtotalElement = document.querySelector('tfoot tr:nth-child(1) td:last-child');
+    var taxElement = document.querySelector('tfoot tr:nth-child(2) td:last-child');
+    var shippingCostElement = document.getElementById('shipping-cost');
+    var grandTotalElement = document.getElementById('grand-total');
+    
+    if (subtotalElement && taxElement && shippingCostElement && grandTotalElement) {
+        var subtotal = parseFloat(subtotalElement.textContent.replace(/[рз│,]/g, ''));
+        var tax = parseFloat(taxElement.textContent.replace(/[рз│,]/g, ''));
+        var shippingCost = parseFloat(shippingCostElement.textContent.replace(/[рз│,]/g, ''));
+        
+        var grandTotal = subtotal + tax + shippingCost;
+        grandTotalElement.textContent = formatPrice(grandTotal);
+    }
+}
+
 // Form validation before submission
 document.getElementById('express-checkout-form').addEventListener('submit', function(e) {
     var paymentOption = document.querySelector('input[name="payment_option"]:checked');
+    var shippingCharge = document.getElementById('shipping-charge-select');
     
     if (!paymentOption) {
         e.preventDefault();
         alert('Please select a payment method');
+        return false;
+    }
+    
+    if (!shippingCharge.value) {
+        e.preventDefault();
+        shippingCharge.focus();
+        alert('Please select a delivery area');
         return false;
     }
     
