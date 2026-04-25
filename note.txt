@@ -1,0 +1,13 @@
+SELECT * FROM products WHERE category_id IN (68)
+
+
+#SELECT * FROM categories WHERE NAME = 'Cleansers'
+#SELECT * FROM categories WHERE NAME = 'Face Masks'
+
+SELECT * FROM uploads WHERE id > 2074 AND id < 2278
+
+
+
+
+19-2-2026
+ALTER TABLE `products` ADD `new_product` INT NOT NULL DEFAULT '0' AFTER `featured`, ADD `best_selling` INT NOT NULL DEFAULT '0' AFTER `new_product`, ADD `category_by_featured` INT NOT NULL DEFAULT '0' AFTER `best_selling`;
