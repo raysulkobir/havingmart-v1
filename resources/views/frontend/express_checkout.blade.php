@@ -202,12 +202,12 @@
                                         <input type="text" name="guest_name" class="form-control" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>{{ translate('Email') }} *</label>
+                                        <label>{{ translate('Email') }} </label>
                                         <input type="email" name="guest_email" class="form-control" required>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{ translate('Phone') }} *</label>
@@ -478,7 +478,6 @@ document.getElementById('express-checkout-form').addEventListener('submit', func
     }
     @else
     var guestName = document.querySelector('input[name="guest_name"]');
-    var guestEmail = document.querySelector('input[name="guest_email"]');
     var guestPhone = document.querySelector('input[name="guest_phone"]');
     var guestAddress = document.querySelector('textarea[name="guest_address"]');
     
