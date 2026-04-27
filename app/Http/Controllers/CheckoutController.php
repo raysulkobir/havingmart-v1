@@ -380,6 +380,7 @@ class CheckoutController extends Controller
         // Calculate shipping charge
         $shipping_charge = $request->shipping_charge == 'inside_dhaka' ? 60 : 120;
         $request->session()->put('shipping_charge', $shipping_charge);
+        $request->session()->put('guest_checkout', true);
 
         // Use temporary user creation approach
         return $this->process_payment($request, $carts, $guest_info);
@@ -446,12 +447,23 @@ class CheckoutController extends Controller
             }
 
             Auth::logout();
-            Session::forget('guest_checkout');
-            Session::forget('temp_user_id');
+            Session::forget([
+                'guest_checkout',
+                'temp_user_id',
+                'shipping_charge',
+                'shipping_method',
+                'payment_type',
+                'payment_data',
+                'club_point',
+            ]);
         }
 
         foreach($combined_order->orders as $order){
             NotificationUtility::sendOrderPlacedNotification($order);
+        }
+
+        if ($combined_order->user_id == 0) {
+            Session::forget('combined_order_id');
         }
 
         return view('frontend.order_confirmed', compact('combined_order'));
