@@ -20,7 +20,8 @@ class ScrapingController extends Controller
         // $this->brand();
         // $this->category();
         // $this->addProducts();
-       return $this->updateImage();
+        //    return $this->updateImage();
+           return $this->addProductStock();
 
         return "Success";
     }
@@ -31,120 +32,71 @@ class ScrapingController extends Controller
             ->table('products')
             ->select(
                 'main_category',
-            'subcategory',
+                'subcategory',
                 'sub_sub_category',
                 'sub_sub_sub_category',
                 DB::raw('COUNT(*) as total_products')
             )
-            ->groupBy(
-                'main_category',
-            'subcategory',
-                'sub_sub_category',
-                'sub_sub_sub_category'
-            )
+            ->groupBy('main_category', 'subcategory', 'sub_sub_category', 'sub_sub_sub_category')
             ->get();
 
-        $mainCache      = [];
-        $subCache       = [];
-        $subSubCache    = [];
+        $mainCache   = [];
+        $subCache    = [];
+        $subSubCache = [];
+        $now         = now();
+
+        $buildRecord = fn(string $name, int $parentId, int $level) => [
+            'slug'       => Str::slug($name),
+            'parent_id'  => $parentId,
+            'level'      => $level,
+            'status'     => 1,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ];
+
+        $upsertAndCache = function (string $name, int $parentId, int $level) use ($buildRecord) {
+            DB::table('categories')->updateOrInsert(
+                ['name' => $name, 'parent_id' => $parentId, 'level' => $level],
+                $buildRecord($name, $parentId, $level)
+            );
+
+            return DB::table('categories')
+                ->where(['name' => $name, 'parent_id' => $parentId, 'level' => $level])
+                ->value('id');
+        };
 
         foreach ($rows as $row) {
 
-            /** ---------- MAIN CATEGORY (Level 0) ---------- */
-            if (!isset($mainCache[$row->main_category])) {
-
-                DB::table('categories')->updateOrInsert(
-                    [
-                        'name'  => $row->main_category,
-                        'level' => 0
-                    ],
-                    [
-                        'parent_id' => 0,
-                        'slug' => Str::slug($row->main_category),
-                        'status' => 1,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]
-                );
-
-                $mainCache[$row->main_category] = DB::table('categories')
-                    ->where('name', $row->main_category)
-                    ->where('level', 0)
-                    ->value('id');
+            // Level 0 — Main Category
+            if (!array_key_exists($row->main_category, $mainCache)) {
+                $mainCache[$row->main_category] = $upsertAndCache($row->main_category, 0, 0);
             }
+            $mainId = $mainCache[$row->main_category];
 
-            /** ---------- SUB CATEGORY (Level 1) ---------- */
-            $subKey = $row->main_category . '_' . $row->subcategory;
-
-            if (!isset($subCache[$subKey])) {
-
-                DB::table('categories')->updateOrInsert(
-                    [
-                        'name' => $row->subcategory,
-                        'parent_id' => $mainCache[$row->main_category],
-                        'level' => 1,
-                    ],
-                    [
-                        'slug' => Str::slug($row->subcategory),
-                        'status' => 1,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]
-                );
-
-                $subCache[$subKey] = DB::table('categories')
-                    ->where('name', $row->subcategory)
-                    ->where('parent_id', $mainCache[$row->main_category])
-                    ->where('level', 1)
-                    ->value('id');
+            // Level 1 — Sub Category
+            $subKey = "{$row->main_category}|{$row->subcategory}";
+            if (!array_key_exists($subKey, $subCache)) {
+                $subCache[$subKey] = $upsertAndCache($row->subcategory, $mainId, 1);
             }
+            $subId = $subCache[$subKey];
 
-            /** ---------- SUB-SUB CATEGORY (Level 2) ---------- */
-            $subSubKey = $subKey . '_' . $row->sub_sub_category;
-
-            if (!isset($subSubCache[$subSubKey])) {
-
-                DB::table('categories')->updateOrInsert(
-                    [
-                        'name' => $row->sub_sub_category,
-                        'parent_id' => $subCache[$subKey],
-                        'level' => 2,
-                    ],
-                    [
-                        'slug' => Str::slug($row->sub_sub_category),
-                        'status' => 1,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]
-                );
-
-                $subSubCache[$subSubKey] = DB::table('categories')
-                    ->where('name', $row->sub_sub_category)
-                    ->where('parent_id', $subCache[$subKey])
-                    ->where('level', 2)
-                    ->value('id');
+            // Level 2 — Sub-Sub Category
+            $subSubKey = "{$subKey}|{$row->sub_sub_category}";
+            if (!array_key_exists($subSubKey, $subSubCache)) {
+                $subSubCache[$subSubKey] = $upsertAndCache($row->sub_sub_category, $subId, 2);
             }
+            $subSubId = $subSubCache[$subSubKey];
 
-            /** ---------- SUB-SUB-SUB CATEGORY (Level 3) ---------- */
+            // Level 3 — Sub-Sub-Sub Category (no cache needed, always leaf)
             if (!empty($row->sub_sub_sub_category)) {
-
                 DB::table('categories')->updateOrInsert(
-                    [
-                        'name' => $row->sub_sub_sub_category,
-                        'parent_id' => $subSubCache[$subSubKey],
-                        'level' => 3,
-                    ],
-                    [
-                        'slug' => Str::slug($row->sub_sub_sub_category),
-                        'status' => 1,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]
+                    ['name' => $row->sub_sub_sub_category, 'parent_id' => $subSubId, 'level' => 3],
+                    $buildRecord($row->sub_sub_sub_category, $subSubId, 3)
                 );
             }
         }
 
-        return "ok";
+        return response()->json(['status' => 'ok', 'processed' => $rows->count()]);
     }
 
     public function brand()
@@ -202,18 +154,16 @@ class ScrapingController extends Controller
         $addProducts = DB::connection('mysql_second')
             ->table('products')
             ->where('type', 0)
-            // ->limit(5000)
+            ->limit(500)
             ->get();
 
         foreach ($addProducts as $pro) {
             // return $pro;
             // set category 
-            if($pro->sub_sub_sub_category){
-                $category = Category::where('name', $pro->sub_sub_sub_category)->first();
-            }else if($pro->sub_sub_category){
+            if($pro->sub_sub_category){
                 $category = Category::where('name', $pro->sub_sub_category)->first();
-            }else if($pro->sub_category){
-                $category = Category::where('name', $pro->sub_category)->first();
+            }else if($pro->subcategory){
+                $category = Category::where('name', $pro->subcategory)->first();
             }else if($pro->main_category){
                 $category = Category::where('name', $pro->main_category)->first();
             }
@@ -227,9 +177,16 @@ class ScrapingController extends Controller
                 $unit = end($words);
             }
 
-            if(isset($pro->original_price) && isset($pro->current_price)){
-                $discount = (int) $pro->original_price - (int) $pro->current_price;
+            // return __LINE__;
+
+            // return $category;
+
+            if(!isset($category->id)){
+                continue;
             }
+            // if(isset($pro->original_price) && isset($pro->current_price)){
+            //     $discount = (int) $pro->original_price - (int) $pro->current_price;
+            // }
 
             $product = new Product();
             $product->name = $pro->title;
@@ -238,8 +195,9 @@ class ScrapingController extends Controller
             $product->added_by = 1;
             $product->category_id = $category->id;
             $product->brand_id = $brand->id;
-            $product->unit_price = $pro->current_price;
-            $product->discount = $discount;
+            $product->purchase_price = (int) filter_var($pro->current_price, FILTER_SANITIZE_NUMBER_INT);
+            $product->unit_price = (int) filter_var($pro->original_price, FILTER_SANITIZE_NUMBER_INT);
+            $product->discount = 0;
             $product->attributes = "attributes";
             $product->stock_visibility_state = 0;
             $product->unit = $unit ? $unit : '';
@@ -249,6 +207,7 @@ class ScrapingController extends Controller
             $product->slug = Str::slug($pro->title);
             $product->description = $pro->description;
             
+            // return $product;
             $product->save();
 
             $this->addImage($pro->id, $product->id, $pro->thumbnail_path);
@@ -315,6 +274,8 @@ class ScrapingController extends Controller
                 $product_stock->save();
             }
         }
+
+        return "Product stock added successfully.";
     }
 
 

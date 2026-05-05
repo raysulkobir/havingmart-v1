@@ -40,7 +40,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // return filter_products(Product::where(['published' => 1, 'new_product' => 1])->latest())->limit(12)->get();
         $todays_deal_products = Cache::rememberForever('todays_deal_products', function () {
             return filter_products(Product::where('published', 1)->where('todays_deal', '1'))->get();
         });

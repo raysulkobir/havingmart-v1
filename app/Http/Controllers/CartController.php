@@ -93,6 +93,8 @@ class CartController extends Controller
             }
 
             if ($product->digital != 1) {
+
+            // return Product::find($request->id)->choice_options;
                 //Gets all the choice values of customer choice option and generate a string like Black-S-Cotton
                 foreach (json_decode(Product::find($request->id)->choice_options) as $key => $choice) {
                     if($str != null){
