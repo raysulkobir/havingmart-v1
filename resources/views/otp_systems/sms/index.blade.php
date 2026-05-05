@@ -17,7 +17,7 @@
                             <select class="form-control aiz-selectpicker" data-live-search="true" name="user_phones[]" multiple>
                                 @foreach($users as $user)
                                     @if ($user->phone != null)
-                                        <option value="{{$user->phone}}">{{$user->name}} - {{$user->phone}}</option>
+                                        <option value="{{$user->phone}}">{{$user->phone}}</option>
                                     @endif
                                 @endforeach
                             </select>

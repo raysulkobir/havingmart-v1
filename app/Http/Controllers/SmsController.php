@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Nexmo;
 use Twilio\Rest\Client;
@@ -17,7 +18,11 @@ class SmsController extends Controller
      */
     public function index()
     {
-    	$users = User::all();
+        $usersData = User::all();
+        $customers = Customer::all();
+
+        $users = $usersData->merge($customers);
+
         return view('otp_systems.sms.index',compact('users'));
     }
 

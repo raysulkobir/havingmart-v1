@@ -49,6 +49,7 @@ use App\Http\Controllers\Payment\SslcommerzController;
 use App\Http\Controllers\Payment\MercadopagoController;
 use App\Http\Controllers\Payment\AuthorizenetController;
 use App\Http\Controllers\SEOController;
+ 
 
 /*
   |--------------------------------------------------------------------------
@@ -73,12 +74,10 @@ Route::get('ddd', function(){
     return 'All cache cleared successfully!';
 });
 
-
 Route::controller(SEOController::class)->group(function () {
     Route::get('/sitemap.xml', 'sitemap');
     // facebook
     Route::get('/product-seed', 'generateXMLFeed');
- 
 });
 
 Route::controller(ScrapingController::class)->group(function () {
@@ -87,18 +86,7 @@ Route::controller(ScrapingController::class)->group(function () {
     Route::get('/scr-brand', 'brand');
     Route::get('/scr-addProducts', 'addProducts');
     Route::get('/scr-unit', 'unit');
-});
-
-
-Route::controller(DemoController::class)->group(function () {
-    Route::get('/demo/cron_1', 'cron_1');
-    Route::get('/demo/cron_2', 'cron_2');
-    Route::get('/convert_assets', 'convert_assets');
-    Route::get('/convert_category', 'convert_category');
-    Route::get('/convert_tax', 'convertTaxes');
-    Route::get('/insert_product_variant_forcefully', 'insert_product_variant_forcefully');
-    Route::get('/update_seller_id_in_orders/{id_min}/{id_max}', 'update_seller_id_in_orders');
-    Route::get('/migrate_attribute_values', 'migrate_attribute_values');
+    Route::get('/add-customers', 'addCustomers');
 });
 
 Route::get('/refresh-csrf', function() {

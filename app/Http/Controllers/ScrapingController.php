@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductStock;
 use App\Models\Upload;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -278,7 +280,22 @@ class ScrapingController extends Controller
         return "Product stock added successfully.";
     }
 
-
+    public function addCustomers(){
+        $users = User::where('user_type', 'customer')->get();
+        foreach($users as $user){
+            $exists = Customer::where('phone', $user->phone)->exists();
+            if($exists){
+                continue;
+            }
+            $customer = new Customer();
+            $customer->customer_code = 'CUS-'.str_pad($user->id, 5, '0', STR_PAD_LEFT);
+            $customer->first_name = $user->name;
+            $customer->email = $user->email;
+            $customer->phone = $user->phone;
+            $customer->save();
+        }
+         
+    }
 
     
 
