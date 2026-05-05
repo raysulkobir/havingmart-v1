@@ -39,6 +39,7 @@ class CreateCustomersTable extends Migration
             $table->decimal('opening_balance', 12, 2)->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->text('notes')->nullable();
+            $table->string('type')->nullable();
 
             $table->index(['first_name', 'last_name']);
             $table->index('status');
