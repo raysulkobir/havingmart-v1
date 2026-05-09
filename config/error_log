@@ -1,0 +1,32 @@
+[30-Mar-2026 23:06:44 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/database.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/database.php on line 16
+[19-Apr-2026 02:09:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/database.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/database.php on line 16
+[19-Apr-2026 02:09:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/mail.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/mail.php on line 19
+[26-Apr-2026 19:57:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/database.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/database.php on line 16
+[26-Apr-2026 19:57:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/services.php on line 18
+[26-Apr-2026 19:57:23 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/mail.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/mail.php on line 19
+[08-May-2026 20:03:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/database.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/database.php on line 16
+[08-May-2026 20:03:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sajirsaj/havingmart.com/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sajirsaj/havingmart.com/config/app.php on line 16

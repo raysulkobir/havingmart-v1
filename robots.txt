@@ -1,0 +1,5 @@
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: meta-externalagent
+Crawl-delay: 5
