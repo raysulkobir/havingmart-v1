@@ -960,10 +960,19 @@ if (!function_exists('app_timezone')) {
 if (!function_exists('uploaded_asset')) {
     function uploaded_asset($id)
     {
-        if (($asset = \App\Models\Upload::find($id)) != null) {
-            return $asset->external_link == null ? my_asset($asset->file_name) : $asset->external_link;
+        if ($id === null) {
+            return static_asset('assets/img/placeholder.jpg');
         }
-        return static_asset('assets/img/placeholder.jpg');
+
+        return Cache::remember("uploaded_asset_{$id}", now()->addDay(), function () use ($id) {
+            $asset = \App\Models\Upload::find($id);
+
+            if ($asset === null) {
+                return static_asset('assets/img/placeholder.jpg');
+            }
+
+            return $asset->external_link ?? my_asset($asset->file_name);
+        });
     }
 }
 

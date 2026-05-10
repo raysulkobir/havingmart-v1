@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductStock;
 use App\Models\Upload;
@@ -20,9 +21,20 @@ class ScrapingController extends Controller
         // $this->brand();
         // $this->category();
         // $this->addProducts();
-       return $this->updateImage();
+       return $this->updateCustomersNumber();
 
         return "Success";
+    }
+
+    public function updateCustomersNumber()
+    {
+        $customers = Customer::get();
+        foreach ($customers as $customer) {
+
+            $customer->phone = '+88' . ltrim($customer->phone, '0');
+
+            $customer->save();
+        }
     }
 
     public function category()

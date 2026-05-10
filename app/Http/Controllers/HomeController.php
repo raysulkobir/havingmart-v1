@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Auth;
-use App\Models\Category;
-use App\Models\FlashDeal;
-use App\Models\Cart;
-use App\Models\Brand;
-use App\Models\Product;
-use App\Models\PickupPoint;
-use App\Models\CustomerPackage;
-use App\Models\User;
-use App\Models\Shop;
-use App\Models\Order;
-use App\Models\Coupon;
-use App\Models\City;
-use Cookie;
-use Illuminate\Support\Str;
 use App\Mail\SecondEmailVerifyMailManager;
 use App\Models\AffiliateConfig;
+use App\Models\Brand;
+use App\Models\Cart;
+use App\Models\Category;
+use App\Models\City;
+use App\Models\Coupon;
+use App\Models\CustomerPackage;
+use App\Models\FlashDeal;
+use App\Models\Order;
 use App\Models\Page;
+use App\Models\PickupPoint;
+use App\Models\Product;
 use App\Models\ProductQuery;
-use Mail;
+use App\Models\Shop;
+use App\Models\User;
+use Artisan;
+use Auth;
+use Cookie;
 use Illuminate\Auth\Events\PasswordReset;
-use Cache;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
-use Artisan;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -40,20 +40,48 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $time = 3600;
         $todays_deal_products = Cache::rememberForever('todays_deal_products', function () {
             return filter_products(Product::where('published', 1)->where('todays_deal', '1'))->get();
         });
 
-        $new_products = Cache::remember('new_products', 3600, function () {
+        $new_products = Cache::remember('new_products', $time, function () {
             return filter_products(Product::where(['published' => 1, 'new_product' => 1])->latest())->limit(12)->get();
         });
 
-        $popularCategories = Category::where(['featured' =>  1, 'status' => 1])->get();
-        $banner_1_imags = json_decode(get_setting('home_banner1_images'));
+        $popularCategories = Cache::remember('popular_categories',now()->addHour(), function(){
+            return Category::where(['featured' =>  1, 'status' => 1])->limit(12)->get();
+        });
+
+        // $banner_1_imags = Cache::remember('home_banner1_images',now()->addHour(),function(){
+        //     return json_decode(get_setting('home_banner1_images'), true) ?? [];
+        // });
 
         $flash_deal = FlashDeal::where('status', 1)->where('featured', 1)->first();
 
-        return view('frontend.index', compact('todays_deal_products', 'new_products', 'popularCategories', 'banner_1_imags', 'flash_deal'));
+        $featured_products = Cache::remember('featured_products', $time, function () {
+            return filter_products(\App\Models\Product::where(['published' => 1, 'featured' => 1]))->limit(12)->get();
+        });
+
+        $best_selling_products = Cache::remember('best_selling_products', $time, function () {
+            return filter_products(\App\Models\Product::where(['published' => 1, 'best_selling' => 1])->orderBy('num_of_sale', 'desc'))->limit(20)->get();
+        });
+
+        // $home_categories = Cache::remember('setting.home_categories',now()->addMinutes(5),function () {
+        //         $value = get_setting('home_categories');
+        //         return $value ? json_decode($value) : [];
+        //     }
+        // );
+
+        $best_selers =  Cache::remember('best_selers', $time, function () {
+            return Shop::where('verification_status', 1)->orderBy('num_of_sale', 'desc')->take(20)->get();
+        });
+
+        $topBrands = Cache::remember('top_brands', $time, function () {
+            return Brand::limit(20)->get();
+        });
+
+        return view('frontend.index', compact('todays_deal_products', 'new_products', 'popularCategories', 'flash_deal', 'featured_products', 'best_selling_products', 'best_selers', 'topBrands'));
     }
 
     public function login()
