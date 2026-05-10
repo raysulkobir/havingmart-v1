@@ -63,8 +63,7 @@ class SEOController extends Controller
             $item->addChild('g:id', $product->id, 'http://base.google.com/ns/1.0');
             $item->addChild('g:title', htmlspecialchars($product->name), 'http://base.google.com/ns/1.0');
             $item->addChild('g:description', htmlspecialchars($product->description), 'http://base.google.com/ns/1.0');
-            $item->addChild('g:link', "https://havingmart.com/product/" . $product->slug, 'http://base.google.com/ns/1.0');
-            $item->addChild('g:image_link', "https://havingmart.com/public/" . $product->thumbnail_img, 'http://base.google.com/ns/1.0');
+            $item->addChild('g:link', uploaded_asset($product->thumbnail_img), 'http://base.google.com/ns/1.0');
             $item->addChild('g:availability', "in stock", 'http://base.google.com/ns/1.0');
             $item->addChild('g:price', ((int)$product->unit_price - (int)$product->discount) . ' BDT', 'http://base.google.com/ns/1.0');
             $item->addChild('g:condition', "new", 'http://base.google.com/ns/1.0');
