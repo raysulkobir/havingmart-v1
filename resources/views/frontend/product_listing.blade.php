@@ -280,5 +280,13 @@
             $('input[name=max_price]').val(arg[1]);
             filter();
         }
+
+        fbq('track', 'Search', {
+            search_string: {{ $query }},   // required
+            content_ids: [{{ $products->pluck('id') }}], // matching results
+            content_type: 'cosmetics & beauty',  // optional
+            value: {{ $products->min('unit_price') }},
+            currency: 'USD'
+        });
     </script>
 @endsection

@@ -1014,5 +1014,14 @@
                 alert('Something went worng! Questions could not be loaded.');
             });
         }
+
+        fbq('track', 'ViewContent', {
+            content_ids: [{{ $detailedProduct->id }}],        // required
+            content_type: 'product',         // 'product' or 'product_group'
+            content_name: {{ $detailedProduct->getTranslation('name') }},
+            content_category: 'cosmetics & beauty',  // optional
+            value: {{ home_discounted_base_price($detailedProduct) }},
+            currency: 'BDT'
+        });
     </script>
 @endsection
