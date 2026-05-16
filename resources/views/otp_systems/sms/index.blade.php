@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-lg-6 mx-auto">
+    <div class="col-lg-8 mx-auto">
         <div class="card">
             <div class="card-header">
                 <h3 class="fs-18 mb-0">{{translate('Send Bulk SMS')}}</h3>
