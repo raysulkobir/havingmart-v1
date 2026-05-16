@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\OtpConfiguration;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Nexmo;
 use Twilio\Rest\Client;
-use App\Models\OtpConfiguration;
-use App\Models\User;
 
 class SmsController extends Controller
 {
@@ -17,7 +18,12 @@ class SmsController extends Controller
      */
     public function index()
     {
-    	$users = User::all();
+        // $users = User::all();
+        $users = Customer::select('id','first_name as name','phone')->where('sms_status', 'pending')->get()->map(function ($customer) {
+            $customer->phone = $customer->phone;
+            return $customer;
+        });
+
         return view('otp_systems.sms.index',compact('users'));
     }
 
