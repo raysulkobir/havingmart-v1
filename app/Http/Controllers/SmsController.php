@@ -30,7 +30,40 @@ class SmsController extends Controller
     //send message to multiple users
     public function send(Request $request)
     {
-        foreach ($request->user_phones as $key => $phone) {
+        $request->validate([
+            'send_to' => 'required|in:selected,range',
+            'user_phones' => 'required_if:send_to,selected|array',
+            'customer_range' => 'required_if:send_to,range|nullable|regex:/^\s*[0-9]+\s*-\s*[0-9]+\s*$/',
+            'content' => 'required|string',
+            'template_id' => 'nullable|string',
+        ]);
+
+        $phones = collect();
+
+        if ($request->send_to == 'range') {
+            [$start, $end] = array_map('intval', preg_split('/\s*-\s*/', $request->customer_range));
+
+            if ($start < 1 || $end < $start) {
+                flash(translate('Please enter a valid customer range.'))->error();
+                return back()->withInput();
+            }
+
+            $phones = Customer::orderBy('id')
+                ->skip($start - 1)
+                ->take($end - $start + 1)
+                ->pluck('phone');
+        } else {
+            $phones = collect($request->user_phones);
+        }
+
+        $phones = $phones->filter()->unique()->values();
+
+        if ($phones->isEmpty()) {
+            flash(translate('No customers found for SMS sending.'))->error();
+            return back()->withInput();
+        }
+
+        foreach ($phones as $phone) {
             sendSMS($phone, env('APP_NAME'), $request->content, $request->template_id);
         }
 
