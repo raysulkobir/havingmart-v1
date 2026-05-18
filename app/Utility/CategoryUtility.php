@@ -3,16 +3,26 @@
 namespace App\Utility;
 
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryUtility
 {
     /*when with trashed is true id will get even the deleted items*/
     public static function get_immediate_children($id, $with_trashed = false, $as_array = false)
     {
-        $children = $with_trashed ? Category::where('parent_id', $id)->where('status', 1)->orderBy('order_level', 'desc')->get() : Category::where('parent_id', $id)->where('status', 1)->orderBy('order_level', 'desc')->get();
-        $children = $as_array && !is_null($children) ? $children->toArray() : $children;
+        $cacheKey = "category_children_{$id}_{$with_trashed}_{$as_array}";
 
-        return $children;
+        $children = Cache::remember($cacheKey, 3600, function () use ($id, $with_trashed) {
+
+            return Category::where('parent_id', $id)
+                ->where('status', 1)
+                ->orderBy('order_level', 'desc')
+                ->get();
+        });
+
+        return $as_array && !is_null($children)
+            ? $children->toArray()
+            : $children;
     }
 
     public static function get_immediate_children_ids($id, $with_trashed = false)

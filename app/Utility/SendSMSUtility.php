@@ -9,7 +9,8 @@ use Twilio\Rest\Client;
 class SendSMSUtility
 {
     public static function sendSMS($to, $from, $text, $template_id)
-    {        
+    {  
+       
         if (OtpConfiguration::where('type', 'nexmo')->first()->value == 1) {
             $api_key = env("NEXMO_KEY"); //put ssl provided api_token here
             $api_secret = env("NEXMO_SECRET"); // put ssl provided sid here
@@ -191,7 +192,22 @@ class SendSMSUtility
             curl_close($ch);
             return $response;
         }else{
-            return false;
+            $url = "http://bulksmsbd.net/api/smsapi";
+            $data = [
+                "api_key" => "ieMWZq8Giz9pMBGxnm4c",
+                "senderid" => "8809648906341",
+                "number" => $to,
+                "message" => $text
+            ];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            return $response;
         }
     }
 }

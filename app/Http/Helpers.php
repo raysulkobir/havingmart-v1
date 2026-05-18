@@ -1,46 +1,46 @@
 <?php
 
-use Carbon\Carbon;
-use App\Models\Cart;
-use App\Models\City;
-use App\Models\Shop;
-use App\Models\User;
-use App\Models\Addon;
-use App\Models\Coupon;
-use App\Models\Seller;
-use App\Models\Upload;
-use App\Models\Wallet;
-use App\Models\Address;
-use App\Models\Carrier;
-use App\Models\Country;
-use App\Models\Product;
-use App\Models\Currency;
-use App\Models\CouponUsage;
-use App\Models\Translation;
-use App\Models\ProductStock;
-use App\Models\CombinedOrder;
-use App\Models\SellerPackage;
-use App\Models\BusinessSetting;
-use App\Models\CustomerPackage;
-use App\Utility\SendSMSUtility;
-use App\Utility\CategoryUtility;
-use App\Models\SellerPackagePayment;
-use App\Utility\NotificationUtility;
-use App\Http\Resources\V2\CarrierCollection;
 use App\Http\Controllers\AffiliateController;
 use App\Http\Controllers\ClubPointController;
 use App\Http\Controllers\CommissionController;
+use App\Http\Resources\V2\CarrierCollection;
+use App\Models\Addon;
+use App\Models\Address;
+use App\Models\BusinessSetting;
+use App\Models\Carrier;
+use App\Models\Cart;
+use App\Models\City;
+use App\Models\CombinedOrder;
+use App\Models\Country;
+use App\Models\Coupon;
+use App\Models\CouponUsage;
+use App\Models\Currency;
+use App\Models\Customer;
+use App\Models\CustomerPackage;
+use App\Models\Product;
+use App\Models\ProductStock;
+use App\Models\Seller;
+use App\Models\SellerPackage;
+use App\Models\SellerPackagePayment;
+use App\Models\Shop;
+use App\Models\Translation;
+use App\Models\Upload;
+use App\Models\User;
+use App\Models\Wallet;
+use App\Utility\CategoryUtility;
+use App\Utility\NotificationUtility;
+use App\Utility\SendSMSUtility;
+use Carbon\Carbon;
 
 //sensSMS function for OTP
 if (!function_exists('sendSMS')) {
     function sendSMS($to, $from, $text, $template_id)
     {
         $send = SendSMSUtility::sendSMS($to, $from, $text, $template_id);
-
         if ($send) {
-
-            return true;
+            Customer::where('phone', $to)->update(['sms_status' => "sent"]);
         }else{
+            Customer::where('phone', $to)->update(['sms_status' => "failed"]);
             flash("The OTP system is not activated, could not send an SMS to your phone!")->error();
         }
     }
@@ -960,10 +960,19 @@ if (!function_exists('app_timezone')) {
 if (!function_exists('uploaded_asset')) {
     function uploaded_asset($id)
     {
-        if (($asset = \App\Models\Upload::find($id)) != null) {
-            return $asset->external_link == null ? my_asset($asset->file_name) : $asset->external_link;
+        if ($id === null) {
+            return static_asset('assets/img/placeholder.jpg');
         }
-        return static_asset('assets/img/placeholder.jpg');
+
+        return Cache::remember("uploaded_asset_{$id}", now()->addDay(), function () use ($id) {
+            $asset = \App\Models\Upload::find($id);
+
+            if ($asset === null) {
+                return static_asset('assets/img/placeholder.jpg');
+            }
+
+            return $asset->external_link ?? my_asset($asset->file_name);
+        });
     }
 }
 
