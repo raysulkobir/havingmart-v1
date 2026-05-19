@@ -48,10 +48,10 @@ class SmsController extends Controller
                 return back()->withInput();
             }
 
-            $phones = Customer::orderBy('id')
+            $phones = Customer::whereBetween('id', [$start, $end])
                 ->where('sms_status', 'pending')
-                ->skip($start - 1)
-                ->take($end - $start + 1)
+                ->orderBy('id')
+                // ->get();
                 ->pluck('phone');
         } else {
             $phones = collect($request->user_phones);
