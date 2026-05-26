@@ -268,6 +268,63 @@
         </div>
         @endif
     </div>
+
+    {{-- Horizontal Category Mega Menu --}}
+    <div class="hm-catbar d-none d-lg-block">
+        <div class="container">
+            <div class="hm-catbar-inner">
+                @php
+                    $allCategories = Cache::remember('all_nav_categories', 3600, function () {
+                        return \App\Models\Category::where('status', 1)
+                            ->with(['category_translations'])
+                            ->orderBy('order_level', 'desc')
+                            ->get();
+                    });
+                    $level0 = $allCategories->where('level', 0)->take(12);
+                @endphp
+                <a href="{{ route('categories.all') }}" class="hm-catbar-all">
+                    <i class="las la-th-large mr-1"></i> {{ translate('All Categories') }}
+                </a>
+                @foreach ($level0 as $cat)
+                    @php $children = $allCategories->where('parent_id', $cat->id); @endphp
+                    <div class="hm-catbar-item">
+                        <a href="{{ route('products.category', $cat->slug) }}" class="hm-catbar-link">
+                            {{ $cat->getTranslation('name') }}
+                            @if($children->count() > 0)
+                                <i class="las la-angle-down fs-10 ml-1"></i>
+                            @endif
+                        </a>
+                        @if($children->count() > 0)
+                            <div class="hm-catbar-dropdown">
+                                <div class="hm-catbar-dropdown-inner">
+                                    @foreach ($children as $sub)
+                                        @php $subChildren = $allCategories->where('parent_id', $sub->id); @endphp
+                                        <div class="hm-catbar-col">
+                                            <a href="{{ route('products.category', $sub->slug) }}" class="hm-catbar-sub-title">
+                                                {{ $sub->getTranslation('name') }}
+                                            </a>
+                                            @if($subChildren->count() > 0)
+                                                <ul class="hm-catbar-sub-list">
+                                                    @foreach ($subChildren->take(8) as $item)
+                                                        <li>
+                                                            <a href="{{ route('products.category', $item->slug) }}">
+                                                                {{ $item->getTranslation('name') }}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
     @if ( get_setting('header_menu_labels') !=  null )
         <div class="bd-dazlea border-top border-gray-200">
             <div class="container">

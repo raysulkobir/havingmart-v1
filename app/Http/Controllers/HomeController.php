@@ -41,47 +41,81 @@ class HomeController extends Controller
     public function index()
     {
         $time = 3600;
-        $todays_deal_products = Cache::rememberForever('todays_deal_products', function () {
-            return filter_products(Product::where('published', 1)->where('todays_deal', '1'))->get();
+        $eagerRelations = ['product_translations', 'taxes', 'stocks', 'brand', 'category', 'user'];
+
+        $todays_deal_products = Cache::remember('todays_deal_products', $time, function () use ($eagerRelations) {
+            return filter_products(Product::where('published', 1)->where('todays_deal', '1'))
+                ->with($eagerRelations)->limit(12)->get();
         });
 
-        $new_products = Cache::remember('new_products', $time, function () {
-            return filter_products(Product::where(['published' => 1, 'new_product' => 1])->latest())->limit(12)->get();
+        $new_products = Cache::remember('new_products', $time, function () use ($eagerRelations) {
+            return filter_products(Product::where(['published' => 1, 'new_product' => 1])->latest())
+                ->with($eagerRelations)->limit(12)->get();
         });
 
-        $popularCategories = Cache::remember('popular_categories',now()->addHour(), function(){
-            return Category::where(['featured' =>  1, 'status' => 1])->limit(12)->get();
+        $popularCategories = Cache::remember('popular_categories', $time, function () {
+            return Category::where(['featured' => 1, 'status' => 1])
+                ->with(['category_translations'])
+                ->limit(12)->get();
         });
 
-        // $banner_1_imags = Cache::remember('home_banner1_images',now()->addHour(),function(){
-        //     return json_decode(get_setting('home_banner1_images'), true) ?? [];
-        // });
-
-        $flash_deal = FlashDeal::where('status', 1)->where('featured', 1)->first();
-
-        $featured_products = Cache::remember('featured_products', $time, function () {
-            return filter_products(\App\Models\Product::where(['published' => 1, 'featured' => 1]))->limit(12)->get();
+        $flash_deal = Cache::remember('flash_deal_featured', $time, function () use ($eagerRelations) {
+            return FlashDeal::where('status', 1)->where('featured', 1)
+                ->with(['flash_deal_products.product' => function ($q) use ($eagerRelations) {
+                    $q->with($eagerRelations);
+                }])
+                ->first();
         });
 
-        $best_selling_products = Cache::remember('best_selling_products', $time, function () {
-            return filter_products(\App\Models\Product::where(['published' => 1, 'best_selling' => 1])->orderBy('num_of_sale', 'desc'))->limit(20)->get();
+        $featured_products = Cache::remember('featured_products', $time, function () use ($eagerRelations) {
+            return filter_products(Product::where(['published' => 1, 'featured' => 1]))
+                ->with($eagerRelations)->limit(12)->get();
         });
 
-        // $home_categories = Cache::remember('setting.home_categories',now()->addMinutes(5),function () {
-        //         $value = get_setting('home_categories');
-        //         return $value ? json_decode($value) : [];
-        //     }
-        // );
+        $best_selling_products = Cache::remember('best_selling_products', $time, function () use ($eagerRelations) {
+            return filter_products(Product::where(['published' => 1, 'best_selling' => 1]))
+                ->with($eagerRelations)
+                ->orderBy('num_of_sale', 'desc')
+                ->limit(20)->get();
+        });
 
-        $best_selers =  Cache::remember('best_selers', $time, function () {
+        // Cache home category IDs
+        $home_categories = Cache::remember('setting.home_categories', $time, function () {
+            $value = get_setting('home_categories');
+            return $value ? json_decode($value) : [];
+        });
+
+        // Pre-fetch all category products in bulk to avoid N+1 in the view
+        $home_category_products = [];
+        if (!empty($home_categories)) {
+            foreach ($home_categories as $cat_id) {
+                $home_category_products[$cat_id] = get_cached_products($cat_id);
+            }
+        }
+
+        // Pre-fetch category models
+        $home_category_models = !empty($home_categories)
+            ? Cache::remember('home_category_models', $time, function () use ($home_categories) {
+                return Category::whereIn('id', $home_categories)
+                    ->with(['category_translations'])
+                    ->get()->keyBy('id');
+            })
+            : collect();
+
+        $best_selers = Cache::remember('best_selers', $time, function () {
             return Shop::where('verification_status', 1)->orderBy('num_of_sale', 'desc')->take(20)->get();
         });
 
         $topBrands = Cache::remember('top_brands', $time, function () {
-            return Brand::limit(20)->get();
+            return Brand::with(['brand_translations'])->limit(20)->get();
         });
 
-        return view('frontend.index', compact('todays_deal_products', 'new_products', 'popularCategories', 'flash_deal', 'featured_products', 'best_selling_products', 'best_selers', 'topBrands'));
+        return view('frontend.index', compact(
+            'todays_deal_products', 'new_products', 'popularCategories',
+            'flash_deal', 'featured_products', 'best_selling_products',
+            'best_selers', 'topBrands', 'home_categories',
+            'home_category_products', 'home_category_models'
+        ));
     }
 
     public function login()
