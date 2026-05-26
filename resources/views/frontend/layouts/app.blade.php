@@ -47,7 +47,7 @@
     <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
     <link rel="stylesheet" href="{{ static_asset('assets/css/style.css?v=1') }}">
-    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=3') }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=4') }}">
     <script>
         var AIZ = AIZ || {};
         AIZ.local = {

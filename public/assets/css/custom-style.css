@@ -1,5 +1,12 @@
 /*your custom css goes here*/
 
+:root {
+    --primary: #E22132 !important;
+    --hov-primary: #c31322 !important;
+    --soft-primary: rgba(226, 33, 50, 0.15) !important;
+    --secondary: #260A54 !important;
+}
+
 /* ========================================
    HAVINGMART HOMEPAGE – Modern Grid UI
    ======================================== */
@@ -35,14 +42,14 @@
     top: 2px;
     bottom: 2px;
     width: 4px;
-    background: linear-gradient(180deg, #4361ee, #7209b7);
+    background: linear-gradient(180deg, #E22132, #260A54);
     border-radius: 4px;
 }
 .hm-view-all-btn {
     display: inline-flex;
     align-items: center;
     padding: 7px 18px;
-    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    background: linear-gradient(135deg, #E22132, #260A54);
     color: #fff !important;
     font-size: 13px;
     font-weight: 600;
@@ -86,7 +93,7 @@
     overflow: hidden;
 }
 .hm-deal-header {
-    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    background: linear-gradient(135deg, #E22132, #260A54);
     padding: 14px 16px;
     display: flex;
     align-items: center;
@@ -138,7 +145,7 @@
 }
 .hm-deal-price {
     font-weight: 700;
-    color: #4361ee;
+    color: #E22132;
     font-size: 14px;
 }
 .hm-deal-old-price {
@@ -149,52 +156,57 @@
 /* Category Thumbnails */
 .hm-cat-scroll {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
 }
 .hm-cat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
     text-decoration: none !important;
-    padding: 12px 6px;
-    border-radius: 12px;
-    transition: all .25s ease;
-    border: 1px solid transparent;
+    transition: all .25s ease-in-out;
 }
 .hm-cat-item:hover {
-    background: #f5f7ff;
-    border-color: #e0e7ff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(67,97,238,.12);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e1;
 }
 .hm-cat-img-wrap {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
     overflow: hidden;
-    margin-bottom: 8px;
-    border: 2px solid #e8ecf4;
-    transition: border-color .25s;
-}
-.hm-cat-item:hover .hm-cat-img-wrap {
-    border-color: #4361ee;
+    margin-bottom: 12px;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f1f5f9;
 }
 .hm-cat-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    transition: transform .3s ease;
+}
+.hm-cat-item:hover .hm-cat-img-wrap img {
+    transform: scale(1.05);
 }
 .hm-cat-name {
-    font-size: 12px;
-    font-weight: 600;
-    color: #333;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
     text-align: center;
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    line-height: 1.4;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    padding: 0 4px;
 }
 
 /* Product Grid — 6 columns desktop */
@@ -209,13 +221,13 @@
 
 /* Dark Section (Best Sellers) */
 .hm-dark-section {
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    background: linear-gradient(135deg, #260A54, #13032c);
 }
 .hm-dark-section .hm-section-header {
     border-bottom-color: rgba(255,255,255,.12);
 }
 .hm-dark-section .hm-section-title::before {
-    background: linear-gradient(180deg, #f72585, #b5179e);
+    background: #E22132;
 }
 
 /* Seller Grid */
@@ -285,7 +297,7 @@
     background: #fff;
 }
 .hm-brand-card:hover {
-    border-color: #4361ee;
+    border-color: #E22132;
     box-shadow: 0 4px 12px rgba(67,97,238,.12);
     transform: translateY(-2px);
 }
@@ -313,7 +325,7 @@
     .hm-product-grid { grid-template-columns: repeat(4, 1fr); }
     .hm-seller-grid { grid-template-columns: repeat(3, 1fr); }
     .hm-section-card { padding: 18px; }
-    .hm-cat-scroll { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; }
+    .hm-cat-scroll { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
 }
 @media (max-width: 767px) {
     .hm-product-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -325,8 +337,7 @@
 @media (max-width: 480px) {
     .hm-product-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
     .hm-seller-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .hm-cat-scroll { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 6px; }
-    .hm-cat-img-wrap { width: 48px; height: 48px; }
+    .hm-cat-scroll { grid-template-columns: repeat(auto-fill, minmax(95px, 1fr)); gap: 8px; }
     .hm-section-title { font-size: 15px; }
 }
 
@@ -348,7 +359,7 @@
     display: inline-flex;
     align-items: center;
     padding: 10px 18px;
-    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    background: linear-gradient(135deg, #E22132, #260A54);
     color: #fff !important;
     font-size: 13px;
     font-weight: 700;
@@ -360,7 +371,7 @@
     transition: all .2s;
 }
 .hm-catbar-all:hover {
-    background: linear-gradient(135deg, #3a0ca3, #4361ee);
+    background: linear-gradient(135deg, #260A54, #E22132);
 }
 
 .hm-catbar-item {
@@ -381,8 +392,8 @@
 }
 .hm-catbar-link:hover,
 .hm-catbar-item:hover .hm-catbar-link {
-    color: #4361ee !important;
-    border-bottom-color: #4361ee;
+    color: #E22132 !important;
+    border-bottom-color: #E22132;
 }
 
 /* Dropdown Panel */
@@ -428,7 +439,7 @@
     transition: color .2s;
 }
 .hm-catbar-sub-title:hover {
-    color: #4361ee !important;
+    color: #E22132 !important;
 }
 .hm-catbar-sub-list {
     list-style: none;
@@ -444,7 +455,7 @@
     transition: color .2s, padding-left .2s;
 }
 .hm-catbar-sub-list li a:hover {
-    color: #4361ee !important;
+    color: #E22132 !important;
     padding-left: 6px;
 }
 
