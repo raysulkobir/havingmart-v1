@@ -341,10 +341,8 @@
     display: flex;
     align-items: center;
     gap: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
+    overflow: visible;
 }
-.hm-catbar-inner::-webkit-scrollbar { display: none; }
 
 .hm-catbar-all {
     display: inline-flex;

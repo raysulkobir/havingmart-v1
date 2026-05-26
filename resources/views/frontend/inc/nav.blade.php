@@ -256,7 +256,6 @@
 
             </div>
         </div>
-        @if(Route::currentRouteName() != 'home')
         <div class="hover-category-menu position-absolute w-100 top-100 left-0 right-0 d-none z-3" id="hover-category-menu">
             <div class="container">
                 <div class="row gutters-10 position-relative">
@@ -266,7 +265,6 @@
                 </div>
             </div>
         </div>
-        @endif
     </div>
 
     {{-- Horizontal Category Mega Menu --}}
@@ -370,5 +368,14 @@
                 AIZ.plugins.bootstrapSelect('refresh');
             });
         }
+
+        $(document).ready(function() {
+            // Hover All Categories horizontal button -> expand vertical category menu
+            $('.hm-catbar-all, #hover-category-menu').on('mouseenter', function() {
+                $('#hover-category-menu').removeClass('d-none').addClass('active');
+            }).on('mouseleave', function() {
+                $('#hover-category-menu').addClass('d-none').removeClass('active');
+            });
+        });
     </script>
 @endsection
