@@ -194,6 +194,33 @@
     </section>
     @endif
 
+    {{-- Trending Products --}}
+    @if (count(@$trending_products) > 0)
+    <section class="mb-4">
+        <div class="container">
+            <div class="hm-section-card">
+                <div class="hm-section-header">
+                    <h2 class="hm-section-title">{{ translate('Trending Products') }}</h2>
+                </div>
+                <div class="hm-product-grid" id="trending-products-grid">
+                    @foreach ($trending_products as $product)
+                        <div class="hm-product-col">
+                            @include('frontend.partials.product_box_1', ['product' => $product])
+                        </div>
+                    @endforeach
+                </div>
+                @if($has_more_trending)
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-primary px-4 py-2" id="btn-load-more-trending" data-page="2">
+                            <i class="las la-sync mr-1"></i> {{ translate('View More') }}
+                        </button>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </section>
+    @endif
+
     {{-- Banner Section 2 --}}
     @if (get_setting('home_banner2_images') != null)
     <div class="mb-4">
@@ -331,5 +358,43 @@
 @section('script')
     <script>
         // No owl carousel needed — pure CSS grid for speed
+        $(document).ready(function() {
+            $('#btn-load-more-trending').on('click', function() {
+                var btn = $(this);
+                var page = btn.data('page');
+                btn.prop('disabled', true).html('<i class="las la-spinner la-spin mr-1"></i> Loading...');
+                
+                $.ajax({
+                    url: "{{ route('home.section.trending') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        page: page
+                    },
+                    success: function(response) {
+                        if (response.html) {
+                            $('#trending-products-grid').append(response.html);
+                            
+                            // Initialize lazy loading for new images
+                            if (typeof AIZ === 'object' && typeof AIZ.plugins === 'object' && typeof AIZ.plugins.lazyLoader === 'function') {
+                                AIZ.plugins.lazyLoader();
+                            }
+                            
+                            btn.data('page', page + 1);
+                        }
+                        
+                        if (response.has_more) {
+                            btn.prop('disabled', false).html('<i class="las la-sync mr-1"></i> {{ translate("View More") }}');
+                        } else {
+                            btn.parent().remove(); // Remove button if no more products
+                        }
+                    },
+                    error: function() {
+                        btn.prop('disabled', false).html('<i class="las la-sync mr-1"></i> {{ translate("View More") }}');
+                        alert('Something went wrong, please try again.');
+                    }
+                });
+            });
+        });
     </script>
 @endsection
