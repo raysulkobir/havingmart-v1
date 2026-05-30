@@ -60,21 +60,23 @@
                     <h2 class="hm-section-title">{{ translate('Shop by Category') }}</h2>
                     <a href="{{ route('categories.all') }}" class="hm-view-all-btn">{{ translate('View All') }}</a>
                 </div>
-                <div class="hm-cat-scroll">
+                <div class="hm-cat-carousel owl-carousel owl-theme">
                     @foreach ($popularCategories as $category)
                         @if ($category != null)
-                            <a href="{{ route('products.category', $category->slug) }}" class="hm-cat-item">
-                                <div class="hm-cat-img-wrap">
-                                    <img
-                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                        data-src="{{ uploaded_asset($category->banner) }}"
-                                        alt="{{ $category->getTranslation('name') }}"
-                                        class="lazyload"
-                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                    >
-                                </div>
-                                <span class="hm-cat-name">{{ $category->getTranslation('name') }}</span>
-                            </a>
+                            <div class="item">
+                                <a href="{{ route('products.category', $category->slug) }}" class="hm-cat-item d-block">
+                                    <div class="hm-cat-img-wrap">
+                                        <img
+                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                            data-src="{{ uploaded_asset($category->banner) }}"
+                                            alt="{{ $category->getTranslation('name') }}"
+                                            class="lazyload"
+                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
+                                        >
+                                    </div>
+                                    <span class="hm-cat-name text-truncate d-block text-center" style="max-width: 100%;">{{ $category->getTranslation('name') }}</span>
+                                </a>
+                            </div>
                         @endif
                     @endforeach
                 </div>
@@ -357,8 +359,26 @@
 
 @section('script')
     <script>
-        // No owl carousel needed — pure CSS grid for speed
         $(document).ready(function() {
+            // Category Slider
+            $('.hm-cat-carousel').owlCarousel({
+                loop: true,
+                margin: 15,
+                nav: false,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                smartSpeed: 600,
+                responsive: {
+                    0: { items: 2, margin: 10 },
+                    480: { items: 3, margin: 10 },
+                    768: { items: 5, margin: 12 },
+                    992: { items: 6, margin: 15 },
+                    1200: { items: 8, margin: 15 }
+                }
+            });
+
             $('#btn-load-more-trending').on('click', function() {
                 var btn = $(this);
                 var page = btn.data('page');
