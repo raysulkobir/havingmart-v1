@@ -32,7 +32,7 @@
                             <select class="form-control aiz-selectpicker" data-live-search="true" name="user_phones[]" multiple>
                                 @foreach($users as $user)
                                     @if ($user->phone != null)
-                                        <option value="{{$user->phone}}">{{$user->name}} - {{$user->phone}}</option>
+                                        <option value="{{$user->phone}}">{{$user->name}} - {{$user->phone}} - {{$user->id}}</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -48,13 +48,14 @@
                     <div class="form-group row">
                         <label class="col-sm-2 control-label" for="name">{{translate('SMS content')}}</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="content" required></textarea>
+                            <textarea class="form-control" name="content" required>🎁 ঈদ Giveaway! জিতুন পুরস্কার 
+👉 https://go.havingmart.com/t/Ng3N</textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label">{{translate('Template ID')}}</label>
                         <div class="col-md-10">
-                            <input type="text" name="template_id"  class="form-control" placeholder="{{translate('Template Id')}}">
+                            <input type="text" name="template_id" value="1"  class="form-control" placeholder="{{translate('Template Id')}}">
                             <small class="form-text text-danger">{{ ('**N.B : Template ID is Required Only for Fast2SMS DLT Manual **') }}</small>
                         </div>
                     </div>
