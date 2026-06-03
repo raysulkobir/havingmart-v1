@@ -211,13 +211,12 @@
                         </div>
                     @endforeach
                 </div>
-                @if($has_more_trending)
-                    <div class="text-center mt-4">
-                        <button type="button" class="btn btn-primary px-4 py-2" id="btn-load-more-trending" data-page="2">
-                            <i class="las la-sync mr-1"></i> {{ translate('View More') }}
-                        </button>
+                <div id="trending-loader" class="text-center mt-4 py-3 d-none" data-page="2" data-loading="false" data-has-more="{{ $has_more_trending ? 'true' : 'false' }}">
+                    <div class="d-inline-flex align-items-center justify-content-center text-primary">
+                        <i class="las la-spinner la-spin fs-24 mr-2"></i>
+                        <span class="fw-600">{{ translate('Loading more products...') }}</span>
                     </div>
-                @endif
+                </div>
             </div>
         </div>
     </section>
@@ -379,10 +378,27 @@
                 }
             });
 
-            $('#btn-load-more-trending').on('click', function() {
-                var btn = $(this);
-                var page = btn.data('page');
-                btn.prop('disabled', true).html('<i class="las la-spinner la-spin mr-1"></i> Loading...');
+            // Infinite Scroll for Trending Products
+            $(window).on('scroll', function() {
+                var loader = $('#trending-loader');
+                var grid = $('#trending-products-grid');
+                if (loader.length === 0 || grid.length === 0 || loader.attr('data-has-more') === 'false' || loader.attr('data-loading') === 'true') {
+                    return;
+                }
+                
+                var bottomOfGrid = grid.offset().top + grid.outerHeight();
+                var bottomOfWindow = $(window).scrollTop() + $(window).height();
+                
+                if (bottomOfWindow > bottomOfGrid - 100) {
+                    loadMoreTrending();
+                }
+            });
+
+            function loadMoreTrending() {
+                var loader = $('#trending-loader');
+                var page = parseInt(loader.attr('data-page'));
+                
+                loader.attr('data-loading', 'true').removeClass('d-none');
                 
                 $.ajax({
                     url: "{{ route('home.section.trending') }}",
@@ -400,21 +416,20 @@
                                 AIZ.plugins.lazyLoader();
                             }
                             
-                            btn.data('page', page + 1);
+                            loader.attr('data-page', page + 1);
                         }
                         
-                        if (response.has_more) {
-                            btn.prop('disabled', false).html('<i class="las la-sync mr-1"></i> {{ translate("View More") }}');
-                        } else {
-                            btn.parent().remove(); // Remove button if no more products
+                        loader.attr('data-loading', 'false');
+                        if (!response.has_more) {
+                            loader.attr('data-has-more', 'false');
                         }
+                        loader.addClass('d-none');
                     },
                     error: function() {
-                        btn.prop('disabled', false).html('<i class="las la-sync mr-1"></i> {{ translate("View More") }}');
-                        alert('Something went wrong, please try again.');
+                        loader.attr('data-loading', 'false').addClass('d-none');
                     }
                 });
-            });
+            }
         });
     </script>
 @endsection
