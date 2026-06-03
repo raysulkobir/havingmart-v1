@@ -60,21 +60,23 @@
                     <h2 class="hm-section-title">{{ translate('Shop by Category') }}</h2>
                     <a href="{{ route('categories.all') }}" class="hm-view-all-btn">{{ translate('View All') }}</a>
                 </div>
-                <div class="hm-cat-scroll">
+                <div class="hm-cat-carousel owl-carousel owl-theme">
                     @foreach ($popularCategories as $category)
                         @if ($category != null)
-                            <a href="{{ route('products.category', $category->slug) }}" class="hm-cat-item">
-                                <div class="hm-cat-img-wrap">
-                                    <img
-                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                        data-src="{{ uploaded_asset($category->banner) }}"
-                                        alt="{{ $category->getTranslation('name') }}"
-                                        class="lazyload"
-                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                    >
-                                </div>
-                                <span class="hm-cat-name">{{ $category->getTranslation('name') }}</span>
-                            </a>
+                            <div class="item">
+                                <a href="{{ route('products.category', $category->slug) }}" class="hm-cat-item d-block">
+                                    <div class="hm-cat-img-wrap">
+                                        <img
+                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                            data-src="{{ uploaded_asset($category->banner) }}"
+                                            alt="{{ $category->getTranslation('name') }}"
+                                            class="lazyload"
+                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
+                                        >
+                                    </div>
+                                    <span class="hm-cat-name text-truncate d-block text-center" style="max-width: 100%;">{{ $category->getTranslation('name') }}</span>
+                                </a>
+                            </div>
                         @endif
                     @endforeach
                 </div>
@@ -209,13 +211,12 @@
                         </div>
                     @endforeach
                 </div>
-                @if($has_more_trending)
-                    <div class="text-center mt-4">
-                        <button type="button" class="btn btn-primary px-4 py-2" id="btn-load-more-trending" data-page="2">
-                            <i class="las la-sync mr-1"></i> {{ translate('View More') }}
-                        </button>
+                <div id="trending-loader" class="text-center mt-4 py-3 d-none" data-page="2" data-loading="false" data-has-more="{{ $has_more_trending ? 'true' : 'false' }}">
+                    <div class="d-inline-flex align-items-center justify-content-center text-primary">
+                        <i class="las la-spinner la-spin fs-24 mr-2"></i>
+                        <span class="fw-600">{{ translate('Loading more products...') }}</span>
                     </div>
-                @endif
+                </div>
             </div>
         </div>
     </section>
@@ -357,12 +358,47 @@
 
 @section('script')
     <script>
-        // No owl carousel needed — pure CSS grid for speed
         $(document).ready(function() {
-            $('#btn-load-more-trending').on('click', function() {
-                var btn = $(this);
-                var page = btn.data('page');
-                btn.prop('disabled', true).html('<i class="las la-spinner la-spin mr-1"></i> Loading...');
+            // Category Slider
+            $('.hm-cat-carousel').owlCarousel({
+                loop: true,
+                margin: 15,
+                nav: false,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                smartSpeed: 600,
+                responsive: {
+                    0: { items: 2, margin: 10 },
+                    480: { items: 3, margin: 10 },
+                    768: { items: 5, margin: 12 },
+                    992: { items: 6, margin: 15 },
+                    1200: { items: 8, margin: 15 }
+                }
+            });
+
+            // Infinite Scroll for Trending Products
+            $(window).on('scroll', function() {
+                var loader = $('#trending-loader');
+                var grid = $('#trending-products-grid');
+                if (loader.length === 0 || grid.length === 0 || loader.attr('data-has-more') === 'false' || loader.attr('data-loading') === 'true') {
+                    return;
+                }
+                
+                var bottomOfGrid = grid.offset().top + grid.outerHeight();
+                var bottomOfWindow = $(window).scrollTop() + $(window).height();
+                
+                if (bottomOfWindow > bottomOfGrid - 100) {
+                    loadMoreTrending();
+                }
+            });
+
+            function loadMoreTrending() {
+                var loader = $('#trending-loader');
+                var page = parseInt(loader.attr('data-page'));
+                
+                loader.attr('data-loading', 'true').removeClass('d-none');
                 
                 $.ajax({
                     url: "{{ route('home.section.trending') }}",
@@ -380,21 +416,20 @@
                                 AIZ.plugins.lazyLoader();
                             }
                             
-                            btn.data('page', page + 1);
+                            loader.attr('data-page', page + 1);
                         }
                         
-                        if (response.has_more) {
-                            btn.prop('disabled', false).html('<i class="las la-sync mr-1"></i> {{ translate("View More") }}');
-                        } else {
-                            btn.parent().remove(); // Remove button if no more products
+                        loader.attr('data-loading', 'false');
+                        if (!response.has_more) {
+                            loader.attr('data-has-more', 'false');
                         }
+                        loader.addClass('d-none');
                     },
                     error: function() {
-                        btn.prop('disabled', false).html('<i class="las la-sync mr-1"></i> {{ translate("View More") }}');
-                        alert('Something went wrong, please try again.');
+                        loader.attr('data-loading', 'false').addClass('d-none');
                     }
                 });
-            });
+            }
         });
     </script>
 @endsection
