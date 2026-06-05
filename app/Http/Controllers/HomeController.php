@@ -372,31 +372,40 @@ class HomeController extends Controller
     public function load_trending_products(Request $request)
     {
         $page = $request->input('page', 2);
-        $limit = 12;
-        $offset = ($page - 1) * $limit;
-        $eagerRelations = ['product_translations', 'taxes', 'stocks', 'brand', 'category', 'user'];
+        $cacheKey = 'trending_products_ajax_page_' . $page;
 
-        $trending_products = filter_products(\App\Models\Product::where('published', 1))
-            ->with($eagerRelations)
-            ->orderBy('product_view_count', 'desc')
-            ->offset($offset)
-            ->limit($limit)
-            ->get();
+        // Cache the result for 10 minutes to protect the database from parallel load
+        $data = \Illuminate\Support\Facades\Cache::remember($cacheKey, 600, function() use ($page) {
+            $limit = 12;
+            $offset = ($page - 1) * $limit;
+            $eagerRelations = ['product_translations', 'taxes', 'stocks', 'brand', 'category', 'user'];
 
-        $total_trending = filter_products(\App\Models\Product::where('published', 1))->count();
-        $has_more = ($offset + $limit) < $total_trending;
+            $trending_products = filter_products(\App\Models\Product::where('published', 1))
+                ->with($eagerRelations)
+                ->orderBy('product_view_count', 'desc')
+                ->offset($offset)
+                ->limit($limit + 1)
+                ->get();
 
-        $html = '';
-        foreach ($trending_products as $product) {
-            $html .= '<div class="hm-product-col">';
-            $html .= view('frontend.partials.product_box_1', compact('product'))->render();
-            $html .= '</div>';
-        }
+            $has_more = $trending_products->count() > $limit;
+            if ($has_more) {
+                $trending_products = $trending_products->take($limit);
+            }
 
-        return response()->json([
-            'html' => $html,
-            'has_more' => $has_more
-        ]);
+            $html = '';
+            foreach ($trending_products as $product) {
+                $html .= '<div class="hm-product-col">';
+                $html .= view('frontend.partials.product_box_1', compact('product'))->render();
+                $html .= '</div>';
+            }
+
+            return [
+                'html' => $html,
+                'has_more' => $has_more
+            ];
+        });
+
+        return response()->json($data);
     }
 
     public function load_auction_products_section()
