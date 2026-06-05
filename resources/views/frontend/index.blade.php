@@ -196,32 +196,6 @@
     </section>
     @endif
 
-    {{-- Trending Products --}}
-    @if (count(@$trending_products) > 0)
-    <section class="mb-4">
-        <div class="container">
-            <div class="hm-section-card">
-                <div class="hm-section-header">
-                    <h2 class="hm-section-title">{{ translate('Trending Products') }}</h2>
-                </div>
-                <div class="hm-product-grid" id="trending-products-grid">
-                    @foreach ($trending_products as $product)
-                        <div class="hm-product-col">
-                            @include('frontend.partials.product_box_1', ['product' => $product])
-                        </div>
-                    @endforeach
-                </div>
-                <div id="trending-loader" class="text-center mt-4 py-3 d-none" data-page="2" data-loading="false" data-has-more="{{ $has_more_trending ? 'true' : 'false' }}">
-                    <div class="d-inline-flex align-items-center justify-content-center text-primary">
-                        <i class="las la-spinner la-spin fs-24 mr-2"></i>
-                        <span class="fw-600">{{ translate('Loading more products...') }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    @endif
-
     {{-- Banner Section 2 --}}
     @if (get_setting('home_banner2_images') != null)
     <div class="mb-4">
@@ -324,6 +298,32 @@
     </section>
     @endif
 
+    {{-- Trending Products --}}
+    @if (count(@$trending_products) > 0)
+    <section class="mb-4">
+        <div class="container">
+            <div class="hm-section-card">
+                <div class="hm-section-header">
+                    <h2 class="hm-section-title">{{ translate('Trending Products') }}</h2>
+                </div>
+                <div class="hm-product-grid" id="trending-products-grid">
+                    @foreach ($trending_products as $product)
+                        <div class="hm-product-col">
+                            @include('frontend.partials.product_box_1', ['product' => $product])
+                        </div>
+                    @endforeach
+                </div>
+                <div id="trending-loader" class="text-center mt-4 py-3 d-none" data-page="2" data-loading="false" data-has-more="{{ $has_more_trending ? 'true' : 'false' }}">
+                    <div class="d-inline-flex align-items-center justify-content-center text-primary">
+                        <i class="las la-spinner la-spin fs-24 mr-2"></i>
+                        <span class="fw-600">{{ translate('Loading more products...') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif
+
     {{-- Shop By Brands --}}
     @if (get_setting('top10_brands') != null && count($topBrands) > 0)
     <section class="mb-4">
@@ -379,10 +379,11 @@
             });
 
             // Infinite Scroll for Trending Products
+            var isTrendingLoading = false;
             $(window).on('scroll', function() {
                 var loader = $('#trending-loader');
                 var grid = $('#trending-products-grid');
-                if (loader.length === 0 || grid.length === 0 || loader.attr('data-has-more') === 'false' || loader.attr('data-loading') === 'true') {
+                if (loader.length === 0 || grid.length === 0 || loader.attr('data-has-more') === 'false' || isTrendingLoading) {
                     return;
                 }
                 
@@ -390,6 +391,7 @@
                 var bottomOfWindow = $(window).scrollTop() + $(window).height();
                 
                 if (bottomOfWindow > bottomOfGrid - 100) {
+                    isTrendingLoading = true;
                     loadMoreTrending();
                 }
             });
@@ -398,7 +400,7 @@
                 var loader = $('#trending-loader');
                 var page = parseInt(loader.attr('data-page'));
                 
-                loader.attr('data-loading', 'true').removeClass('d-none');
+                loader.removeClass('d-none');
                 
                 $.ajax({
                     url: "{{ route('home.section.trending') }}",
@@ -419,14 +421,15 @@
                             loader.attr('data-page', page + 1);
                         }
                         
-                        loader.attr('data-loading', 'false');
+                        isTrendingLoading = false;
                         if (!response.has_more) {
                             loader.attr('data-has-more', 'false');
                         }
                         loader.addClass('d-none');
                     },
                     error: function() {
-                        loader.attr('data-loading', 'false').addClass('d-none');
+                        isTrendingLoading = false;
+                        loader.addClass('d-none');
                     }
                 });
             }
