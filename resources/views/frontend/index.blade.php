@@ -313,12 +313,13 @@
                         </div>
                     @endforeach
                 </div>
-                <div id="trending-loader" class="text-center mt-4 py-3 d-none" data-page="2" data-loading="false" data-has-more="{{ $has_more_trending ? 'true' : 'false' }}">
-                    <div class="d-inline-flex align-items-center justify-content-center text-primary">
-                        <i class="las la-spinner la-spin fs-24 mr-2"></i>
-                        <span class="fw-600">{{ translate('Loading more products...') }}</span>
+                @if($has_more_trending)
+                    <div class="text-center mt-4" id="trending-btn-wrap">
+                        <button type="button" class="btn btn-primary px-4 py-2" id="btn-load-more-trending" data-page="2">
+                            <i class="las la-sync mr-1"></i> {{ translate('View More') }}
+                        </button>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </section>
@@ -378,29 +379,15 @@
                 }
             });
 
-            // Infinite Scroll for Trending Products
-            var isTrendingLoading = false;
-            $(window).on('scroll', function() {
-                var loader = $('#trending-loader');
-                var grid = $('#trending-products-grid');
-                if (loader.length === 0 || grid.length === 0 || loader.attr('data-has-more') === 'false' || isTrendingLoading) {
-                    return;
-                }
+            // View More Button for Trending Products
+            $(document).on('click', '#btn-load-more-trending', function(e) {
+                e.preventDefault();
+                var btn = $(this);
+                var page = parseInt(btn.attr('data-page'));
                 
-                var bottomOfGrid = grid.offset().top + grid.outerHeight();
-                var bottomOfWindow = $(window).scrollTop() + $(window).height();
-                
-                if (bottomOfWindow > bottomOfGrid - 100) {
-                    isTrendingLoading = true;
-                    loadMoreTrending();
-                }
-            });
-
-            function loadMoreTrending() {
-                var loader = $('#trending-loader');
-                var page = parseInt(loader.attr('data-page'));
-                
-                loader.removeClass('d-none');
+                // Prevent multiple clicks while loading
+                if (btn.prop('disabled')) return;
+                btn.prop('disabled', true).html('<i class="las la-spinner la-spin mr-1"></i> Loading...');
                 
                 $.ajax({
                     url: "{{ route('home.section.trending') }}",
@@ -418,21 +405,19 @@
                                 AIZ.plugins.lazyLoader();
                             }
                             
-                            loader.attr('data-page', page + 1);
+                            btn.attr('data-page', page + 1);
                         }
                         
-                        isTrendingLoading = false;
+                        btn.prop('disabled', false).html('<i class="las la-sync mr-1"></i> {{ translate('View More') }}');
                         if (!response.has_more) {
-                            loader.attr('data-has-more', 'false');
+                            $('#trending-btn-wrap').remove();
                         }
-                        loader.addClass('d-none');
                     },
                     error: function() {
-                        isTrendingLoading = false;
-                        loader.addClass('d-none');
+                        btn.prop('disabled', false).html('<i class="las la-sync mr-1"></i> {{ translate('Try Again') }}');
                     }
                 });
-            }
+            });
         });
     </script>
 @endsection

@@ -240,9 +240,13 @@
         $(document).ready(function() {
             $('.category-nav-element').each(function(i, el) {
                 $(el).on('mouseover', function(){
-                    if(!$(el).find('.sub-cat-menu').hasClass('loaded')){
+                    var subMenu = $(el).find('.sub-cat-menu');
+                    if(subMenu.length > 0 && !subMenu.hasClass('loaded') && !subMenu.hasClass('loading')){
+                        subMenu.addClass('loading');
                         $.post('{{ route('category.elements') }}', {_token: AIZ.data.csrf, id:$(el).data('id')}, function(data){
-                            $(el).find('.sub-cat-menu').addClass('loaded').html(data);
+                            subMenu.removeClass('loading').addClass('loaded').html(data);
+                        }).fail(function() {
+                            subMenu.removeClass('loading');
                         });
                     }
                 });
