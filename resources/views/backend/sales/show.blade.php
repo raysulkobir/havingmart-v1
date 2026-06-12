@@ -112,10 +112,10 @@
                     @else
                         <address>
                             <strong class="text-main">
-                                {{ $order->user->name }}
+                                {{ $order->user->name ?? '' }}
                             </strong><br>
-                            {{ $order->user->email }}<br>
-                            {{ $order->user->phone }}<br>
+                            {{ $order->user->email ?? '' }}<br>
+                            {{ $order->user->phone ?? '' }}<br>
                         </address>
                     @endif
                     @if ($order->manual_payment && is_array(json_decode($order->manual_payment_data, true)))
