@@ -22,7 +22,7 @@ class BusinessSettingsController extends Controller
         $this->middleware(['permission:social_media_logins'])->only('social_login');
         $this->middleware(['permission:facebook_chat'])->only('facebook_chat');
         $this->middleware(['permission:facebook_comment'])->only('facebook_comment');
-        $this->middleware(['permission:analytics_tools_configuration'])->only('google_analytics');
+        $this->middleware(['permission:analytics_tools_configuration'])->only('google_analytics', 'google_analytics_update', 'google_tag_manager_update');
         $this->middleware(['permission:google_recaptcha_configuration'])->only('google_recaptcha');
         $this->middleware(['permission:google_map_setting'])->only('google_map');
         $this->middleware(['permission:google_firebase_setting'])->only('google_firebase');
@@ -161,6 +161,31 @@ class BusinessSettingsController extends Controller
             $business_settings->value = 0;
             $business_settings->save();
         }
+
+        Artisan::call('cache:clear');
+
+        flash(translate("Settings updated successfully"))->success();
+        return back();
+    }
+
+    public function google_tag_manager_update(Request $request)
+    {
+        foreach ($request->types as $key => $type) {
+            $this->overWriteEnvFile($type, $request[$type]);
+        }
+
+        $business_settings = BusinessSetting::where('type', 'google_tag_manager')->first();
+        if ($business_settings == null) {
+            $business_settings = new BusinessSetting;
+            $business_settings->type = 'google_tag_manager';
+        }
+
+        if ($request->has('google_tag_manager')) {
+            $business_settings->value = 1;
+        } else {
+            $business_settings->value = 0;
+        }
+        $business_settings->save();
 
         Artisan::call('cache:clear');
 
