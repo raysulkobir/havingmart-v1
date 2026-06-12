@@ -15,6 +15,7 @@ use App\Models\Coupon;
 use App\Models\User;
 use App\Models\CombinedOrder;
 use App\Models\SmsTemplate;
+use App\Models\OrderNote;
 use Auth;
 use Mail;
 use App\Mail\InvoiceEmailManager;
@@ -32,7 +33,7 @@ class OrderController extends Controller
         $this->middleware(['permission:view_inhouse_orders'])->only('all_orders');
         $this->middleware(['permission:view_seller_orders'])->only('all_orders');
         $this->middleware(['permission:view_pickup_point_orders'])->only('all_orders');
-        $this->middleware(['permission:view_order_details'])->only('show');
+        $this->middleware(['permission:view_order_details'])->only('show', 'edit', 'update');
         $this->middleware(['permission:delete_order'])->only('destroy');
     }
     
@@ -290,7 +291,8 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::findOrFail(decrypt($id));
+        return view('backend.sales.edit', compact('order'));
     }
 
     /**
@@ -302,7 +304,52 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        if ($request->has('name')) {
+            $shippingAddress = json_decode($order->shipping_address, true) ?? [];
+            $shippingAddress['name'] = $request->name;
+            $shippingAddress['phone'] = $request->phone;
+            $shippingAddress['address'] = $request->address;
+            $shippingAddress['state'] = $request->state;
+            $shippingAddress['city'] = $request->city;
+            $shippingAddress['postal_code'] = $request->postal_code;
+            $order->shipping_address = json_encode($shippingAddress);
+        }
+
+        if ($request->has('tracking_code')) {
+            $order->tracking_code = $request->tracking_code;
+        }
+
+        $order->save();
+
+        if ($request->has('delivery_status') && $request->delivery_status != $order->delivery_status) {
+            $subRequest = new Request([
+                'order_id' => $order->id,
+                'status' => $request->delivery_status
+            ]);
+            $this->update_delivery_status($subRequest);
+        }
+
+        if ($request->has('payment_status') && $request->payment_status != $order->payment_status) {
+            $subRequest = new Request([
+                'order_id' => $order->id,
+                'status' => $request->payment_status
+            ]);
+            $this->update_payment_status($subRequest);
+        }
+
+        if ($request->has('note') && !empty($request->note)) {
+            $orderNote = new OrderNote();
+            $orderNote->order_id = $order->id;
+            $orderNote->user_id = Auth::user()->id;
+            $orderNote->note = $request->note;
+            $orderNote->save();
+        }
+
+        flash(translate('Order has been updated successfully'))->success();
+
+        return back();
     }
 
     /**

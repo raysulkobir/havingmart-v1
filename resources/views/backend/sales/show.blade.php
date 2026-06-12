@@ -323,6 +323,44 @@
 
         </div>
     </div>
+
+    <!-- Order Notes Card -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0 h6">{{ translate('Order Notes Log (Multiple)') }}</h5>
+        </div>
+        <div class="card-body">
+            @if($order->notes->count() > 0)
+                <div class="border rounded p-3 mb-4 bg-light" style="max-height: 300px; overflow-y: auto;">
+                    @foreach($order->notes as $note)
+                        <div class="p-3 mb-2 rounded bg-white border">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="font-weight-bold text-dark">{{ optional($note->user)->name ?? translate('System / Unknown') }}</span>
+                                <small class="text-muted">{{ $note->created_at->format('d-m-Y h:i A') }}</small>
+                            </div>
+                            <div class="text-secondary" style="white-space: pre-wrap;">{{ $note->note }}</div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center py-4 border rounded bg-light mb-4">
+                    <p class="text-muted mb-0">{{ translate('No notes added to this order yet.') }}</p>
+                </div>
+            @endif
+
+            <form action="{{ route('orders.update', $order->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="form-group">
+                    <label for="note">{{ translate('Add New Note') }}</label>
+                    <textarea id="note" name="note" class="form-control" rows="3" placeholder="{{ translate('Type a note to append to this order...') }}" required></textarea>
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">{{ translate('Add Note') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('script')
