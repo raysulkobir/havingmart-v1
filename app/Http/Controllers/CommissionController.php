@@ -101,11 +101,11 @@ class CommissionController extends Controller
                 if(get_setting('vendor_commission_activation')){
                     if (get_setting('category_wise_commission')) {
                         $commission_percentage = $orderDetail->product->category->commision_rate;
-                    } else if ($orderDetail->product->user->user_type == 'seller') {
+                    } else if ($orderDetail->product->user != null && $orderDetail->product->user->user_type == 'seller') {
                         $commission_percentage = get_setting('vendor_commission');
                     }
                 }
-                if ($orderDetail->product->user->user_type == 'seller') {
+                if ($orderDetail->product->user != null && $orderDetail->product->user->user_type == 'seller') {
                     $seller = $orderDetail->product->user->shop;
                     $admin_commission = ($orderDetail->price * $commission_percentage) / 100;
 
@@ -139,12 +139,12 @@ class CommissionController extends Controller
                 if(get_setting('vendor_commission_activation')){
                     if (get_setting('category_wise_commission')) {
                         $commission_percentage = $orderDetail->product->category->commision_rate;
-                    } else if ($orderDetail->product->user->user_type == 'seller') {
+                    } else if ($orderDetail->product->user != null && $orderDetail->product->user->user_type == 'seller') {
                         $commission_percentage = get_setting('vendor_commission');
                     }
                 }
 
-                if ($orderDetail->product->user->user_type == 'seller') {
+                if ($orderDetail->product->user != null && $orderDetail->product->user->user_type == 'seller') {
                     $seller = $orderDetail->product->user->shop;
                     $admin_commission = ($orderDetail->price * $commission_percentage)/100;
 
@@ -167,7 +167,7 @@ class CommissionController extends Controller
                     $commission_history->save();
                 }
             }
-            if($order->shop != null){
+            if($order->shop != null && isset($seller)){
                 $seller->admin_to_pay -= $order->coupon_discount;
                 $seller->save();
             }

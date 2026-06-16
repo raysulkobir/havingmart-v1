@@ -119,7 +119,10 @@ if (!function_exists('filter_products')) {
 if (!function_exists('get_cached_products')) {
     function get_cached_products($category_id = null)
     {
-        $products = \App\Models\Product::where('published', 1)->where('category_by_featured', '1')->where('auction_product', 0);
+        $products = \App\Models\Product::where('published', 1)
+            ->where('category_by_featured', '1')
+            ->where('auction_product', 0)
+            ->with(['product_translations', 'taxes', 'stocks', 'brand', 'category', 'user']);
         $verified_sellers = verified_sellers_id();
         if (get_setting('vendor_system_activation') == 1) {
             $products = $products->where(function ($p) use ($verified_sellers) {
