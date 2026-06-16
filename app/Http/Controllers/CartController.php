@@ -248,6 +248,7 @@ class CartController extends Controller
                 'cart_count' => count($carts),
                 'modal_view' => view('frontend.partials.addedToCart', compact('product', 'data'))->render(),
                 'nav_cart_view' => view('frontend.partials.cart')->render(),
+                'gtm' => $this->gtmAddToCartData($product, $price, $tax, $data['quantity'], $str),
             );
         }
         else{
@@ -285,14 +286,42 @@ class CartController extends Controller
                 'cart_count' => count($carts),
                 'modal_view' => view('frontend.partials.addedToCart', compact('product', 'data'))->render(),
                 'nav_cart_view' => view('frontend.partials.cart')->render(),
+                'gtm' => $this->gtmAddToCartData($product, $price, $tax, $data['quantity'], ''),
             );
         }
+    }
+
+    private function gtmAddToCartData($product, $price, $tax, $quantity, $variant = '')
+    {
+        $product->loadMissing('category');
+        $unit_price = round(convert_price($price + $tax), 2);
+        $qty = (int) $quantity;
+
+        return [
+            'currency' => Session::has('currency_code') ? Session::get('currency_code') : get_system_default_currency()->code,
+            'value' => round($unit_price * $qty, 2),
+            'items' => [[
+                'item_id' => (string) $product->id,
+                'item_name' => $product->getTranslation('name'),
+                'item_category' => optional($product->category)->getTranslation('name') ?? '',
+                'price' => $unit_price,
+                'quantity' => $qty,
+                'variant' => $variant,
+                'short_description' => \Illuminate\Support\Str::limit(strip_tags($product->meta_description ?? ''), 150),
+            ]],
+        ];
     }
 
     //removes from Cart
     public function removeFromCart(Request $request)
     {
-        Cart::destroy($request->id);
+        $cartItem = Cart::find($request->id);
+        $gtm = null;
+
+        if ($cartItem) {
+            $gtm = $this->gtmRemoveFromCartData($cartItem);
+            Cart::destroy($request->id);
+        }
         
         if(auth()->user() != null) {
             $user_id = Auth::user()->id;
@@ -314,7 +343,33 @@ class CartController extends Controller
             'cart_total' => single_price($total),
             'cart_view' => view('frontend.partials.cart_details', compact('carts'))->render(),
             'nav_cart_view' => view('frontend.partials.cart')->render(),
+            'gtm' => $gtm,
         );
+    }
+
+    private function gtmRemoveFromCartData($cartItem)
+    {
+        $product = Product::with('category')->find($cartItem->product_id);
+        if (!$product) {
+            return null;
+        }
+
+        $unit_price = round(convert_price($cartItem->price + $cartItem->tax), 2);
+        $qty = (int) $cartItem->quantity;
+
+        return [
+            'currency' => Session::has('currency_code') ? Session::get('currency_code') : get_system_default_currency()->code,
+            'value' => round($unit_price * $qty, 2),
+            'items' => [[
+                'item_id' => (string) $product->id,
+                'item_name' => $product->getTranslation('name'),
+                'item_category' => optional($product->category)->getTranslation('name') ?? '',
+                'price' => $unit_price,
+                'quantity' => $qty,
+                'variant' => $cartItem->variation ?? '',
+                'short_description' => \Illuminate\Support\Str::limit(strip_tags($product->meta_description ?? ''), 150),
+            ]],
+        ];
     }
 
     //updated the quantity for a cart item

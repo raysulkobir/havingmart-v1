@@ -474,6 +474,51 @@ document.getElementById('express-checkout-form').addEventListener('submit', func
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="las la-spinner la-spin mr-2"></i>Processing...';
 });
+
+@php
+    $ga_currency = Session::has('currency_code') ? Session::get('currency_code') : get_system_default_currency()->code;
+    $ga_affiliation = get_setting('website_name') ?: get_setting('meta_title');
+    $ga_checkout_value = 0;
+    $ga_checkout_items = [];
+
+    foreach ($carts as $cartItem) {
+        $product = \App\Models\Product::with('category')->find($cartItem['product_id']);
+        if (!$product) {
+            continue;
+        }
+
+        $unit_price = round(convert_price(cart_product_price($cartItem, $product, false, true)), 2);
+        $qty = (int) $cartItem['quantity'];
+        $ga_checkout_value += $unit_price * $qty;
+
+        $item_name = $product->getTranslation('name');
+        if (!empty($cartItem['variation'])) {
+            $item_name .= ' - ' . $cartItem['variation'];
+        }
+
+        $ga_checkout_items[] = [
+            'item_id' => (string) $product->id,
+            'item_name' => $item_name,
+            'item_category' => optional($product->category)->getTranslation('name') ?? '',
+            'affiliation' => $ga_affiliation,
+            'price' => $unit_price,
+            'quantity' => $qty,
+            'variant' => $cartItem['variation'] ?? '',
+            'short_description' => \Illuminate\Support\Str::limit(strip_tags($product->meta_description ?? ''), 150),
+        ];
+    }
+    $ga_checkout_value = round($ga_checkout_value, 2);
+@endphp
+
+window.dataLayer = window.dataLayer || [];
+dataLayer.push({
+    event: 'begin_checkout',
+    ecommerce: {
+        currency: @json($ga_currency),
+        value: {{ $ga_checkout_value }},
+        items: @json($ga_checkout_items)
+    }
+});
 </script>
 @endsection
 
