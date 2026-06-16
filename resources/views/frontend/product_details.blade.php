@@ -1014,5 +1014,34 @@
                 alert('Something went worng! Questions could not be loaded.');
             });
         }
-    </script>
+
+
+    @php
+        $ga_price_raw = (double) trim(explode('-', home_discounted_price($detailedProduct, false))[0]);
+        $ga_price = round(convert_price($ga_price_raw), 2);
+        $ga_currency = Session::has('currency_code') ? Session::get('currency_code') : get_system_default_currency()->code;
+        $ga_category = optional($detailedProduct->category)->getTranslation('name') ?? '';
+        $ga_variant = optional($detailedProduct->stocks->first())->variant ?? '';
+        $ga_quantity = max(1, (int) $detailedProduct->min_qty);
+        $ga_short_description = Str::limit(strip_tags($detailedProduct->meta_description ?? ''), 150);
+    @endphp
+
+    window.dataLayer = window.dataLayer || [];
+    dataLayer.push({
+        event: "view_item",
+        ecommerce: {
+            currency: @json($ga_currency),
+            value: {{ $ga_price }},
+            items: [{
+                item_id: @json((string) $detailedProduct->id),
+                item_name: @json($detailedProduct->getTranslation('name')),
+                item_category: @json($ga_category),
+                price: {{ $ga_price }},
+                quantity: {{ $ga_quantity }},
+                variant: @json($ga_variant),
+                short_description: @json($ga_short_description)
+            }]
+        }
+    });
+</script>
 @endsection
