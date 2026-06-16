@@ -55,4 +55,9 @@ class Order extends Model
     {
         return $this->hasMany(ProxyPayment::class)->select('reference_id');
     }
+
+    public function notes()
+    {
+        return $this->hasMany(OrderNote::class)->orderBy('created_at', 'desc');
+    }
 }

@@ -217,6 +217,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
         Route::post('/env_key_update', 'env_key_update')->name('env_key_update.update');
         Route::post('/payment_method_update', 'payment_method_update')->name('payment_method.update');
         Route::post('/google_analytics', 'google_analytics_update')->name('google_analytics.update');
+        Route::post('/google_tag_manager', 'google_tag_manager_update')->name('google_tag_manager.update');
         Route::post('/google_recaptcha', 'google_recaptcha_update')->name('google_recaptcha.update');
         Route::post('/google-map', 'google_map_update')->name('google-map.update');
         Route::post('/google-firebase', 'google_firebase_update')->name('google-firebase.update');

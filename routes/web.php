@@ -148,6 +148,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::post('/home/section/best_selling', 'load_best_selling_section')->name('home.section.best_selling');
     Route::post('/home/section/home_categories', 'load_home_categories_section')->name('home.section.home_categories');
     Route::post('/home/section/best_sellers', 'load_best_sellers_section')->name('home.section.best_sellers');
+    Route::post('/home/section/trending', 'load_trending_products')->name('home.section.trending');
 
     //category dropdown menu ajax call
     Route::post('/category/nav-element-list', 'get_category_items')->name('category.elements');
