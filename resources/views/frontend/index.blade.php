@@ -183,6 +183,138 @@
       </defs>
     </svg>
 
+    {{-- Shop By Concern Section --}}
+    <section class="mb-4">
+        <div class="container">
+            <div class="hm-section-card">
+                <div class="text-center mb-4">
+                    <h2 class="hm-concern-cats-title">
+                        {{ translate('Shop By Concern') }}
+                    </h2>
+                </div>
+                
+                <div class="row gutters-10 row-cols-2 row-cols-md-5">
+                    @php
+                        $concerns = [
+                            [
+                                'main_title' => 'Acne',
+                                'sub_title' => 'Treatment',
+                                'slug' => 'acne-treatment',
+                                'image' => static_asset('assets/img/home_concerns/acne.webp')
+                            ],
+                            [
+                                'main_title' => 'Anti Aging',
+                                'sub_title' => 'Treatment',
+                                'slug' => 'anti-aging-products',
+                                'image' => static_asset('assets/img/home_concerns/anti_aging.webp')
+                            ],
+                            [
+                                'main_title' => 'Dandruff',
+                                'sub_title' => 'Solution',
+                                'slug' => 'dandruff',
+                                'image' => static_asset('assets/img/home_concerns/dandruff.webp')
+                            ],
+                            [
+                                'main_title' => 'Dry Skin',
+                                'sub_title' => 'Treatment',
+                                'slug' => 'dry-skin',
+                                'image' => static_asset('assets/img/home_concerns/dry_skin.webp')
+                            ],
+                            [
+                                'main_title' => 'Hair Fall',
+                                'sub_title' => 'Treatment',
+                                'slug' => 'hair-fall',
+                                'image' => static_asset('assets/img/home_concerns/hair_fall.webp')
+                            ],
+                            [
+                                'main_title' => 'Oil Control',
+                                'sub_title' => 'Treatment',
+                                'slug' => 'oil-control-serum',
+                                'image' => static_asset('assets/img/home_concerns/oil_control.webp')
+                            ],
+                            [
+                                'main_title' => 'Pore',
+                                'sub_title' => 'Care',
+                                'slug' => 'pore-refining-serum',
+                                'image' => static_asset('assets/img/home_concerns/pore.webp')
+                            ],
+                            [
+                                'main_title' => 'Spot',
+                                'sub_title' => 'Treatment',
+                                'slug' => 'spot-treatment',
+                                'image' => static_asset('assets/img/home_concerns/spot.webp')
+                            ],
+                            [
+                                'main_title' => 'Hair Thinning',
+                                'sub_title' => 'Solution',
+                                'slug' => 'hair-thinning',
+                                'image' => static_asset('assets/img/home_concerns/hair_thinning.webp')
+                            ],
+                            [
+                                'main_title' => 'Sun Burn',
+                                'sub_title' => 'Treatment',
+                                'slug' => 'sunscreen',
+                                'image' => static_asset('assets/img/home_concerns/sun_burn.webp')
+                            ]
+                        ];
+                    @endphp
+                    
+                    @foreach($concerns as $concern)
+                        @php
+                            $db_cat = \App\Models\Category::where('slug', $concern['slug'])->where('status', 1)->first();
+                            $link = $db_cat ? route('products.category', $db_cat->slug) : route('search') . '?keyword=' . urlencode($concern['main_title'] . ' ' . $concern['sub_title']);
+                        @endphp
+                        <div class="col mb-3">
+                            <a href="{{ $link }}" class="hm-concern-card-wrap">
+                                <div class="hm-concern-card">
+                                    <div class="hm-concern-hexagon-border">
+                                        <div class="hm-concern-hexagon-wrap">
+                                            <img 
+                                                src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                data-src="{{ $concern['image'] }}" 
+                                                alt="{{ translate($concern['main_title']) }}"
+                                                class="hm-concern-img lazyload"
+                                                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="hm-concern-title-main">{{ translate($concern['main_title']) }}</div>
+                                    <div class="hm-concern-title-sub">{{ translate($concern['sub_title']) }}</div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Reusable SVG Clip-paths --}}
+    <svg style="position: absolute; width: 0; height: 0;" width="0" height="0">
+      <defs>
+        <clipPath id="wavy-card-clip" clipPathUnits="objectBoundingBox">
+          <path d="M 0.1 0 
+                   C 0.4 0.05, 0.6 0.05, 0.9 0 
+                   C 0.95 0, 1 0.05, 1 0.1 
+                   C 0.95 0.4, 0.95 0.6, 1 0.9 
+                   C 1 0.95, 0.95 1, 0.9 1 
+                   C 0.6 0.95, 0.4 0.95, 0.1 1 
+                   C 0.05 1, 0 0.95, 0 0.9 
+                   C 0.05 0.6, 0.05 0.4, 0 0.1 
+                   C 0 0.05, 0.05 0, 0.1 0 Z" />
+        </clipPath>
+        <clipPath id="rounded-hexagon-clip" clipPathUnits="objectBoundingBox">
+          <path d="M 0.5 0.02
+                   C 0.55 0.02, 0.93 0.22, 0.95 0.25
+                   C 0.98 0.28, 0.98 0.72, 0.95 0.75
+                   C 0.93 0.78, 0.55 0.98, 0.5 0.98
+                   C 0.45 0.98, 0.07 0.78, 0.05 0.75
+                   C 0.02 0.72, 0.02 0.28, 0.05 0.25
+                   C 0.07 0.22, 0.45 0.02, 0.5 0.02 Z" />
+        </clipPath>
+      </defs>
+    </svg>
+
     {{-- Flash Deal --}}
     @if(@$flash_deal != null && strtotime(date('Y-m-d H:i:s')) >= $flash_deal->start_date && strtotime(date('Y-m-d H:i:s')) <= $flash_deal->end_date)
     <section class="mb-4">
