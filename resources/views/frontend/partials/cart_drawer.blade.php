@@ -257,6 +257,10 @@ function removeFromDrawer(cartId) {
         },
         success: function(data) {
             if (data.status == 1) {
+                if (data.gtm) {
+                    pushRemoveFromCartEvent(data.gtm);
+                }
+
                 // Remove item with animation
                 $(cartItem).fadeOut(300, function() {
                     $(this).remove();

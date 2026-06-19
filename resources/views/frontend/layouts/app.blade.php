@@ -342,6 +342,9 @@
                 _token  : AIZ.data.csrf,
                 id      :  key
             }, function(data){
+                if (data.status == 1 && data.gtm) {
+                    pushRemoveFromCartEvent(data.gtm);
+                }
                 updateNavCart(data.nav_cart_view,data.cart_count);
                 $('#cart-summary').html(data.cart_view);
                 AIZ.plugins.notify('success', "{{ translate('Item has been removed from cart') }}");
@@ -389,6 +392,32 @@
                 AIZ.plugins.zoom();
                 AIZ.extra.plusMinus();
                 getVariantPrice();
+            });
+        }
+
+        function pushAddToCartEvent(gtm) {
+            if (!gtm) return;
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+                event: 'add_to_cart',
+                ecommerce: {
+                    currency: gtm.currency,
+                    value: parseFloat(gtm.value),
+                    items: gtm.items
+                }
+            });
+        }
+
+        function pushRemoveFromCartEvent(gtm) {
+            if (!gtm) return;
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+                event: 'remove_from_cart',
+                ecommerce: {
+                    currency: gtm.currency,
+                    value: parseFloat(gtm.value),
+                    items: gtm.items
+                }
             });
         }
 
@@ -462,6 +491,9 @@
                     url: '{{ route('cart.addToCart') }}',
                     data: $('#option-choice-form').serializeArray().concat([{name: 'buy_now', value: buyNow ? 1 : 0}]),
                     success: function(data){
+                       if (data.status == 1 && data.gtm) {
+                           pushAddToCartEvent(data.gtm);
+                       }
 
                        $('#addToCart-modal-body').html(null);
                        $('.c-preloader').hide();
@@ -498,6 +530,9 @@
                    data: $('#option-choice-form').serializeArray().concat([{name: 'buy_now', value: 1}]),
                    success: function(data){
                        if(data.status == 1){
+                            if (data.gtm) {
+                                pushAddToCartEvent(data.gtm);
+                            }
 
                             $('#addToCart-modal-body').html(data.modal_view);
                             updateNavCart(data.nav_cart_view,data.cart_count);
