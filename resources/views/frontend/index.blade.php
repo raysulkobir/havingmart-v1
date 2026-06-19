@@ -85,6 +85,104 @@
     </section>
     @endif
 
+    {{-- Shop Beauty Products By Category --}}
+    <section class="mb-4">
+        <div class="container">
+            <div class="hm-section-card">
+                <div class="text-center mb-4">
+                    <h2 class="hm-beauty-cats-title">
+                        {{ translate('Shop Beauty Products By Category') }}
+                    </h2>
+                </div>
+                
+                <div class="row gutters-10 row-cols-2 row-cols-md-4">
+                    @php
+                        $beauty_categories = [
+                            [
+                                'name' => 'Makeup',
+                                'slug' => 'makeup',
+                                'image' => static_asset('assets/img/home_categories/makeup.webp')
+                            ],
+                            [
+                                'name' => 'K-Beauty',
+                                'slug' => 'k-beauty',
+                                'image' => static_asset('assets/img/home_categories/k_beauty.webp')
+                            ],
+                            [
+                                'name' => 'Hair Care',
+                                'slug' => 'hair-care',
+                                'image' => static_asset('assets/img/home_categories/hair_care.webp')
+                            ],
+                            [
+                                'name' => 'Mom & Baby',
+                                'slug' => 'mom-baby',
+                                'image' => static_asset('assets/img/home_categories/mom_baby.webp')
+                            ],
+                            [
+                                'name' => 'Skin Care',
+                                'slug' => 'skincare',
+                                'image' => static_asset('assets/img/home_categories/skin_care.webp')
+                            ],
+                            [
+                                'name' => 'Accessories',
+                                'slug' => 'accessories',
+                                'image' => static_asset('assets/img/home_categories/accessories.webp')
+                            ],
+                            [
+                                'name' => 'Undergarments',
+                                'slug' => 'undergarments',
+                                'image' => static_asset('assets/img/home_categories/undergarments.webp')
+                            ],
+                            [
+                                'name' => 'Fragrance',
+                                'slug' => 'fragrance',
+                                'image' => static_asset('assets/img/home_categories/fragrance.webp')
+                            ]
+                        ];
+                    @endphp
+                    
+                    @foreach($beauty_categories as $b_cat)
+                        @php
+                            $db_cat = \App\Models\Category::where('slug', $b_cat['slug'])->where('status', 1)->first();
+                            $link = $db_cat ? route('products.category', $db_cat->slug) : route('search') . '?keyword=' . urlencode($b_cat['name']);
+                        @endphp
+                        <div class="col mb-3">
+                            <a href="{{ $link }}" class="hm-beauty-cat-card">
+                                <div class="hm-beauty-cat-text">{{ translate($b_cat['name']) }}</div>
+                                <div class="hm-beauty-cat-img-wrapper">
+                                    <img 
+                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                        data-src="{{ $b_cat['image'] }}" 
+                                        alt="{{ translate($b_cat['name']) }}"
+                                        class="hm-beauty-cat-img lazyload"
+                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
+                                    >
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Reusable SVG Clip-path for Wavy Categories --}}
+    <svg style="position: absolute; width: 0; height: 0;" width="0" height="0">
+      <defs>
+        <clipPath id="wavy-card-clip" clipPathUnits="objectBoundingBox">
+          <path d="M 0.1 0 
+                   C 0.4 0.05, 0.6 0.05, 0.9 0 
+                   C 0.95 0, 1 0.05, 1 0.1 
+                   C 0.95 0.4, 0.95 0.6, 1 0.9 
+                   C 1 0.95, 0.95 1, 0.9 1 
+                   C 0.6 0.95, 0.4 0.95, 0.1 1 
+                   C 0.05 1, 0 0.95, 0 0.9 
+                   C 0.05 0.6, 0.05 0.4, 0 0.1 
+                   C 0 0.05, 0.05 0, 0.1 0 Z" />
+        </clipPath>
+      </defs>
+    </svg>
+
     {{-- Flash Deal --}}
     @if(@$flash_deal != null && strtotime(date('Y-m-d H:i:s')) >= $flash_deal->start_date && strtotime(date('Y-m-d H:i:s')) <= $flash_deal->end_date)
     <section class="mb-4">
