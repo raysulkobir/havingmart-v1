@@ -67,7 +67,7 @@
                 <div class="alert alert-info py-2 px-3 border-0 rounded-lg d-flex flex-wrap align-items-center justify-content-between mb-4 shadow-sm">
                     <div class="small mb-0 text-dark">
                         <i class="las la-truck mr-1 fs-18 text-info"></i>
-                        <strong>ঢাকার ভিতরে:</strong> ৳৬০ (১-২ দিন) | <strong>ঢাকার বাইরে:</strong> ৳১২০ (২-৪ দিন) | <strong>৳৩০০০+ অর্ডারে ফ্রি ডেলিভারি</strong>
+                        <strong>ঢাকার ভিতরে:</strong> ৳৮০ (১-২ দিন) | <strong>ঢাকার বাইরে:</strong> ৳১২০ (২-৪ দিন) | <strong>৳৩০০০+ অর্ডারে ফ্রি ডেলিভারি</strong>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                                         <input type="radio" name="shipping_charge" value="inside_dhaka" required>
                                         <span class="d-block p-3 aiz-megabox-elem rounded border text-center">
                                             <div class="fw-700 fs-14 mb-1 text-dark">{{ translate('Inside Dhaka') }}</div>
-                                            <div class="text-primary font-weight-bold fs-18 mb-1">৳৬০</div>
+                                            <div class="text-primary font-weight-bold fs-18 mb-1">৳৮০</div>
                                             <div class="small text-muted">{{ translate('1-2 Days Delivery') }}</div>
                                         </span>
                                     </label>
@@ -377,7 +377,7 @@ document.querySelectorAll('input[name="shipping_charge"]').forEach(function(radi
         var selectedOption = this.value;
         
         if (selectedOption === 'inside_dhaka') {
-            shippingCharge = 60;
+            shippingCharge = 80;
         } else if (selectedOption === 'outside_dhaka') {
             shippingCharge = 120;
         }
