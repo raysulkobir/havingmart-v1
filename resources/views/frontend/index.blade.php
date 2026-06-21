@@ -53,7 +53,7 @@
 
     {{-- Category Thumbnails Row --}}
     @if(count($popularCategories) > 0)
-    <section class="hm-categories-strip mb-4">
+    <!-- <section class="hm-categories-strip mb-4">
         <div class="container">
             <div class="hm-section-card">
                 <div class="hm-section-header">
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     @endif
 
     {{-- Shop Beauty Products By Category --}}
@@ -557,7 +557,7 @@
 
     {{-- Shop By Brands --}}
     @if (get_setting('top10_brands') != null && count($topBrands) > 0)
-    <section class="mb-4">
+    <!-- <section class="mb-4">
         <div class="container">
             <div class="hm-section-card">
                 <div class="hm-section-header">
@@ -582,7 +582,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     @endif
 
 @endsection
