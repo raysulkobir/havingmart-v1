@@ -1434,6 +1434,7 @@
     .home-only-scroll-show {
         display: none !important;
     }
+
     .header-scrolled .home-only-scroll-show {
         display: flex !important;
     }
@@ -1444,6 +1445,7 @@
     .hover-category-menu .aiz-category-menu {
         width: 220px !important;
     }
+
     .hover-category-menu .sub-cat-menu {
         width: calc(100% - 220px) !important;
         left: 220px !important;
@@ -1452,16 +1454,19 @@
         overflow-y: auto !important;
         padding: 24px !important;
     }
+
     [dir="rtl"] .hover-category-menu .sub-cat-menu {
         left: auto !important;
         right: 220px !important;
     }
+
     .hover-category-menu .sub-cat-menu .card-columns {
         display: grid !important;
         grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)) !important;
         gap: 20px 24px !important;
         column-count: auto !important;
     }
+
     .hover-category-menu .sub-cat-menu .card-columns .card {
         display: block !important;
         width: auto !important;
@@ -1560,7 +1565,7 @@
         font-size: 18px;
         margin-bottom: 18px;
     }
-    
+
     .hm-beauty-cat-text {
         font-size: 15px;
         top: 13%;
@@ -1572,7 +1577,7 @@
         font-size: 16px;
         margin-bottom: 15px;
     }
-    
+
     .hm-beauty-cat-text {
         font-size: 13px;
         top: 12%;
@@ -1695,16 +1700,16 @@
         font-size: 18px;
         margin-bottom: 18px;
     }
-    
+
     .hm-concern-hexagon-border {
         width: 70px;
         height: 70px;
     }
-    
+
     .hm-concern-title-main {
         font-size: 12px;
     }
-    
+
     .hm-concern-title-sub {
         font-size: 8px;
     }
@@ -1715,18 +1720,152 @@
         font-size: 16px;
         margin-bottom: 15px;
     }
-    
+
     .hm-concern-hexagon-border {
         width: 65px;
         height: 65px;
         margin-bottom: 8px;
     }
-    
+
     .hm-concern-title-main {
         font-size: 11px;
     }
-    
+
     .hm-concern-title-sub {
         font-size: 7px;
+    }
+}
+
+/* ==========================================================================
+   BRAND COLOR THEME (LOGO COLORS: RED #E22132 & NAVY BLUE #1B1464)
+   ========================================================================== */
+
+/* --- Footer Colorization --- */
+.footer-widget {
+    background-color: #120d44 !important; /* Deep Premium Navy */
+    color: #d1d1f0 !important;
+}
+.footer-widget h4 {
+    color: #ffffff !important;
+    border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+}
+.footer-widget a,
+.footer-widget .text-reset {
+    color: #b8b8e0 !important;
+    transition: all 0.2s ease !important;
+}
+.footer-widget a:hover {
+    color: #E22132 !important;
+    text-decoration: none !important;
+    padding-left: 3px;
+}
+.footer-widget .contact_links:hover {
+    padding-left: 0 !important; /* Don't slide contact links */
+}
+.footer-widget .app_store_link:hover {
+    padding-left: 0 !important;
+    transform: translateY(-2px);
+}
+.footer-widget .btn-primary {
+    background-color: #E22132 !important;
+    border-color: #E22132 !important;
+}
+.footer-widget .btn-primary:hover {
+    background-color: #c31322 !important;
+    border-color: #c31322 !important;
+}
+
+/* --- Footer Bottom (Copyright bar) --- */
+#footer_bottom {
+    background-color: #0d0932 !important; /* Ultra dark navy */
+    color: #8c8caf !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+#footer_bottom a {
+    color: #8c8caf !important;
+}
+#footer_bottom a:hover {
+    color: #E22132 !important;
+}
+#footer_bottom .social a {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+    transition: all 0.2s ease;
+}
+#footer_bottom .social a:hover {
+    background-color: #E22132 !important;
+    transform: translateY(-2px);
+}
+
+/* Premium Bottom-to-Top Scroll Button */
+.scroll-to-top-btn {
+    position: fixed;
+    bottom: 160px; /* Sits cleanly above the floating WhatsApp/Messenger stack */
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary, #E22132), #260A54);
+    color: #ffffff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(38, 10, 84, 0.25);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.8);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.scroll-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.scroll-to-top-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.scroll-to-top-btn:hover {
+    background: linear-gradient(135deg, #260A54, var(--primary, #E22132));
+    box-shadow: 0 8px 25px rgba(226, 33, 50, 0.45);
+    transform: translateY(-5px) scale(1.08);
+}
+
+.scroll-to-top-btn:hover svg {
+    transform: translateY(-4px);
+}
+
+.scroll-to-top-btn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* Responsive styles for Mobile Devices */
+@media (max-width: 768px) {
+    .scroll-to-top-btn {
+        bottom: 170px; /* Positioned above the mobile social-float-container */
+        right: 20px;
+        width: 42px;
+        height: 42px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    .scroll-to-top-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .scroll-to-top-btn:hover {
+        transform: translateY(-3px) scale(1.05);
     }
 }
