@@ -1798,3 +1798,74 @@
     background-color: #E22132 !important;
     transform: translateY(-2px);
 }
+
+/* Premium Bottom-to-Top Scroll Button */
+.scroll-to-top-btn {
+    position: fixed;
+    bottom: 160px; /* Sits cleanly above the floating WhatsApp/Messenger stack */
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary, #E22132), #260A54);
+    color: #ffffff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(38, 10, 84, 0.25);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.8);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.scroll-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.scroll-to-top-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.scroll-to-top-btn:hover {
+    background: linear-gradient(135deg, #260A54, var(--primary, #E22132));
+    box-shadow: 0 8px 25px rgba(226, 33, 50, 0.45);
+    transform: translateY(-5px) scale(1.08);
+}
+
+.scroll-to-top-btn:hover svg {
+    transform: translateY(-4px);
+}
+
+.scroll-to-top-btn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* Responsive styles for Mobile Devices */
+@media (max-width: 768px) {
+    .scroll-to-top-btn {
+        bottom: 170px; /* Positioned above the mobile social-float-container */
+        right: 20px;
+        width: 42px;
+        height: 42px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    .scroll-to-top-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .scroll-to-top-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+    }
+}
