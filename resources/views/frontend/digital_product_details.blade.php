@@ -220,11 +220,11 @@
 
                             <div class="mt-3">
                                 <button type="button" class="btn btn-soft-primary mr-2 add-to-cart fw-600" onclick="addToCart()">
-                                    <i class="las la-shopping-bag"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 mr-md-2" style="vertical-align: middle;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                                     <span class="d-none d-md-inline-block"> ব্যাগ এ রাখুন</span>
                                 </button>
                                 <button type="button" class="btn btn-primary buy-now fw-600" onclick="buyNow()">
-                                    <i class="la la-shopping-cart"></i> এখনি কিনুন
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 mr-md-2" style="vertical-align: middle;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> এখনি কিনুন
                                 </button>
                             </div>
 
