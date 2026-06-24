@@ -468,7 +468,7 @@
         <div class="container">
             <div class="row gutters-10">
                 <div class="col-xl-3 order-1 order-xl-0">
-                    @if ($detailedProduct->added_by == 'seller' && $detailedProduct->user->shop != null)
+                    {{-- @if ($detailedProduct->added_by == 'seller' && $detailedProduct->user->shop != null)
                         <div class="bg-white shadow-sm mb-3">
                             <div class="position-relative p-3 text-left">
                                 @if ($detailedProduct->user->shop->verification_status)
@@ -517,8 +517,8 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
-                    <div class="bg-white rounded shadow-sm mb-3">
+                    @endif --}}
+                    {{-- <div class="bg-white rounded shadow-sm mb-3">
                         <div class="p-3 border-bottom fs-16 fw-600">
                             {{ translate('Top Selling') }}
                         </div>
@@ -556,7 +556,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-xl-9 order-0 order-xl-1">
                     <div class="bg-white mb-3 shadow-sm rounded">
