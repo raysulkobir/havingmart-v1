@@ -121,7 +121,7 @@
                             @else
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label text-secondary fw-600 small">{{ translate('Your Name') }} <span class="text-danger">*</span></label>
+                                        <label class="form-label text-secondary fw-600 small">আপনার নাম <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-light border-right-0"><i class="las la-user"></i></span>
@@ -130,7 +130,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label text-secondary fw-600 small">{{ translate('Phone Number') }} <span class="text-danger">*</span></label>
+                                        <label class="form-label text-secondary fw-600 small">ফোন নম্বর <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-light border-right-0"><i class="las la-phone"></i></span>
@@ -139,7 +139,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label class="form-label text-secondary fw-600 small">{{ translate('Full Address') }} <span class="text-danger">*</span></label>
+                                        <label class="form-label text-secondary fw-600 small">সম্পূর্ণ ঠিকানা <span class="text-danger">*</span></label>
                                         <textarea name="guest_address" class="form-control" rows="2" placeholder="e.g. House #12, Road #4, Dhanmondi, Dhaka" required></textarea>
                                     </div>
                                 </div>
@@ -150,7 +150,7 @@
                     <!-- Shipping Charge Selection -->
                     <div class="checkout-card">
                         <div class="checkout-card-header">
-                            <h4><i class="las la-truck mr-2 text-primary"></i>{{ translate('Select Delivery Area') }}</h4>
+                            <h4><i class="las la-truck mr-2 text-primary"></i>ডেলিভারি এলাকা নির্বাচন করুন</h4>
                         </div>
                         <div class="checkout-card-body">
                             <div class="row">
@@ -158,7 +158,7 @@
                                     <label class="aiz-megabox d-block mb-0 cursor-pointer">
                                         <input type="radio" name="shipping_charge" value="inside_dhaka" required>
                                         <span class="d-block p-3 aiz-megabox-elem rounded border text-center">
-                                            <div class="fw-700 fs-14 mb-1 text-dark">{{ translate('Inside Dhaka') }}</div>
+                                            <div class="fw-700 fs-14 mb-1 text-dark">ঢাকার ভিতরে</div>
                                             <div class="text-primary font-weight-bold fs-18 mb-1">৳৮০</div>
                                             <div class="small text-muted">{{ translate('1-2 Days Delivery') }}</div>
                                         </span>
@@ -168,7 +168,7 @@
                                     <label class="aiz-megabox d-block mb-0 cursor-pointer">
                                         <input type="radio" name="shipping_charge" value="outside_dhaka" required>
                                         <span class="d-block p-3 aiz-megabox-elem rounded border text-center">
-                                            <div class="fw-700 fs-14 mb-1 text-dark">{{ translate('Outside Dhaka') }}</div>
+                                            <div class="fw-700 fs-14 mb-1 text-dark">ঢাকার বাইরে</div>
                                             <div class="text-primary font-weight-bold fs-18 mb-1">৳১২০</div>
                                             <div class="small text-muted">{{ translate('2-4 Days Delivery') }}</div>
                                         </span>
@@ -184,7 +184,7 @@
                     <!-- Payment Information -->
                     <div class="checkout-card">
                         <div class="checkout-card-header">
-                            <h4><i class="las la-credit-card mr-2 text-primary"></i>{{ translate('Payment Method') }}</h4>
+                            <h4><i class="las la-credit-card mr-2 text-primary"></i>অর্থপ্রদানের পদ্ধতি</h4>
                         </div>
                         <div class="checkout-card-body">
                             <div class="row gutters-10">
@@ -349,7 +349,7 @@
                                 <!-- Action Buttons -->
                                 <button type="submit" class="btn btn-checkout-submit btn-block btn-lg fw-700 mb-3 py-3">
                                     <i class="las la-lock mr-2"></i>
-                                    {{ translate('Complete Order') }} (<span id="btn-grand-total">{{ format_price($subtotal + get_setting('tax', 0)) }}</span>)
+                                    অর্ডার করুন (<span id="btn-grand-total">{{ format_price($subtotal + get_setting('tax', 0)) }}</span>)
                                 </button>
 
                                 <div class="text-center text-muted small">
