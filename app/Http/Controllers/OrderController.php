@@ -201,7 +201,7 @@ class OrderController extends Controller
                 if ($product->digital != 1 && $cartItem['quantity'] > $product_stock->qty) {
                     flash(translate('The requested quantity is not available for ') . $product->getTranslation('name'))->warning();
                     $order->delete();
-                    return redirect()->route('cart')->send();
+                    return redirect()->route('checkout.express.show')->send();
                 } elseif ($product->digital != 1) {
                     $product_stock->qty -= $cartItem['quantity'];
                     $product_stock->save();

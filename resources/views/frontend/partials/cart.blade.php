@@ -77,7 +77,7 @@ if (auth()->user() != null) {
         <div class="px-3 py-2 text-center border-top">
             <ul class="list-inline mb-0">
                 <li class="list-inline-item">
-                    <a href="{{ route('cart') }}" class="btn btn-soft-primary btn-sm">
+                    <a href="{{ route('checkout.express.show') }}" class="btn btn-soft-primary btn-sm">
                         {{ translate('View cart') }}
                     </a>
                 </li>

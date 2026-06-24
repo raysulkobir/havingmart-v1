@@ -60,14 +60,14 @@
 
         <div class="product-actions">
             <a href="javascript:void(0)" onclick="showAddToCartModal({{ $product->id }})"  data-placement="left">
-                ADD TO CART
+                ব্যাগ এ রাখুন
             </a>
         </div>
-        {{-- <div class="product-actions mt-1">
+        <div class="product-actions mt-1">
            <a href="javascript:void(0)" onclick="showAddToCartModal({{ $product->id }}, 'buy_now')"  data-placement="left">
-                BUY NOW
+                এখনি কিনুন
             </a>
-        </div> --}}
+        </div>
         @if (addon_is_activated('club_point'))
             <div class="rounded px-2 mt-2 bg-soft-primary border-soft-primary border">
                 {{ translate('Club Point') }}:

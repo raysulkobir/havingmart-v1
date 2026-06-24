@@ -380,10 +380,10 @@
                                     <button type="button" class="btn btn-soft-primary mr-2 add-to-cart fw-600 2"
                                         onclick="addToCart()">
                                         <i class="las la-shopping-bag"></i>
-                                        <span class="d-none d-md-inline-block"> {{ translate('Add to cart') }}</span>
+                                        <span class="d-none d-md-inline-block"> ব্যাগ এ রাখুন</span>
                                     </button>
                                     <button type="button" class="btn btn-primary buy-now fw-600 " onclick="buyNow()">
-                                        <i class="la la-shopping-cart"></i> {{ translate('Buy Now') }}
+                                        <i class="la la-shopping-cart"></i> এখনি কিনুন
                                     </button>
                                 @endif
                                 <button type="button" class="btn btn-secondary out-of-stock fw-600 d-none" disabled>
