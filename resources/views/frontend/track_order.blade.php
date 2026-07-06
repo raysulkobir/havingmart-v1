@@ -57,17 +57,35 @@
                                 </tr>
                                 <tr>
                                     <td class="w-50 fw-600">{{ translate('Customer')}}:</td>
-                                    <td>{{ json_decode($order->shipping_address)->name }}</td>
+                                    <td>{{ json_decode($order->shipping_address)->name ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="w-50 fw-600">{{ translate('Email')}}:</td>
-                                    @if ($order->user_id != null)
+                                    @if ($order->user != null)
                                         <td>{{ $order->user->email }}</td>
+                                    @else
+                                        <td>{{ translate('N/A') }}</td>
                                     @endif
                                 </tr>
                                 <tr>
                                     <td class="w-50 fw-600">{{ translate('Shipping address')}}:</td>
-                                    <td>{{ json_decode($order->shipping_address)->address }}, {{ json_decode($order->shipping_address)->city }}, {{ json_decode($order->shipping_address)->country }}</td>
+                                    <td>
+                                        @php
+                                            $shipping_address = json_decode($order->shipping_address);
+                                        @endphp
+                                        @if($shipping_address)
+                                            {{ $shipping_address->address ?? '' }}, {{ $shipping_address->city ?? '' }}
+                                            @if(!empty($shipping_address->state))
+                                                , {{ $shipping_address->state }}
+                                            @endif
+                                            @if(!empty($shipping_address->postal_code))
+                                                , {{ $shipping_address->postal_code }}
+                                            @endif
+                                            @if(!empty($shipping_address->country))
+                                                , {{ $shipping_address->country }}
+                                            @endif
+                                        @endif
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -87,11 +105,11 @@
                                 </tr>
                                 <tr>
                                     <td class="w-50 fw-600">{{ translate('Payment method')}}:</td>
-                                    <td>{{ translate(ucfirst(str_replace('_', ' ', $order->payment_type))) }}</td>
+                                    <td>{{ translate(ucfirst(str_replace('_', ' ', $order->payment_type ?? ''))) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="w-50 fw-600">{{ translate('Delivery Status')}}:</td>
-                                    <td>{{ translate(ucfirst(str_replace('_', ' ', $order->delivery_status))) }}</td>
+                                    <td>{{ translate(ucfirst(str_replace('_', ' ', $order->delivery_status ?? ''))) }}</td>
                                 </tr>
                                 @if ($order->tracking_code)
                                     <tr>
@@ -126,7 +144,7 @@
                                 <tr>
                                 <td>{{ $orderDetail->product->getTranslation('name') }} ({{ $orderDetail->variation }})</td>
                                     <td>{{ $orderDetail->quantity }}</td>
-                                    <td>{{ $orderDetail->product->user->name }}</td>
+                                    <td>{{ optional($orderDetail->product->user)->name ?? translate('Inhouse') }}</td>
                                 </tr>
                             </tbody>
                         </table>

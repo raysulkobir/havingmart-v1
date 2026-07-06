@@ -441,6 +441,7 @@ class HomeController extends Controller
             if ($order != null) {
                 return view('frontend.track_order', compact('order'));
             }
+            flash(translate('Order not found'))->error();
         }
         return view('frontend.track_order');
     }
