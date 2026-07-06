@@ -186,7 +186,7 @@ class IyzicoController extends Controller
         }
         else {
             flash(translate('Opps! Something went wrong.'))->warning();
-            return redirect()->route('cart');
+            return redirect()->route('checkout.express.show');
         }
     }
 

@@ -81,7 +81,7 @@ class AamarpayController extends Controller
             'desc' => env('APP_NAME').' payment',
             'success_url' => route('aamarpay.success'), //your success route
             'fail_url' => route('aamarpay.fail'), //your fail route
-            'cancel_url' => route('cart'), //your cancel url
+            'cancel_url' => route('checkout.express.show'), //your cancel url
             'opt_a' => Session::get('payment_type'),  //optional paramter
             'opt_b' => Session::get('combined_order_id'),
             'opt_c' => json_encode(Session::get('payment_data')),
@@ -149,6 +149,6 @@ class AamarpayController extends Controller
 
     public function fail(Request $request){
         flash(translate('Payment failed'))->error();
-    	return redirect()->route('cart');
+    	return redirect()->route('checkout.express.show');
     }
 }

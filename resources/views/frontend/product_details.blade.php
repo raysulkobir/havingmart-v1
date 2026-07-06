@@ -379,11 +379,11 @@
                                 @else
                                     <button type="button" class="btn btn-soft-primary mr-2 add-to-cart fw-600 2"
                                         onclick="addToCart()">
-                                        <i class="las la-shopping-bag"></i>
-                                        <span class="d-none d-md-inline-block"> {{ translate('Add to cart') }}</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 mr-md-2" style="vertical-align: middle;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                        <span class="d-none d-md-inline-block"> ব্যাগ এ রাখুন</span>
                                     </button>
                                     <button type="button" class="btn btn-primary buy-now fw-600 " onclick="buyNow()">
-                                        <i class="la la-shopping-cart"></i> {{ translate('Buy Now') }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 mr-md-2" style="vertical-align: middle;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> এখনি কিনুন
                                     </button>
                                 @endif
                                 <button type="button" class="btn btn-secondary out-of-stock fw-600 d-none" disabled>
@@ -468,7 +468,7 @@
         <div class="container">
             <div class="row gutters-10">
                 <div class="col-xl-3 order-1 order-xl-0">
-                    @if ($detailedProduct->added_by == 'seller' && $detailedProduct->user->shop != null)
+                    {{-- @if ($detailedProduct->added_by == 'seller' && $detailedProduct->user->shop != null)
                         <div class="bg-white shadow-sm mb-3">
                             <div class="position-relative p-3 text-left">
                                 @if ($detailedProduct->user->shop->verification_status)
@@ -517,8 +517,8 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
-                    <div class="bg-white rounded shadow-sm mb-3">
+                    @endif --}}
+                    {{-- <div class="bg-white rounded shadow-sm mb-3">
                         <div class="p-3 border-bottom fs-16 fw-600">
                             {{ translate('Top Selling') }}
                         </div>
@@ -556,7 +556,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-xl-9 order-0 order-xl-1">
                     <div class="bg-white mb-3 shadow-sm rounded">

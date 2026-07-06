@@ -230,11 +230,11 @@
             }
         @endphp
         <div class="col-auto">
-            <a href="{{ route('cart') }}" class="text-reset d-block text-center pt-2">
+            <a href="{{ route('checkout.express.show') }}" class="text-reset d-block text-center pt-2">
                 <span class="align-items-center bg-primary border border-white border-width-4 d-flex justify-content-center position-relative rounded-circle size-40px" style="margin-top: -33px;box-shadow: 0px -5px 10px rgb(0 0 0 / 15%);border-color: #fff !important;">
                     <i style="font-size: 20px;" class="las la-shopping-bag text-white"></i>
                 </span>
-                <span class="d-block mt-2 fs-10 fw-600 opacity-60 {{ areActiveRoutes(['cart'],'opacity-100 fw-600')}}">
+                <span class="d-block mt-2 fs-10 fw-600 opacity-60 {{ areActiveRoutes(['cart', 'checkout.express.show'],'opacity-100 fw-600')}}">
                     {{ translate('Cart') }}
                     @php
                         $count = (isset($cart) && count($cart)) ? count($cart) : 0;
