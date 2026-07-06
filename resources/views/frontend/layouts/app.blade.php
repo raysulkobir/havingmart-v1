@@ -504,7 +504,7 @@
                        updateNavCart(data.nav_cart_view,data.cart_count);
 
                           if(buyNow){
-                            window.location.replace("{{ route('cart') }}");
+                            window.location.replace("{{ route('checkout.express.show') }}");
                           }
                     }
                 });
@@ -537,7 +537,7 @@
                             $('#addToCart-modal-body').html(data.modal_view);
                             updateNavCart(data.nav_cart_view,data.cart_count);
 
-                            window.location.replace("{{ route('cart') }}");
+                            window.location.replace("{{ route('checkout.express.show') }}");
                        }
                        else{
                             $('#addToCart-modal-body').html(null);
