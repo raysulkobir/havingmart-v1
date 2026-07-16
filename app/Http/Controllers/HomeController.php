@@ -447,7 +447,7 @@ class HomeController extends Controller
 
     public function product(Request $request, $slug)
     {
-        $detailedProduct  = Product::with('reviews', 'brand', 'stocks', 'user', 'user.shop')->where('auction_product', 0)->where('slug', $slug)->where('approved', 1)->first();
+        $detailedProduct  = Product::with('reviews', 'brand', 'stocks')->where('auction_product', 0)->where('slug', $slug)->where('approved', 1)->first();
 
         if ($detailedProduct) 
         {

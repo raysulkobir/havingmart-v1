@@ -1434,6 +1434,7 @@
     .home-only-scroll-show {
         display: none !important;
     }
+
     .header-scrolled .home-only-scroll-show {
         display: flex !important;
     }
@@ -1444,6 +1445,7 @@
     .hover-category-menu .aiz-category-menu {
         width: 220px !important;
     }
+
     .hover-category-menu .sub-cat-menu {
         width: calc(100% - 220px) !important;
         left: 220px !important;
@@ -1452,20 +1454,418 @@
         overflow-y: auto !important;
         padding: 24px !important;
     }
+
     [dir="rtl"] .hover-category-menu .sub-cat-menu {
         left: auto !important;
         right: 220px !important;
     }
+
     .hover-category-menu .sub-cat-menu .card-columns {
         display: grid !important;
         grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)) !important;
         gap: 20px 24px !important;
         column-count: auto !important;
     }
+
     .hover-category-menu .sub-cat-menu .card-columns .card {
         display: block !important;
         width: auto !important;
         background: transparent !important;
         margin-bottom: 0 !important;
+    }
+}
+
+/* ========================================================
+   BEAUTY CATEGORIES GRID SECTION - PREMIUM HOMEPAGE FEATURE
+   ======================================================== */
+.hm-beauty-cats-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.hm-beauty-cats-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #E22132, #260A54);
+    border-radius: 2px;
+}
+
+.hm-beauty-cat-card {
+    display: block;
+    position: relative;
+    text-decoration: none !important;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 100%;
+}
+
+.hm-beauty-cat-card:hover {
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.16));
+    transform: translateY(-5px);
+}
+
+.hm-beauty-cat-img-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    -webkit-clip-path: url(#wavy-card-clip);
+    clip-path: url(#wavy-card-clip);
+    overflow: hidden;
+    background: #f8fafc;
+}
+
+.hm-beauty-cat-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hm-beauty-cat-card:hover .hm-beauty-cat-img {
+    transform: scale(1.08);
+}
+
+.hm-beauty-cat-text {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-align: center;
+    white-space: nowrap;
+    z-index: 3;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 10px rgba(255, 105, 180, 0.6);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.hm-beauty-cat-card:hover .hm-beauty-cat-text {
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 105, 180, 0.8);
+    transform: translateX(-50%) scale(1.03);
+}
+
+@media (max-width: 991px) {
+    .hm-beauty-cats-title {
+        font-size: 18px;
+        margin-bottom: 18px;
+    }
+
+    .hm-beauty-cat-text {
+        font-size: 15px;
+        top: 13%;
+    }
+}
+
+@media (max-width: 575px) {
+    .hm-beauty-cats-title {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .hm-beauty-cat-text {
+        font-size: 13px;
+        top: 12%;
+    }
+}
+
+/* ========================================================
+   SHOP BY CONCERN SECTION - PREMIUM HOMEPAGE FEATURE
+   ======================================================== */
+.hm-concern-cats-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    position: relative;
+    padding-bottom: 8px;
+}
+
+.hm-concern-cats-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #E22132, #260A54);
+    border-radius: 2px;
+}
+
+.hm-concern-card-wrap {
+    display: block;
+    position: relative;
+    text-decoration: none !important;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.08));
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    width: 100%;
+}
+
+.hm-concern-card-wrap:hover {
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.16));
+    transform: translateY(-5px);
+}
+
+.hm-concern-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    -webkit-clip-path: url(#wavy-card-clip);
+    clip-path: url(#wavy-card-clip);
+    background: linear-gradient(180deg, #FAD75A 0%, #EAA918 100%);
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hm-concern-hexagon-border {
+    width: 80px;
+    height: 80px;
+    -webkit-clip-path: url(#rounded-hexagon-clip);
+    clip-path: url(#rounded-hexagon-clip);
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFE485 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    padding: 2.5px;
+    flex-shrink: 0;
+}
+
+.hm-concern-hexagon-wrap {
+    width: 100%;
+    height: 100%;
+    -webkit-clip-path: url(#rounded-hexagon-clip);
+    clip-path: url(#rounded-hexagon-clip);
+    overflow: hidden;
+}
+
+.hm-concern-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hm-concern-card-wrap:hover .hm-concern-img {
+    transform: scale(1.08);
+}
+
+.hm-concern-title-main {
+    font-size: 14px;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.hm-concern-title-sub {
+    font-size: 9px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 1px;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 991px) {
+    .hm-concern-cats-title {
+        font-size: 18px;
+        margin-bottom: 18px;
+    }
+
+    .hm-concern-hexagon-border {
+        width: 70px;
+        height: 70px;
+    }
+
+    .hm-concern-title-main {
+        font-size: 12px;
+    }
+
+    .hm-concern-title-sub {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 575px) {
+    .hm-concern-cats-title {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .hm-concern-hexagon-border {
+        width: 65px;
+        height: 65px;
+        margin-bottom: 8px;
+    }
+
+    .hm-concern-title-main {
+        font-size: 11px;
+    }
+
+    .hm-concern-title-sub {
+        font-size: 7px;
+    }
+}
+
+/* ==========================================================================
+   BRAND COLOR THEME (LOGO COLORS: RED #E22132 & NAVY BLUE #1B1464)
+   ========================================================================== */
+
+/* --- Footer Colorization --- */
+.footer-widget {
+    background-color: #120d44 !important; /* Deep Premium Navy */
+    color: #d1d1f0 !important;
+}
+.footer-widget h4 {
+    color: #ffffff !important;
+    border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+}
+.footer-widget a,
+.footer-widget .text-reset {
+    color: #b8b8e0 !important;
+    transition: all 0.2s ease !important;
+}
+.footer-widget a:hover {
+    color: #E22132 !important;
+    text-decoration: none !important;
+    padding-left: 3px;
+}
+.footer-widget .contact_links:hover {
+    padding-left: 0 !important; /* Don't slide contact links */
+}
+.footer-widget .app_store_link:hover {
+    padding-left: 0 !important;
+    transform: translateY(-2px);
+}
+.footer-widget .btn-primary {
+    background-color: #E22132 !important;
+    border-color: #E22132 !important;
+}
+.footer-widget .btn-primary:hover {
+    background-color: #c31322 !important;
+    border-color: #c31322 !important;
+}
+
+/* --- Footer Bottom (Copyright bar) --- */
+#footer_bottom {
+    background-color: #0d0932 !important; /* Ultra dark navy */
+    color: #8c8caf !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+#footer_bottom a {
+    color: #8c8caf !important;
+}
+#footer_bottom a:hover {
+    color: #E22132 !important;
+}
+#footer_bottom .social a {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+    transition: all 0.2s ease;
+}
+#footer_bottom .social a:hover {
+    background-color: #E22132 !important;
+    transform: translateY(-2px);
+}
+
+/* Premium Bottom-to-Top Scroll Button */
+.scroll-to-top-btn {
+    position: fixed;
+    bottom: 160px; /* Sits cleanly above the floating WhatsApp/Messenger stack */
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary, #E22132), #260A54);
+    color: #ffffff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(38, 10, 84, 0.25);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.8);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.scroll-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.scroll-to-top-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.scroll-to-top-btn:hover {
+    background: linear-gradient(135deg, #260A54, var(--primary, #E22132));
+    box-shadow: 0 8px 25px rgba(226, 33, 50, 0.45);
+    transform: translateY(-5px) scale(1.08);
+}
+
+.scroll-to-top-btn:hover svg {
+    transform: translateY(-4px);
+}
+
+.scroll-to-top-btn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+/* Responsive styles for Mobile Devices */
+@media (max-width: 768px) {
+    .scroll-to-top-btn {
+        bottom: 170px; /* Positioned above the mobile social-float-container */
+        right: 20px;
+        width: 42px;
+        height: 42px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    .scroll-to-top-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .scroll-to-top-btn:hover {
+        transform: translateY(-3px) scale(1.05);
     }
 }

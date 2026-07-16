@@ -47,7 +47,7 @@
     <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
     <link rel="stylesheet" href="{{ static_asset('assets/css/style.css?v=1') }}">
-    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=5') }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=6') }}">
     <script>
         var AIZ = AIZ || {};
         AIZ.local = {
@@ -504,7 +504,7 @@
                        updateNavCart(data.nav_cart_view,data.cart_count);
 
                           if(buyNow){
-                            window.location.replace("{{ route('cart') }}");
+                            window.location.replace("{{ route('checkout.express.show') }}");
                           }
                     }
                 });
@@ -537,7 +537,7 @@
                             $('#addToCart-modal-body').html(data.modal_view);
                             updateNavCart(data.nav_cart_view,data.cart_count);
 
-                            window.location.replace("{{ route('cart') }}");
+                            window.location.replace("{{ route('checkout.express.show') }}");
                        }
                        else{
                             $('#addToCart-modal-body').html(null);
@@ -568,10 +568,31 @@
             $("#footer_bottom").removeClass("pt-2");
             $("#footer_bottom").addClass("pt-4");
         }
+
+        // Scroll to top button visibility
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 300) {
+                $('#scroll-to-top').addClass('show');
+            } else {
+                $('#scroll-to-top').removeClass('show');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
     </script>
     {{-- slider  --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+
+    <button id="scroll-to-top" class="scroll-to-top-btn" onclick="scrollToTop()" title="{{ translate('Scroll to Top') }}">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"></path></svg>
+    </button>
 
     <div class="social-float-container">
         <a href="https://wa.me/8801308664173" target="_blank" class="social-icon whatsapp">

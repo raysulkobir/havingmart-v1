@@ -2,372 +2,475 @@
 
 @section('content')
 <style>
-    .checkout-card {
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        margin-bottom: 24px;
+    .minimal-checkout-container {
+        max-width: 900px;
+        width: 100%;
+        margin: 10px auto 30px auto;
+        background: #ffffff;
+        border: 2px solid var(--primary);
+        border-radius: 24px;
+        padding: 32px 24px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        position: relative;
+    }
+    .minimal-input-group {
+        display: flex;
+        align-items: stretch;
+        border: 1.5px solid var(--soft-primary);
+        border-radius: 20px;
+        overflow: hidden;
         background: #fff;
+        margin-bottom: 16px;
+        transition: all 0.2s;
     }
-    .checkout-card-header {
-        background: #f8fafc;
-        border-bottom: 1px solid #edf2f7;
-        padding: 16px 24px;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+    .minimal-input-group:focus-within {
+        box-shadow: 0 0 0 3px var(--soft-primary);
+        border-color: var(--primary);
     }
-    .checkout-card-header h4 {
-        margin: 0;
-        font-size: 16px;
-        font-weight: 700;
-        color: #1a202c;
+    .minimal-input-icon {
+        background-color: var(--soft-primary);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        border-right: 1.5px solid var(--soft-primary);
+        flex-shrink: 0;
     }
-    .checkout-card-body {
-        padding: 24px;
+    .minimal-input-icon i {
+        font-size: 22px;
     }
-    .express-product-item {
-        padding: 12px 0;
-        border-bottom: 1px solid #f1f5f9;
+    .minimal-input-field {
+        border: none !important;
+        outline: none !important;
+        flex-grow: 1;
+        padding: 14px 16px;
+        font-size: 15px;
+        color: #333;
+        background: transparent;
     }
-    .express-product-item:last-child {
+    .minimal-input-field::placeholder {
+        color: #9ca3af;
+    }
+    /* Product row style */
+    .minimal-product-item {
+        display: flex;
+        align-items: center;
+        padding: 16px 0;
+        border-bottom: 1.5px solid var(--soft-primary);
+        width: 100%;
+        overflow: hidden;
+    }
+    .minimal-product-item:last-child {
         border-bottom: none;
     }
-    .sticky-sidebar {
-        position: sticky;
-        top: 120px;
-        z-index: 10;
+    .minimal-product-img-wrapper {
+        position: relative;
+        flex-shrink: 0;
+        margin-right: 16px;
     }
-    .aiz-megabox-elem {
-        border-radius: 8px !important;
-        transition: all 0.2s ease-in-out;
-        border: 1px solid #e2e8f0;
+    .minimal-product-badge {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background-color: #6b7280;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }
-    .aiz-megabox input:checked ~ .aiz-megabox-elem {
-        border-color: var(--primary) !important;
-        background: rgba(226, 33, 50, 0.02);
-        box-shadow: 0 0 0 1px var(--primary);
+    .minimal-product-title {
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 0;
+        white-space: normal;
+        word-break: break-word;
+    }
+    .minimal-product-price-wrapper {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        padding-left: 12px;
+        flex-shrink: 0;
+    }
+    .minimal-product-price {
+        font-weight: 700;
+        color: #1f2937;
+        font-size: 15px;
+        margin-right: 12px;
+    }
+    .minimal-product-remove {
+        color: #9ca3af;
+        cursor: pointer;
+        transition: color 0.2s;
+        background: none;
+        border: none;
+        padding: 4px;
+        font-size: 16px;
+    }
+    .minimal-product-remove:hover {
+        color: #ef4444;
+    }
+    /* Delivery selection style */
+    .minimal-section-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--primary);
+        margin: 24px 0 12px 0;
+    }
+    .minimal-delivery-box {
+        border: 1.5px solid var(--soft-primary);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 16px;
+    }
+    .minimal-delivery-option {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        cursor: pointer;
+        background: #fff;
+        transition: background-color 0.2s;
+    }
+    .minimal-delivery-option:not(:last-child) {
+        border-bottom: 1.5px solid var(--soft-primary);
+    }
+    .minimal-delivery-option:hover {
+        background-color: var(--soft-primary);
+    }
+    .minimal-delivery-option input[type="radio"] {
+        display: none;
+    }
+    .minimal-delivery-radio-custom {
+        width: 22px;
+        height: 22px;
+        border: 2px solid #d1d5db;
+        border-radius: 50%;
+        margin-right: 12px;
+        position: relative;
+        flex-shrink: 0;
+        transition: all 0.2s;
+    }
+    .minimal-delivery-option input[type="radio"]:checked + .minimal-delivery-radio-custom {
+        border-color: var(--primary);
+    }
+    .minimal-delivery-option input[type="radio"]:checked + .minimal-delivery-radio-custom::after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-color: var(--primary);
+        border-radius: 50%;
+        top: 3px;
+        left: 3px;
+    }
+    .minimal-delivery-text {
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+    }
+    .minimal-delivery-price {
+        margin-left: auto;
+        font-weight: 700;
+        color: #111827;
+        font-size: 14px;
+    }
+    /* Summary box style */
+    .minimal-summary-box {
+        background-color: var(--soft-primary);
+        border: 1.5px solid var(--soft-primary);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .minimal-summary-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 15px;
+        color: #4b5563;
+        margin-bottom: 10px;
+    }
+    .minimal-summary-row.total-row {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 0;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1.5px solid var(--primary);
+    }
+    /* Timer box style */
+    .minimal-timer-box {
+        border: 1.5px solid #fee2e2;
+        background-color: #fef2f2;
+        border-radius: 20px;
+        padding: 16px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .minimal-timer-text {
+        color: #dc2626;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+    .minimal-timer-clock {
+        color: #991b1b;
+        font-size: 28px;
+        font-weight: 800;
     }
     .btn-checkout-submit {
-        background: linear-gradient(135deg, #E22132, #260A54);
+        background: var(--primary);
         color: #fff !important;
         border: none;
         transition: all 0.3s;
     }
     .btn-checkout-submit:hover {
+        background: var(--hov-primary);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(226, 33, 50, 0.4);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    @media (max-width: 768px) {
+        .minimal-checkout-container {
+            padding: 20px 16px;
+            border-radius: 16px;
+            margin: 10px auto 20px auto;
+        }
+        .minimal-input-field {
+            padding: 12px 10px;
+            font-size: 14px;
+        }
+        .minimal-input-icon {
+            width: 44px;
+        }
+        .minimal-input-icon i {
+            font-size: 18px;
+        }
+        .minimal-product-item {
+            padding: 12px 0;
+        }
+        .minimal-product-title {
+            font-size: 13px;
+        }
+        .minimal-product-price {
+            font-size: 14px;
+            margin-right: 8px;
+        }
     }
 </style>
 
 <section class="py-4 gry-bg">
-    <div class="container-fluid px-lg-5">
-        <!-- Compact Delivery Alert Banner -->
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info py-2 px-3 border-0 rounded-lg d-flex flex-wrap align-items-center justify-content-between mb-4 shadow-sm">
-                    <div class="small mb-0 text-dark">
-                        <i class="las la-truck mr-1 fs-18 text-info"></i>
-                        <strong>ঢাকার ভিতরে:</strong> ৳৬০ (১-২ দিন) | <strong>ঢাকার বাইরে:</strong> ৳১২০ (২-৪ দিন) | <strong>৳৩০০০+ অর্ডারে ফ্রি ডেলিভারি</strong>
-                    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9 col-sm-12">
+                <div class="minimal-checkout-container">
+
+
+                    <form class="form-default" data-toggle="validator" action="{{ route('checkout.express') }}" role="form" method="POST" id="express-checkout-form">
+                        @csrf
+                        @foreach ($carts as $cartItem)
+                            <input type="hidden" name="cart_ids[]" value="{{ $cartItem['id'] }}">
+                        @endforeach
+
+                        <!-- Address/Shipping Info -->
+                        @if(Auth::check() && count(Auth::user()->addresses) > 0)
+                            <div class="minimal-section-title">ডেলিভারি ঠিকানা নির্বাচন করুন</div>
+                            <div class="minimal-delivery-box">
+                                @foreach (Auth::user()->addresses as $key => $address)
+                                    <label class="minimal-delivery-option mb-0">
+                                        <input type="radio" name="address_id" value="{{ $address->id }}" @if ($address->set_default) checked @endif required>
+                                        <span class="minimal-delivery-radio-custom"></span>
+                                        <span class="minimal-delivery-text">
+                                            <strong>{{ $address->name }}</strong> - {{ $address->address }}, {{ $address->phone }}
+                                        </span>
+                                    </label>
+                                @endforeach
+                            </div>
+                            <div class="mb-3 text-right">
+                                <a href="javascript:void(0)" onclick="add_new_address()" class="text-primary small fw-700">
+                                    <i class="las la-plus mr-1"></i>নতুন ঠিকানা যোগ করুন
+                                </a>
+                            </div>
+                        @else
+                            <div class="minimal-input-group">
+                                <div class="minimal-input-icon">
+                                    <i class="las la-user"></i>
+                                </div>
+                                <input type="text" name="guest_name" class="minimal-input-field" placeholder="আপনার নাম" value="{{ Auth::check() ? Auth::user()->name : '' }}" required>
+                            </div>
+
+                            <div class="minimal-input-group">
+                                <div class="minimal-input-icon">
+                                    <i class="las la-phone"></i>
+                                </div>
+                                <input type="text" name="guest_phone" class="minimal-input-field" placeholder="ফোন নাম্বার" value="{{ Auth::check() ? Auth::user()->phone : '' }}" required>
+                            </div>
+
+                            <div class="minimal-input-group">
+                                <div class="minimal-input-icon">
+                                    <i class="las la-map-marker-alt"></i>
+                                </div>
+                                <textarea name="guest_address" class="minimal-input-field" rows="2" placeholder="বাড়ি/ফ্ল্যাট নম্বর, রোড, এলাকা, উপজেলা, জেলা" required></textarea>
+                            </div>
+                        @endif
+
+                        <hr style="border-top: 1.5px solid var(--soft-primary); margin: 20px 0;">
+
+                        <!-- Product List -->
+                        <div class="mb-3">
+                            @php
+                                $subtotal = 0;
+                            @endphp
+                            @foreach ($carts as $key => $cartItem)
+                                @php
+                                    $product = \App\Models\Product::find($cartItem['product_id']);
+                                    if($product) {
+                                        $cart_product_price = cart_product_price($cartItem, $product, false, false);
+                                        $subtotal += $cart_product_price * $cartItem['quantity'];
+                                    }
+                                @endphp
+                                @if($product)
+                                    <div class="minimal-product-item">
+                                        <div class="minimal-product-img-wrapper">
+                                            <img src="{{ uploaded_asset($product->thumbnail_img) }}" class="size-50px rounded border img-fit" alt="{{ $product->getTranslation('name') }}">
+                                            <span class="minimal-product-badge">{{ $cartItem['quantity'] }}</span>
+                                        </div>
+                                        <div class="flex-grow-1 pr-2" style="min-width: 0; overflow: hidden;">
+                                            <div class="minimal-product-title">{{ $product->getTranslation('name') }}</div>
+                                            @if($cartItem['variation'] != null)
+                                                <small class="text-muted d-block" style="font-size: 11px;">{{ $cartItem['variation'] }}</small>
+                                            @endif
+                                        </div>
+                                        <div class="minimal-product-price-wrapper">
+                                            <span class="minimal-product-price">{{ format_price($cart_product_price * $cartItem['quantity']) }}</span>
+                                            <button type="button" class="minimal-product-remove" onclick="removeExpressItem({{ $cartItem['id'] }})" title="বাদ দিন">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+
+                        <!-- Delivery area selection -->
+                        <div class="minimal-section-title">ডেলিভারি চার্জ সিলেক্ট করুন..</div>
+                        <div class="minimal-delivery-box">
+                            <label class="minimal-delivery-option mb-0">
+                                <input type="radio" name="shipping_charge" value="inside_dhaka" checked required>
+                                <span class="minimal-delivery-radio-custom"></span>
+                                <span class="minimal-delivery-text">ঢাকা সিটির মধ্যে</span>
+                                <span class="minimal-delivery-price">৳৮০</span>
+                            </label>
+                            <label class="minimal-delivery-option mb-0">
+                                <input type="radio" name="shipping_charge" value="outside_dhaka" required>
+                                <span class="minimal-delivery-radio-custom"></span>
+                                <span class="minimal-delivery-text">ঢাকা সিটির বাহিরে</span>
+                                <span class="minimal-delivery-price">৳১২০</span>
+                            </label>
+                        </div>
+
+                        <!-- Pricing Details Summary Box -->
+                        <div class="minimal-summary-box">
+                            <div class="minimal-summary-row">
+                                <span>সাব টোটাল</span>
+                                <span id="summary-subtotal">{{ format_price($subtotal) }}</span>
+                            </div>
+                            <div class="minimal-summary-row">
+                                <span>ডেলিভারি চার্জ</span>
+                                <span id="shipping-cost">{{ format_price(80) }}</span>
+                            </div>
+                            <span class="d-none" id="summary-tax">{{ format_price(get_setting('tax', 0)) }}</span>
+                            <div class="minimal-summary-row total-row">
+                                <span>সর্বমোট</span>
+                                <span id="grand-total">{{ format_price($subtotal + 80 + get_setting('tax', 0)) }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Hidden Shipping Method -->
+                        <input type="hidden" name="shipping_method" value="home_delivery">
+
+                        <!-- Payment Information -->
+                        <div class="minimal-section-title">অর্থপ্রদানের পদ্ধতি</div>
+                        <div class="minimal-payment-box d-flex flex-wrap rounded-lg p-2 bg-white mb-4" style="border: 1.5px solid var(--soft-primary); gap: 8px;">
+                            <!-- Cash on Delivery -->
+                            <label class="minimal-payment-option-label mb-0 flex-grow-1 cursor-pointer">
+                                <input type="radio" name="payment_option" value="cash_on_delivery" checked required style="display:none;">
+                                <div class="payment-inner p-3 border rounded text-center d-flex align-items-center justify-content-center" style="border-color: var(--primary); background: var(--soft-primary); transition: all 0.2s;">
+                                    <img src="{{ static_asset('assets/img/cards/cod.png') }}" class="mr-2" style="max-height: 20px;">
+                                    <span class="fw-700 text-dark" style="font-size: 13px;">ক্যাশ অন ডেলিভারি</span>
+                                </div>
+                            </label>
+                            
+                            @if (get_setting('sslcommerz_payment') == 1)
+                                <label class="minimal-payment-option-label mb-0 flex-grow-1 cursor-pointer">
+                                    <input type="radio" name="payment_option" value="sslcommerz" style="display:none;">
+                                    <div class="payment-inner p-3 border rounded text-center d-flex align-items-center justify-content-center" style="border-color: #e2e8f0; background: #fff; transition: all 0.2s;">
+                                        <img src="{{ static_asset('assets/img/cards/sslcommerz.png') }}" class="mr-2" style="max-height: 20px;">
+                                        <span class="fw-700 text-dark" style="font-size: 13px;">SSLCommerz</span>
+                                    </div>
+                                </label>
+                            @endif
+                            
+                            @if (get_setting('bkash') == 1)
+                                <label class="minimal-payment-option-label mb-0 flex-grow-1 cursor-pointer">
+                                    <input type="radio" name="payment_option" value="bkash" style="display:none;">
+                                    <div class="payment-inner p-3 border rounded text-center d-flex align-items-center justify-content-center" style="border-color: #e2e8f0; background: #fff; transition: all 0.2s;">
+                                        <img src="{{ static_asset('assets/img/cards/bkash.png') }}" class="mr-2" style="max-height: 20px;">
+                                        <span class="fw-700 text-dark" style="font-size: 13px;">bKash</span>
+                                    </div>
+                                </label>
+                            @endif
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class="minimal-input-group">
+                            <div class="minimal-input-icon">
+                                <i class="las la-edit"></i>
+                            </div>
+                            <input type="text" name="additional_info" class="minimal-input-field" placeholder="কোনো মন্তব্য থাকলে লিখুন...">
+                        </div>
+
+                        <!-- Timer Countdown -->
+                        <div class="minimal-timer-box">
+                            <div class="minimal-timer-text">⌛ আর অল্প সময়! অফার শেষ হবে কিছুক্ষণের মধ্যেই</div>
+                            <div class="minimal-timer-clock" id="countdown-timer">15:00</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-checkout-submit btn-block btn-lg fw-700 py-3 rounded-lg">
+                            <i class="las la-lock mr-2"></i>অর্ডার করুন (<span id="btn-grand-total">{{ format_price($subtotal + 80 + get_setting('tax', 0)) }}</span>)
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <form class="form-default" data-toggle="validator" action="{{ route('checkout.express') }}" role="form" method="POST" id="express-checkout-form">
-            @csrf
-            @foreach ($carts as $cartItem)
-                <input type="hidden" name="cart_ids[]" value="{{ $cartItem['id'] }}">
-            @endforeach
-
-            <div class="row">
-                <!-- Left Side: Shipping & Payment Info -->
-                <div class="col-lg-7 col-xl-8">
-                    <!-- Shipping Information -->
-                    <div class="checkout-card">
-                        <div class="checkout-card-header d-flex justify-content-between align-items-center">
-                            <h4><i class="las la-map-marker-alt mr-2 text-primary"></i>{{ translate('Shipping Information') }}</h4>
-                            @if(!Auth::check())
-                                <div>
-                                    <span class="opacity-60 small">{{ translate('Returning customer?') }}</span>
-                                    <a href="{{ route('user.login') }}" class="ml-2 fw-700 text-primary small">{{ translate('Login here') }}</a>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="checkout-card-body">
-                            @if(Auth::check())
-                                <div class="row gutters-5">
-                                    @foreach (Auth::user()->addresses as $key => $address)
-                                        <div class="col-md-6 mb-3">
-                                            <label class="aiz-megabox d-block mb-0 cursor-pointer">
-                                                <input type="radio" name="address_id" value="{{ $address->id }}" @if ($address->set_default) checked @endif required>
-                                                <span class="d-flex p-3 aiz-megabox-elem rounded border">
-                                                    <span class="aiz-rounded-check flex-shrink-0 mt-1"></span>
-                                                    <span class="flex-grow-1 pl-2 text-left">
-                                                        <div class="fw-700 text-dark mb-1">{{ $address->name }}</div>
-                                                        <div class="small text-secondary mb-1"><i class="las la-map-marker-alt"></i> {{ $address->address }}</div>
-                                                        <div class="small text-secondary"><i class="las la-phone"></i> {{ $address->phone }}</div>
-                                                    </span>
-                                                </span>
-                                            </label>
-                                        </div>
-                                    @endforeach
-                                    <div class="col-md-6 mb-3">
-                                        <div class="border p-3 rounded mb-0 c-pointer text-center bg-white h-100 d-flex flex-column justify-content-center" onclick="add_new_address()" style="border-style: dashed !important; min-height: 110px;">
-                                            <i class="las la-plus la-2x mb-2 text-muted"></i>
-                                            <div class="alpha-7 small fw-600 text-secondary">{{ translate('Add New Address') }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label text-secondary fw-600 small">{{ translate('Your Name') }} <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light border-right-0"><i class="las la-user"></i></span>
-                                            </div>
-                                            <input type="text" name="guest_name" class="form-control border-left-0 pl-1" placeholder="e.g. John Doe" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label text-secondary fw-600 small">{{ translate('Phone Number') }} <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light border-right-0"><i class="las la-phone"></i></span>
-                                            </div>
-                                            <input type="text" name="guest_phone" class="form-control border-left-0 pl-1" placeholder="e.g. 017XXXXXXXX" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <label class="form-label text-secondary fw-600 small">{{ translate('Full Address') }} <span class="text-danger">*</span></label>
-                                        <textarea name="guest_address" class="form-control" rows="2" placeholder="e.g. House #12, Road #4, Dhanmondi, Dhaka" required></textarea>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    <!-- Shipping Charge Selection -->
-                    <div class="checkout-card">
-                        <div class="checkout-card-header">
-                            <h4><i class="las la-truck mr-2 text-primary"></i>{{ translate('Select Delivery Area') }}</h4>
-                        </div>
-                        <div class="checkout-card-body">
-                            <div class="row">
-                                <div class="col-6">
-                                    <label class="aiz-megabox d-block mb-0 cursor-pointer">
-                                        <input type="radio" name="shipping_charge" value="inside_dhaka" required>
-                                        <span class="d-block p-3 aiz-megabox-elem rounded border text-center">
-                                            <div class="fw-700 fs-14 mb-1 text-dark">{{ translate('Inside Dhaka') }}</div>
-                                            <div class="text-primary font-weight-bold fs-18 mb-1">৳৬০</div>
-                                            <div class="small text-muted">{{ translate('1-2 Days Delivery') }}</div>
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="col-6">
-                                    <label class="aiz-megabox d-block mb-0 cursor-pointer">
-                                        <input type="radio" name="shipping_charge" value="outside_dhaka" required>
-                                        <span class="d-block p-3 aiz-megabox-elem rounded border text-center">
-                                            <div class="fw-700 fs-14 mb-1 text-dark">{{ translate('Outside Dhaka') }}</div>
-                                            <div class="text-primary font-weight-bold fs-18 mb-1">৳১২০</div>
-                                            <div class="small text-muted">{{ translate('2-4 Days Delivery') }}</div>
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Hidden Shipping Method - Auto Home Delivery -->
-                    <input type="hidden" name="shipping_method" value="home_delivery">
-
-                    <!-- Payment Information -->
-                    <div class="checkout-card">
-                        <div class="checkout-card-header">
-                            <h4><i class="las la-credit-card mr-2 text-primary"></i>{{ translate('Payment Method') }}</h4>
-                        </div>
-                        <div class="checkout-card-body">
-                            <div class="row gutters-10">
-                                <!-- Cash on Delivery -->
-                                <div class="col-6 col-md-4 mb-3">
-                                    <label class="aiz-megabox d-block mb-0 cursor-pointer h-100">
-                                        <input value="cash_on_delivery" type="radio" name="payment_option" @if(get_setting('cash_on_delivery') != 1) checked @endif required>
-                                        <span class="d-flex flex-column align-items-center justify-content-center p-3 aiz-megabox-elem rounded border text-center h-100">
-                                            <img src="{{ static_asset('assets/img/cards/cod.png') }}" class="img-fluid mb-2" style="max-height: 28px; object-fit: contain;">
-                                            <span class="d-block fw-700 fs-13 text-dark">{{ translate('Cash on Delivery') }}</span>
-                                        </span>
-                                    </label>
-                                </div>
-                                
-                                @if (get_setting('paypal_payment') == 1)
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label class="aiz-megabox d-block mb-0 cursor-pointer h-100">
-                                            <input value="paypal" class="online_payment" type="radio" name="payment_option" required>
-                                            <span class="d-flex flex-column align-items-center justify-content-center p-3 aiz-megabox-elem rounded border text-center h-100">
-                                                <img src="{{ static_asset('assets/img/cards/paypal.png') }}" class="img-fluid mb-2" style="max-height: 28px; object-fit: contain;">
-                                                <span class="d-block fw-700 fs-13 text-dark">{{ translate('Paypal') }}</span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                @endif
-                                
-                                @if (get_setting('stripe_payment') == 1)
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label class="aiz-megabox d-block mb-0 cursor-pointer h-100">
-                                            <input value="stripe" class="online_payment" type="radio" name="payment_option" required>
-                                            <span class="d-flex flex-column align-items-center justify-content-center p-3 aiz-megabox-elem rounded border text-center h-100">
-                                                <img src="{{ static_asset('assets/img/cards/stripe.png') }}" class="img-fluid mb-2" style="max-height: 28px; object-fit: contain;">
-                                                <span class="d-block fw-700 fs-13 text-dark">{{ translate('Stripe') }}</span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                @endif
-                                
-                                @if (get_setting('sslcommerz_payment') == 1)
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label class="aiz-megabox d-block mb-0 cursor-pointer h-100">
-                                            <input value="sslcommerz" class="online_payment" type="radio" name="payment_option" required>
-                                            <span class="d-flex flex-column align-items-center justify-content-center p-3 aiz-megabox-elem rounded border text-center h-100">
-                                                <img src="{{ static_asset('assets/img/cards/sslcommerz.png') }}" class="img-fluid mb-2" style="max-height: 28px; object-fit: contain;">
-                                                <span class="d-block fw-700 fs-13 text-dark">{{ translate('SSLCommerz') }}</span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                @endif
-
-                                @if (get_setting('razorpay') == 1)
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label class="aiz-megabox d-block mb-0 cursor-pointer h-100">
-                                            <input value="razorpay" class="online_payment" type="radio" name="payment_option" required>
-                                            <span class="d-flex flex-column align-items-center justify-content-center p-3 aiz-megabox-elem rounded border text-center h-100">
-                                                <img src="{{ static_asset('assets/img/cards/rozarpay.png') }}" class="img-fluid mb-2" style="max-height: 28px; object-fit: contain;">
-                                                <span class="d-block fw-700 fs-13 text-dark">{{ translate('Razorpay') }}</span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                @endif
-
-                                @if (get_setting('paystack') == 1)
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label class="aiz-megabox d-block mb-0 cursor-pointer h-100">
-                                            <input value="paystack" class="online_payment" type="radio" name="payment_option" required>
-                                            <span class="d-flex flex-column align-items-center justify-content-center p-3 aiz-megabox-elem rounded border text-center h-100">
-                                                <img src="{{ static_asset('assets/img/cards/paystack.png') }}" class="img-fluid mb-2" style="max-height: 28px; object-fit: contain;">
-                                                <span class="d-block fw-700 fs-13 text-dark">{{ translate('Paystack') }}</span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                @endif
-                                
-                                @if (get_setting('wallet_payment_system') == 1)
-                                    <div class="col-6 col-md-4 mb-3">
-                                        <label class="aiz-megabox d-block mb-0 cursor-pointer h-100">
-                                            <input value="wallet" type="radio" name="payment_option" required>
-                                            <span class="d-flex flex-column align-items-center justify-content-center p-3 aiz-megabox-elem rounded border text-center h-100">
-                                                <img src="{{ static_asset('assets/img/cards/wallet.png') }}" class="img-fluid mb-2" style="max-height: 28px; object-fit: contain;">
-                                                <span class="d-block fw-700 fs-13 text-dark">{{ translate('Wallet') }}</span>
-                                            </span>
-                                        </label>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Additional Information -->
-                    <div class="checkout-card">
-                        <div class="checkout-card-header">
-                            <h4><i class="las la-edit mr-2 text-primary"></i>{{ translate('Additional Information (Optional)') }}</h4>
-                        </div>
-                        <div class="checkout-card-body">
-                            <div class="form-group mb-0">
-                                <textarea name="additional_info" rows="2" class="form-control" placeholder="{{ translate('Type any additional notes for your order') }}"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Side: Order Summary & Checkout Action -->
-                <div class="col-lg-5 col-xl-4">
-                    <div class="checkout-card sticky-sidebar">
-                        <div class="checkout-card-header">
-                            <h4><i class="las la-shopping-basket mr-2 text-primary"></i>{{ translate('Order Summary') }}</h4>
-                        </div>
-                        <div class="checkout-card-body p-0">
-                            <!-- Product List -->
-                            <div class="px-4 py-2" style="max-height: 220px; overflow-y: auto;">
-                                @php
-                                    $subtotal = 0;
-                                @endphp
-                                @foreach ($carts as $key => $cartItem)
-                                    @php
-                                        $product = \App\Models\Product::find($cartItem['product_id']);
-                                        if($product) {
-                                            $cart_product_price = cart_product_price($cartItem, $product, false, false);
-                                            $subtotal += $cart_product_price * $cartItem['quantity'];
-                                        }
-                                    @endphp
-                                    @if($product)
-                                        <div class="d-flex align-items-center express-product-item">
-                                            <img src="{{ uploaded_asset($product->thumbnail_img) }}" class="img-fit size-50px rounded mr-3 border" alt="{{ $product->getTranslation('name') }}">
-                                            <div class="flex-grow-1 min-w-0">
-                                                <div class="fw-700 text-dark text-truncate small">{{ $product->getTranslation('name') }}</div>
-                                                <div class="small text-muted">
-                                                    Qty: {{ $cartItem['quantity'] }} × {{ format_price($cart_product_price) }}
-                                                </div>
-                                                @if($cartItem['variation'] != null)
-                                                    <small class="text-muted d-block" style="font-size: 10px;">{{ $cartItem['variation'] }}</small>
-                                                @endif
-                                            </div>
-                                            <div class="text-right pl-2 fw-700 text-dark small">
-                                                {{ format_price($cart_product_price * $cartItem['quantity']) }}
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-
-                            <!-- Pricing Details -->
-                            <div class="bg-light p-4 rounded-bottom">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="text-secondary">{{ translate('Subtotal') }}</span>
-                                    <span class="fw-700 text-dark" id="summary-subtotal">{{ format_price($subtotal) }}</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="text-secondary">{{ translate('Tax') }}</span>
-                                    <span class="fw-700 text-dark" id="summary-tax">{{ format_price(get_setting('tax', 0)) }}</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
-                                    <span class="text-secondary">{{ translate('Shipping Cost') }}</span>
-                                    <span class="fw-700 text-dark" id="shipping-cost">{{ format_price(0) }}</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <span class="h6 mb-0 text-dark fw-700">{{ translate('Grand Total') }}</span>
-                                    <span class="h5 mb-0 text-primary fw-800" id="grand-total">{{ format_price($subtotal + get_setting('tax', 0)) }}</span>
-                                </div>
-
-                                <!-- Action Buttons -->
-                                <button type="submit" class="btn btn-checkout-submit btn-block btn-lg fw-700 mb-3 py-3">
-                                    <i class="las la-lock mr-2"></i>
-                                    {{ translate('Complete Order') }} (<span id="btn-grand-total">{{ format_price($subtotal + get_setting('tax', 0)) }}</span>)
-                                </button>
-
-                                <div class="text-center text-muted small">
-                                    <i class="las la-shield-alt text-success mr-1 fs-14"></i>
-                                    {{ translate('Secure Checkout — 100% Encrypted Connection') }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
     </div>
 </section>
 
 <script>
 function add_new_address() {
     window.location.href = '{{ route("addresses.index") }}';
+}
+
+function removeExpressItem(id) {
+    if(confirm("আপনি কি এই পণ্যটি বাদ দিতে চান?")) {
+        $.post('{{ route('cart.removeFromCart') }}', {
+            _token  : AIZ.data.csrf,
+            id      : id
+        }, function(data){
+            AIZ.plugins.notify('success', "{{ translate('Item has been removed from cart') }}");
+            location.reload();
+        });
+    }
 }
 
 // Shipping charge calculation on radio change
@@ -377,7 +480,7 @@ document.querySelectorAll('input[name="shipping_charge"]').forEach(function(radi
         var selectedOption = this.value;
         
         if (selectedOption === 'inside_dhaka') {
-            shippingCharge = 60;
+            shippingCharge = 80;
         } else if (selectedOption === 'outside_dhaka') {
             shippingCharge = 120;
         }
@@ -387,6 +490,21 @@ document.querySelectorAll('input[name="shipping_charge"]').forEach(function(radi
         
         // Calculate and update grand total
         updateGrandTotal();
+    });
+});
+
+// Payment option selection styling
+document.querySelectorAll('input[name="payment_option"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+        document.querySelectorAll('.minimal-payment-option-label .payment-inner').forEach(function(el) {
+            el.style.borderColor = '#e2e8f0';
+            el.style.background = '#fff';
+        });
+        if(this.checked) {
+            var inner = this.closest('.minimal-payment-option-label').querySelector('.payment-inner');
+            inner.style.borderColor = 'var(--primary)';
+            inner.style.background = 'var(--soft-primary)';
+        }
     });
 });
 
@@ -418,6 +536,26 @@ function updateGrandTotal() {
     }
 }
 
+// Countdown Timer
+var duration = 15 * 60; // 15 minutes
+var timerDisplay = document.getElementById('countdown-timer');
+if (timerDisplay) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        timerDisplay.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
 // Form validation before submission
 document.getElementById('express-checkout-form').addEventListener('submit', function(e) {
     var paymentOption = document.querySelector('input[name="payment_option"]:checked');
@@ -435,7 +573,7 @@ document.getElementById('express-checkout-form').addEventListener('submit', func
         return false;
     }
     
-    @if(Auth::check())
+    @if(Auth::check() && count(Auth::user()->addresses) > 0)
     var addressId = document.querySelector('input[name="address_id"]:checked');
     if (!addressId) {
         e.preventDefault();
