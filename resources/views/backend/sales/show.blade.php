@@ -107,7 +107,13 @@
                                 {{ json_decode($order->shipping_address)->name }}
                             </strong><br>
                             {{ json_decode($order->shipping_address)->phone }}<br>
-                            {{ json_decode($order->shipping_address)->address }}, {{ json_decode($order->shipping_address)->city }}, {{ json_decode($order->shipping_address)->postal_code }}<br>
+                           @php
+                                $shipping = json_decode($order->shipping_address);
+                            @endphp
+
+                            {{ optional($shipping)->address }},
+                            {{ optional($shipping)->city }},
+                            {{ optional($shipping)->postal_code }}<br>
                         </address>
                     @else
                         <address>

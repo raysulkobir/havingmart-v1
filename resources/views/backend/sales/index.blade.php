@@ -69,12 +69,13 @@
                             </div>
                         </th>
                         <th>{{ translate('Order Code') }}</th>
+                        <th data-breakpoints="md">{{ translate('Date') }}</th>
                         <th data-breakpoints="md">{{ translate('Num. of Products') }}</th>
                         <th data-breakpoints="md">{{ translate('Customer') }}</th>
                         <th data-breakpoints="md">{{ translate('Seller') }}</th>
                         <th data-breakpoints="md">{{ translate('Amount') }}</th>
                         <th data-breakpoints="md">{{ translate('Delivery Status') }}</th>
-                        <th data-breakpoints="md">{{ translate('Payment method') }}</th>
+                        {{-- <th data-breakpoints="md">{{ translate('Payment method') }}</th> --}}
                         <th data-breakpoints="md">{{ translate('Payment Status') }}</th>
                         @if (addon_is_activated('refund_request'))
                         <th>{{ translate('Refund') }}</th>
@@ -95,8 +96,12 @@
                                 </div>
                             </div>
                         </td>
+                     
                         <td>
                             {{ $order->code }}@if($order->viewed == 0) <span class="badge badge-inline badge-info">{{translate('New')}}</span>@endif
+                        </td>
+                           <td>
+                            {{ $order->created_at->format('d-m-Y H:i A') }}
                         </td>
                         <td>
                             {{ count($order->orderDetails) }}
@@ -119,11 +124,27 @@
                             {{ single_price($order->grand_total) }}
                         </td>
                         <td>
-                            {{ translate(ucfirst(str_replace('_', ' ', $order->delivery_status))) }}
+                            @php
+                                $status = strtolower($order->delivery_status);
+
+                                $badgeClass = match ($status) {
+                                    'pending' => 'bg-warning text-dark',
+                                    'confirmed' => 'bg-info',
+                                    'processing' => 'bg-primary',
+                                    'out_for_delivery' => 'bg-secondary',
+                                    'delivered' => 'bg-success',
+                                    'cancelled' => 'bg-danger',
+                                    default => 'bg-dark',
+                                };
+                            @endphp
+
+                            <span class="badge badge-inline {{ $badgeClass }}">
+                                {{ translate(ucfirst(str_replace('_', ' ', $order->delivery_status))) }}
+                            </span>
                         </td>
-                        <td>
+                        {{-- <td>
                             {{ translate(ucfirst(str_replace('_', ' ', $order->payment_type))) }}
-                        </td>
+                        </td> --}}
                         <td>
                             @if ($order->payment_status == 'paid')
                                 <span class="badge badge-inline badge-success">{{translate('Paid')}}</span>

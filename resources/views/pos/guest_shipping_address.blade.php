@@ -22,7 +22,7 @@
         </div>
     </div>
 </div>
-<div class="form-group">
+{{-- <div class="form-group">
     <div class=" row">
         <label class="col-sm-2 control-label">{{translate('Country')}}</label>
         <div class="col-sm-10">
@@ -34,8 +34,8 @@
             </select>
         </div>
     </div>
-</div>
-<div class="form-group">
+</div> --}}
+{{-- <div class="form-group">
     <div class="row">
         <div class="col-sm-2 control-label"">
             <label>{{ translate('State')}}</label>
@@ -66,7 +66,7 @@
             <input type="number" min="0" placeholder="{{translate('Postal code')}}" id="postal_code" name="postal_code" class="form-control" required>
         </div>
     </div>
-</div>
+</div> --}}
 <div class="form-group">
     <div class=" row">
         <label class="col-sm-2 control-label" for="phone">{{translate('Phone')}}</label>

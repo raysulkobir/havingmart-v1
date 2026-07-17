@@ -242,19 +242,19 @@ class PosController extends Controller
             $data['name'] = $address->user->name;
             $data['email'] = $address->user->email;
             $data['address'] = $address->address;
-            $data['country'] = $address->country->name;
-            $data['state'] = $address->state->name;
-            $data['city'] = $address->city->name;
-            $data['postal_code'] = $address->postal_code;
+            // $data['country'] = $address->country->name;
+            // $data['state'] = $address->state->name;
+            // $data['city'] = $address->city->name;
+            // $data['postal_code'] = $address->postal_code;
             $data['phone'] = $address->phone;
         } else {
             $data['name'] = $request->name;
             $data['email'] = $request->email;
             $data['address'] = $request->address;
-            $data['country'] = Country::find($request->country_id)->name;
-            $data['state'] = State::find($request->state_id)->name;
-            $data['city'] = City::find($request->city_id)->name;
-            $data['postal_code'] = $request->postal_code;
+            // $data['country'] = Country::find($request->country_id)->name;
+            // $data['state'] = State::find($request->state_id)->name;
+            // $data['city'] = City::find($request->city_id)->name;
+            // $data['postal_code'] = $request->postal_code;
             $data['phone'] = $request->phone;
         }
 
@@ -302,9 +302,9 @@ class PosController extends Controller
             $data['name']           = $shipping_info['name'];
             $data['email']          = $shipping_info['email'];
             $data['address']        = $shipping_info['address'];
-            $data['country']        = $shipping_info['country'];
-            $data['city']           = $shipping_info['city'];
-            $data['postal_code']    = $shipping_info['postal_code'];
+            // $data['country']        = $shipping_info['country'];
+            // $data['city']           = $shipping_info['city'];
+            // $data['postal_code']    = $shipping_info['postal_code'];
             $data['phone']          = $shipping_info['phone'];
             $order->shipping_address = json_encode($data);
 
