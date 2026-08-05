@@ -101,7 +101,7 @@
                             {{ $order->code }}@if($order->viewed == 0) <span class="badge badge-inline badge-info">{{translate('New')}}</span>@endif
                         </td>
                            <td>
-                            {{ $order->created_at->format('d-m-Y H:i A') }}
+                           {{ $order->created_at->format('d-m-Y h:i A') }}
                         </td>
                         <td>
                             {{ count($order->orderDetails) }}
