@@ -3,26 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\AffiliateController;
-use Illuminate\Http\Request;
-use App\Models\Order;
-use App\Models\Cart;
+use App\Mail\InvoiceEmailManager;
 use App\Models\Address;
+use App\Models\Cart;
+use App\Models\CombinedOrder;
+use App\Models\Coupon;
+use App\Models\CouponUsage;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\OrderNote;
 use App\Models\Product;
 use App\Models\ProductStock;
-use App\Models\OrderDetail;
-use App\Models\CouponUsage;
-use App\Models\Coupon;
-use App\Models\User;
-use App\Models\CombinedOrder;
 use App\Models\SmsTemplate;
-use App\Models\OrderNote;
-use Auth;
-use Mail;
-use App\Mail\InvoiceEmailManager;
+use App\Models\User;
 use App\Utility\NotificationUtility;
-use CoreComponentRepository;
+use App\Utility\SendSMSUtility;
 use App\Utility\SmsUtility;
+use Auth;
+use CoreComponentRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Mail;
 
 class OrderController extends Controller
 {
@@ -306,6 +307,8 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
+        // return $request->all();
+
         if ($request->has('name')) {
             $shippingAddress = json_decode($order->shipping_address, true) ?? [];
             $shippingAddress['name'] = $request->name;
@@ -345,6 +348,15 @@ class OrderController extends Controller
             $orderNote->user_id = Auth::check() ? Auth::user()->id : null;
             $orderNote->note = $request->note;
             $orderNote->save();
+        }
+
+        if($request->delivery_status == 'cancelled') {
+            SendSMSUtility::sendSMS(
+                $request->phone,
+                null,
+                "HavingMart: Your order {$order->code} has been cancelled. Thank you.",
+                null
+            );
         }
 
         flash(translate('Order has been updated successfully'))->success();
@@ -486,7 +498,7 @@ class OrderController extends Controller
         }
         if (addon_is_activated('otp_system') && SmsTemplate::where('identifier', 'delivery_status_change')->first()->status == 1) {
             try {
-                SmsUtility::delivery_status_change(json_decode($order->shipping_address)->phone, $order);
+                // SmsUtility::delivery_status_change(json_decode($order->shipping_address)->phone, $order);
             } catch (\Exception $e) {
 
             }
