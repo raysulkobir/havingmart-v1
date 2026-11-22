@@ -381,7 +381,7 @@ class CheckoutController extends Controller
         ];
 
         // Calculate shipping charge
-        $shipping_charge = $request->shipping_charge == 'inside_dhaka' ? 60 : 120;
+        $shipping_charge = $request->shipping_charge == 'inside_dhaka' ? 80 : 120;
         $request->session()->put('shipping_charge', $shipping_charge);
         $request->session()->put('guest_checkout', true);
         $request->session()->put('express_checkout_cart_ids', $carts->pluck('id')->all());
@@ -412,7 +412,7 @@ class CheckoutController extends Controller
         }
 
         // Calculate shipping charge
-        $shipping_charge = $request->shipping_charge == 'inside_dhaka' ? 60 : 120;
+        $shipping_charge = $request->shipping_charge == 'inside_dhaka' ? 80 : 120;
         $request->session()->put('shipping_charge', $shipping_charge);
         $request->session()->put('express_checkout_cart_ids', $carts->pluck('id')->all());
 

@@ -8,9 +8,8 @@ use Twilio\Rest\Client;
 
 class SendSMSUtility
 {
-    public static function sendSMS($to, $from, $text, $template_id)
+    public static function sendSMS($to, $from = null, $text, $template_id = null)
     {  
-       
         if (OtpConfiguration::where('type', 'nexmo')->first()->value == 1) {
             $api_key = env("NEXMO_KEY"); //put ssl provided api_token here
             $api_secret = env("NEXMO_SECRET"); // put ssl provided sid here

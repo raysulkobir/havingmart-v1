@@ -280,5 +280,26 @@
             $('input[name=max_price]').val(arg[1]);
             filter();
         }
+
+
+        window.dataLayer = window.dataLayer || [];
+        dataLayer.push({
+            event: "select_category",
+            ecommerce: {
+                item_list_name: "{{ $query ?? 'Product Listing' }}",
+                items: [
+                    @foreach($products as $index => $product)
+                    {
+                        item_id: "{{ $product->id }}",
+                        item_name: "{{ $product->name }}",
+                        price: {{ $product->unit_price }},
+                        item_brand: "{{ optional($product->brand)->name }}",
+                        item_category: "{{ optional($product->category)->name }}",
+                        index: {{ $index + 1 }}
+                    }@if(!$loop->last),@endif
+                    @endforeach
+                ]
+            }
+        });
     </script>
 @endsection

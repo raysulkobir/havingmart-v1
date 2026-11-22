@@ -17,8 +17,6 @@ class AppServiceProvider extends ServiceProvider
   {
       Schema::defaultStringLength(191);
       Paginator::useBootstrap();
-      $time = \App\Models\BusinessSetting::where('type', 'time')->first();
-      sleep($time->value);
   }
 
   /**

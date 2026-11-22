@@ -47,7 +47,7 @@
     <link rel="stylesheet" href="{{ static_asset('assets/css/bootstrap-rtl.min.css') }}">
     @endif
     <link rel="stylesheet" href="{{ static_asset('assets/css/style.css?v=1') }}">
-    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css') }}">
+    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=6') }}">
     <script>
         var AIZ = AIZ || {};
         AIZ.local = {
@@ -106,6 +106,16 @@
     </script>
 @endif
 
+@if (get_setting('google_tag_manager') == 1)
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{ env('GTM_ID') }}');</script>
+    <!-- End Google Tag Manager -->
+@endif
+
 @if (get_setting('facebook_pixel') == 1)
     <script>
         !function(f,b,e,v,n,t,s)
@@ -130,6 +140,12 @@
 
 </head>
 <body>
+    @if (get_setting('google_tag_manager') == 1)
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ env('GTM_ID') }}"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    @endif
     <div class="aiz-main-wrapper d-flex flex-column">
         @include('frontend.inc.nav')
 
@@ -240,9 +256,13 @@
         $(document).ready(function() {
             $('.category-nav-element').each(function(i, el) {
                 $(el).on('mouseover', function(){
-                    if(!$(el).find('.sub-cat-menu').hasClass('loaded')){
+                    var subMenu = $(el).find('.sub-cat-menu');
+                    if(subMenu.length > 0 && !subMenu.hasClass('loaded') && !subMenu.hasClass('loading')){
+                        subMenu.addClass('loading');
                         $.post('{{ route('category.elements') }}', {_token: AIZ.data.csrf, id:$(el).data('id')}, function(data){
-                            $(el).find('.sub-cat-menu').addClass('loaded').html(data);
+                            subMenu.removeClass('loading').addClass('loaded').html(data);
+                        }).fail(function() {
+                            subMenu.removeClass('loading');
                         });
                     }
                 });
@@ -322,6 +342,9 @@
                 _token  : AIZ.data.csrf,
                 id      :  key
             }, function(data){
+                if (data.status == 1 && data.gtm) {
+                    pushRemoveFromCartEvent(data.gtm);
+                }
                 updateNavCart(data.nav_cart_view,data.cart_count);
                 $('#cart-summary').html(data.cart_view);
                 AIZ.plugins.notify('success', "{{ translate('Item has been removed from cart') }}");
@@ -369,6 +392,32 @@
                 AIZ.plugins.zoom();
                 AIZ.extra.plusMinus();
                 getVariantPrice();
+            });
+        }
+
+        function pushAddToCartEvent(gtm) {
+            if (!gtm) return;
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+                event: 'add_to_cart',
+                ecommerce: {
+                    currency: gtm.currency,
+                    value: parseFloat(gtm.value),
+                    items: gtm.items
+                }
+            });
+        }
+
+        function pushRemoveFromCartEvent(gtm) {
+            if (!gtm) return;
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+                event: 'remove_from_cart',
+                ecommerce: {
+                    currency: gtm.currency,
+                    value: parseFloat(gtm.value),
+                    items: gtm.items
+                }
             });
         }
 
@@ -442,6 +491,9 @@
                     url: '{{ route('cart.addToCart') }}',
                     data: $('#option-choice-form').serializeArray().concat([{name: 'buy_now', value: buyNow ? 1 : 0}]),
                     success: function(data){
+                       if (data.status == 1 && data.gtm) {
+                           pushAddToCartEvent(data.gtm);
+                       }
 
                        $('#addToCart-modal-body').html(null);
                        $('.c-preloader').hide();
@@ -452,7 +504,7 @@
                        updateNavCart(data.nav_cart_view,data.cart_count);
 
                           if(buyNow){
-                            window.location.replace("{{ route('cart') }}");
+                            window.location.replace("{{ route('checkout.express.show') }}");
                           }
                     }
                 });
@@ -478,11 +530,14 @@
                    data: $('#option-choice-form').serializeArray().concat([{name: 'buy_now', value: 1}]),
                    success: function(data){
                        if(data.status == 1){
+                            if (data.gtm) {
+                                pushAddToCartEvent(data.gtm);
+                            }
 
                             $('#addToCart-modal-body').html(data.modal_view);
                             updateNavCart(data.nav_cart_view,data.cart_count);
 
-                            window.location.replace("{{ route('cart') }}");
+                            window.location.replace("{{ route('checkout.express.show') }}");
                        }
                        else{
                             $('#addToCart-modal-body').html(null);
@@ -513,10 +568,31 @@
             $("#footer_bottom").removeClass("pt-2");
             $("#footer_bottom").addClass("pt-4");
         }
+
+        // Scroll to top button visibility
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 300) {
+                $('#scroll-to-top').addClass('show');
+            } else {
+                $('#scroll-to-top').removeClass('show');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
     </script>
     {{-- slider  --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+
+    <button id="scroll-to-top" class="scroll-to-top-btn" onclick="scrollToTop()" title="{{ translate('Scroll to Top') }}">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"></path></svg>
+    </button>
 
     <div class="social-float-container">
         <a href="https://wa.me/8801308664173" target="_blank" class="social-icon whatsapp">
