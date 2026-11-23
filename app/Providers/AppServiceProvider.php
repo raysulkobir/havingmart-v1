@@ -16,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
   public function boot()
   {
       Schema::defaultStringLength(191);
-      Paginator::useBootstrap();
+      // useBootstrap() only exists on Laravel 8+; on Laravel 6 Bootstrap is already the default paginator.
+      if (method_exists(Paginator::class, 'useBootstrap')) {
+          Paginator::useBootstrap();
+      }
   }
 
   /**
