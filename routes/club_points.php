@@ -12,7 +12,7 @@
 */
 
 //Admin
-Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function(){
+Route::group(['prefix' =>'admin', 'namespace' => 'App\Http\Controllers', 'middleware' => ['auth', 'admin']], function(){
     Route::get('club-points/configuration', 'ClubPointController@configure_index')->name('club_points.configs');
     Route::get('club-points/index', 'ClubPointController@index')->name('club_points.index');
     Route::get('set-club-points', 'ClubPointController@set_point')->name('set_product_points');
@@ -24,7 +24,7 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 });
 
 //FrontEnd
-Route::group(['middleware' => ['user', 'verified']], function(){
+Route::group(['namespace' => 'App\Http\Controllers', 'middleware' => ['user', 'verified']], function(){
     Route::get('earning-points', 'ClubPointController@userpoint_index')->name('earnng_point_for_user');
     Route::post('convert-point-into-wallet', 'ClubPointController@convert_point_into_wallet')->name('convert_point_into_wallet');
 });

@@ -14,7 +14,7 @@
 
 //Admin
 
-use App\Http\Controllers\DeliveryBoyController;
+use App\Http\Controllers\Api\V2\DeliveryBoyController;
 use App\Http\Controllers\OrderController;
 
 Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function(){

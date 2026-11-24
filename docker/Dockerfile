@@ -1,14 +1,7 @@
-FROM php:7.4-apache
-
-# Debian bullseye is EOL and has moved to archive.debian.org, so repoint apt there.
-RUN sed -i \
-        -e 's|http://deb.debian.org/debian-security|http://archive.debian.org/debian-security|g' \
-        -e 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' \
-        -e '/bullseye-updates/d' \
-        /etc/apt/sources.list
+FROM php:8.3-apache
 
 # System libraries + image-optimizer binaries used by spatie/laravel-image-optimizer
-RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
         unzip \
         libzip-dev \
