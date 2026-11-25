@@ -1930,3 +1930,16 @@
 .aiz-card-box:hover .aiz-p-hov-icon{ opacity:1; transform:translateX(0); }
 .aiz-card-box .fs-15 del{ color:var(--text-secondary); font-size:12px; }
 .aiz-card-box .fs-15 .text-primary{ font-size:16px; }
+
+/* HavingMart — premium product card: badges, brand, reviews, stock */
+.hm-card-badges{ position:absolute; top:10px; left:10px; z-index:4; display:flex; flex-direction:column; gap:5px; align-items:flex-start; }
+.hm-badge{ font-size:10px; font-weight:700; padding:4px 9px; border-radius:20px; line-height:1; letter-spacing:.3px; color:#fff; }
+.hm-badge-off{ background:var(--primary); }
+.hm-badge-best{ background:#242024; }
+.hm-badge-new{ background:#2e7d50; }
+.hm-card-brand{ font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:var(--text-secondary); margin-bottom:2px; transition:color .2s ease; }
+.hm-card-brand:hover{ color:var(--primary) !important; }
+.hm-review-count{ font-size:11px; color:var(--text-secondary); margin-left:4px; }
+.hm-stock{ font-size:11px; font-weight:600; margin-top:6px; }
+.hm-stock.is-in{ color:#2e7d50; }
+.hm-stock.is-out{ color:#bd3a30; }
