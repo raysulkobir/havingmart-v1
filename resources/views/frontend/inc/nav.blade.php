@@ -283,61 +283,20 @@
                 <a href="{{ route('categories.all') }}" class="hm-catbar-all">
                     <i class="las la-th-large mr-1"></i> {{ translate('All Categories') }}
                 </a>
-                @foreach ($level0 as $cat)
-                    @php $children = $allCategories->where('parent_id', $cat->id); @endphp
-                    <div class="hm-catbar-item">
-                        <a href="{{ route('products.category', $cat->slug) }}" class="hm-catbar-link">
-                            {{ $cat->getTranslation('name') }}
-                            @if($children->count() > 0)
-                                <i class="las la-angle-down fs-10 ml-1"></i>
-                            @endif
-                        </a>
-                        @if($children->count() > 0)
-                            <div class="hm-catbar-dropdown">
-                                <div class="hm-catbar-dropdown-inner">
-                                    @foreach ($children as $sub)
-                                        @php $subChildren = $allCategories->where('parent_id', $sub->id); @endphp
-                                        <div class="hm-catbar-col">
-                                            <a href="{{ route('products.category', $sub->slug) }}" class="hm-catbar-sub-title">
-                                                {{ $sub->getTranslation('name') }}
-                                            </a>
-                                            @if($subChildren->count() > 0)
-                                                <ul class="hm-catbar-sub-list">
-                                                    @foreach ($subChildren->take(8) as $item)
-                                                        <li>
-                                                            <a href="{{ route('products.category', $item->slug) }}">
-                                                                {{ $item->getTranslation('name') }}
-                                                            </a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                @endforeach
+                @if ( get_setting('header_menu_labels') != null )
+                    @foreach (json_decode(get_setting('header_menu_labels'), true) as $key => $value)
+                        <div class="hm-catbar-item">
+                            <a href="{{ url('/').json_decode(get_setting('header_menu_links'), true)[$key] }}" class="hm-catbar-link">
+                                {{ translate($value) }}
+                            </a>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
 
-    @if ( get_setting('header_menu_labels') !=  null )
-        <div class="bd-dazlea border-top border-gray-200">
-            <div class="container">
-                <ul class="list-inline mb-0 pl-0 mobile-hor-swipe text-center text-white">
-                    @foreach (json_decode( get_setting('header_menu_labels'), true) as $key => $value)
-                    <li class="list-inline-item mr-0">
-                        <a href="{{ url('/').json_decode( get_setting('header_menu_links'), true)[$key] }}" class="fs-14 px-3 py-1 d-inline-block fw-600 hov-opacity-90 text-reset">
-                            {{ translate($value) }}
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    @endif
+    {{-- Secondary menu bar removed: merged into the single category bar above --}}
 </header>
 
 <div class="modal fade" id="order_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
