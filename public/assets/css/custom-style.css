@@ -1870,3 +1870,12 @@
         transform: translateY(-3px) scale(1.05);
     }
 }
+/* HavingMart — Shop by Category tiles */
+.hm-cat-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:16px;}
+.hm-cat-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px 10px;background:#FFF3F8;border:1px solid #FCE4F0;border-radius:16px;text-decoration:none !important;text-align:center;transition:transform .25s ease,box-shadow .25s ease,background .25s ease,border-color .25s ease;}
+.hm-cat-tile:hover{transform:translateY(-5px);background:#fff;border-color:#DF1F8F;box-shadow:0 12px 26px rgba(223,31,143,.15);}
+.hm-cat-tile-icon{width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;color:#DF1F8F;font-size:30px;box-shadow:0 4px 12px rgba(223,31,143,.12);transition:background .25s ease,color .25s ease;}
+.hm-cat-tile:hover .hm-cat-tile-icon{background:#DF1F8F;color:#fff;}
+.hm-cat-tile-name{font-weight:600;font-size:14px;color:#242024;line-height:1.3;}
+@media (max-width:991px){.hm-cat-grid{grid-template-columns:repeat(4,1fr);}}
+@media (max-width:575px){.hm-cat-grid{grid-template-columns:repeat(2,1fr);gap:12px;}}

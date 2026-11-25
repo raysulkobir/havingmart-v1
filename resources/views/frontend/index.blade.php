@@ -95,71 +95,28 @@
                     </h2>
                 </div>
                 
-                <div class="row gutters-10 row-cols-2 row-cols-md-4">
+                <div class="hm-cat-grid">
                     @php
-                        $beauty_categories = [
-                            [
-                                'name' => 'Makeup',
-                                'slug' => 'makeup',
-                                'image' => static_asset('assets/img/home_categories/makeup.webp')
-                            ],
-                            [
-                                'name' => 'K-Beauty',
-                                'slug' => 'k-beauty',
-                                'image' => static_asset('assets/img/home_categories/k_beauty.webp')
-                            ],
-                            [
-                                'name' => 'Hair Care',
-                                'slug' => 'hair-care',
-                                'image' => static_asset('assets/img/home_categories/hair_care.webp')
-                            ],
-                            [
-                                'name' => 'Mom & Baby',
-                                'slug' => 'mom-baby',
-                                'image' => static_asset('assets/img/home_categories/mom_baby.webp')
-                            ],
-                            [
-                                'name' => 'Skin Care',
-                                'slug' => 'skincare',
-                                'image' => static_asset('assets/img/home_categories/skin_care.webp')
-                            ],
-                            [
-                                'name' => 'Accessories',
-                                'slug' => 'accessories',
-                                'image' => static_asset('assets/img/home_categories/accessories.webp')
-                            ],
-                            [
-                                'name' => 'Undergarments',
-                                'slug' => 'undergarments',
-                                'image' => static_asset('assets/img/home_categories/undergarments.webp')
-                            ],
-                            [
-                                'name' => 'Fragrance',
-                                'slug' => 'fragrance',
-                                'image' => static_asset('assets/img/home_categories/fragrance.webp')
-                            ]
+                        $hm_cats = [
+                            ['name' => 'Skincare',       'slug' => 'skincare',            'icon' => 'la-spa'],
+                            ['name' => 'Korean Beauty',  'slug' => 'korean-beauty',       'icon' => 'la-heart'],
+                            ['name' => 'Makeup',         'slug' => 'makeup',              'icon' => 'la-palette'],
+                            ['name' => 'Haircare',       'slug' => 'haircare',            'icon' => 'la-wind'],
+                            ['name' => 'Bodycare',       'slug' => 'personal-care',       'icon' => 'la-pump-soap'],
+                            ['name' => 'Fragrance',      'slug' => 'fragrance-perfume',   'icon' => 'la-spray-can'],
+                            ['name' => 'Beauty Tools',   'slug' => 'beauty-tools-device', 'icon' => 'la-magic'],
+                            ['name' => 'Special Offers', 'slug' => null, 'link' => route('flash-deals'), 'icon' => 'la-tags'],
                         ];
                     @endphp
-                    
-                    @foreach($beauty_categories as $b_cat)
+                    @foreach($hm_cats as $c)
                         @php
-                            $db_cat = \App\Models\Category::where('slug', $b_cat['slug'])->where('status', 1)->first();
-                            $link = $db_cat ? route('products.category', $db_cat->slug) : route('search') . '?keyword=' . urlencode($b_cat['name']);
+                            $db_cat = $c['slug'] ? \App\Models\Category::where('slug', $c['slug'])->first() : null;
+                            $link = $c['link'] ?? ($db_cat ? route('products.category', $db_cat->slug) : route('search'));
                         @endphp
-                        <div class="col mb-3">
-                            <a href="{{ $link }}" class="hm-beauty-cat-card">
-                                <div class="hm-beauty-cat-text">{{ translate($b_cat['name']) }}</div>
-                                <div class="hm-beauty-cat-img-wrapper">
-                                    <img 
-                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                        data-src="{{ $b_cat['image'] }}" 
-                                        alt="{{ translate($b_cat['name']) }}"
-                                        class="hm-beauty-cat-img lazyload"
-                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                    >
-                                </div>
-                            </a>
-                        </div>
+                        <a href="{{ $link }}" class="hm-cat-tile">
+                            <span class="hm-cat-tile-icon"><i class="las {{ $c['icon'] }}"></i></span>
+                            <span class="hm-cat-tile-name">{{ translate($c['name']) }}</span>
+                        </a>
                     @endforeach
                 </div>
             </div>
