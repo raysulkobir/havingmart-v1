@@ -81,12 +81,16 @@
     <style>
         :root{
             --primary: {{ get_setting('base_color', '#DF1F8F') }};
-            --hov-primary: {{ get_setting('base_hov_color', '#B81876') }};
+            --hov-primary: {{ get_setting('base_hov_color', '#C9177C') }};
             --soft-primary: {{ hex2rgba(get_setting('base_color','#DF1F8F'),.15) }};
-            /* HavingMart brand palette */
+            /* HavingMart design-system palette */
+            --primary-hover: #C9177C;
+            --soft-pink: #FFF3F8;
+            --light-pink: #FCE4F0;
             --secondary: #FFF3F8;
             --bg: #FFFFFF;
             --text: #242024;
+            --text-secondary: #777777;
         }
         body{
             font-family: 'Jost', 'Open Sans', sans-serif;
