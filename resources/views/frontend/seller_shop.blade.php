@@ -112,7 +112,7 @@
     @if (!isset($type))
         <section class="mb-5">
             <div class="container">
-                <div class="aiz-carousel dots-inside-bottom mobile-img-auto-height" data-arrows="true" data-dots="true" data-autoplay="true">
+                <div class="aiz-carousel dots-inside-bottom mobile-img-auto-height" data-arrows="false" data-dots="true" data-autoplay="true">
                     @if ($shop->sliders != null)
                         @foreach (explode(',',$shop->sliders) as $key => $slide)
                             <div class="carousel-box">
