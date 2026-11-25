@@ -12,8 +12,8 @@
     --white: #fff;
     --gray: #6c757d;
     --gray-dark: #343a40;
-    --primary: #377dff;
-    --hov-primary: #377dff;
+    --primary: #DF1F8F;
+    --hov-primary: #DF1F8F;
     --soft-primary: rgb(207 224 255);
     --secondary: #8f97ab;
     --soft-secondary: rgba(143, 151, 171, 0.15);
@@ -8514,7 +8514,7 @@ div.footable-loader > span.fooicon:after {
     right: calc(15% - 6px);
 }
 .badge-primary {
-    background-color: #336659;
+    background-color: #DF1F8F;
 }
 .badge-secondary {
     background-color: var(--secondary);
@@ -9794,7 +9794,7 @@ ul.social.colored [class*="linkedin"] {
 .badge-custom .box {
     height: 26px;
     width: 26px;
-    background: #336659;
+    background: #DF1F8F;
     color: #fff;
     display: inline-block;
     border-radius: 50%;
@@ -9806,7 +9806,7 @@ ul.social.colored [class*="linkedin"] {
 
 .not_found{
     font-size: 100px;
-    color: #377dff;
+    color: #DF1F8F;
     margin-top: 50px;
 }
 
@@ -9831,7 +9831,7 @@ ul.social.colored [class*="linkedin"] {
 }
 
 .top_serach_input:focus{
-    border-color: #336659 !important;
+    border-color: #DF1F8F !important;
 }
 
 .top_serach_button{
@@ -9946,7 +9946,7 @@ del{
      gap: 20px;
      justify-content: center;
      align-items: center;
-     background: #336659;
+     background: #DF1F8F;
  }
 
 .product-actions a {

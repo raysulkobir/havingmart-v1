@@ -2930,21 +2930,21 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #336659;
-    border-color: #336659;
+    background-color: #DF1F8F;
+    border-color: #DF1F8F;
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #336659 !important;
-    border-color: #336659 !important;
+    background-color: #DF1F8F !important;
+    border-color: #DF1F8F !important;
 }
 
 .btn-primary.focus,
 .btn-primary:focus {
     color: #fff;
-    background-color: #336659;
-    border-color: #336659;
+    background-color: #DF1F8F;
+    border-color: #DF1F8F;
     /* box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); */
 }
 
@@ -32187,5 +32187,5 @@ img.jssocials-share-logo {
 }
 
 .bd-dazlea {
-    background-color: #336659;
+    background-color: #DF1F8F;
 }
