@@ -1921,3 +1921,12 @@
   #hm-product-grid.hm-list-view .aiz-card-box .img-fit{ height:110px !important; }
   #hm-product-grid.hm-list-view .aiz-card-box .product-actions a{ padding:8px 14px; }
 }
+
+/* HavingMart — attractive cosmetic product image frame + hover zoom */
+.aiz-card-box > .position-relative > a.d-block{ display:block; background:linear-gradient(160deg,#FFF3F8 0%,#FCE4F0 100%); border-radius:12px; overflow:hidden; margin:8px 8px 0; }
+.aiz-card-box .img-fit{ transition:transform .55s cubic-bezier(.2,.7,.2,1); }
+.aiz-card-box:hover .img-fit{ transform:scale(1.07); }
+.aiz-card-box .aiz-p-hov-icon{ opacity:0; transform:translateX(6px); transition:opacity .25s ease, transform .25s ease; }
+.aiz-card-box:hover .aiz-p-hov-icon{ opacity:1; transform:translateX(0); }
+.aiz-card-box .fs-15 del{ color:var(--text-secondary); font-size:12px; }
+.aiz-card-box .fs-15 .text-primary{ font-size:16px; }
