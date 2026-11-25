@@ -226,13 +226,7 @@
                                 <div class="hm-concern-card">
                                     <div class="hm-concern-hexagon-border">
                                         <div class="hm-concern-hexagon-wrap">
-                                            <img 
-                                                src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                data-src="{{ $concern['image'] }}" 
-                                                alt="{{ translate($concern['main_title']) }}"
-                                                class="hm-concern-img lazyload"
-                                                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                            >
+                                            <i class="las hm-concern-icon {{ ['Oil Control'=>'la-tint','Pore'=>'la-dot-circle','Spot'=>'la-band-aid','Hair Thinning'=>'la-wind','Sun Burn'=>'la-sun'][$concern['main_title']] ?? 'la-spa' }}"></i>
                                         </div>
                                     </div>
                                     <div class="hm-concern-title-main">{{ translate($concern['main_title']) }}</div>
