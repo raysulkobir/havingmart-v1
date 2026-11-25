@@ -1880,3 +1880,20 @@
 @media (max-width:991px){.hm-cat-grid{grid-template-columns:repeat(4,1fr);}}
 @media (max-width:575px){.hm-cat-grid{grid-template-columns:repeat(2,1fr);gap:12px;}}
 
+
+/* HavingMart — premium product card */
+.aiz-card-box .img-fit{ padding:12px; }
+.aiz-card-box .badge-custom{ position:absolute; top:10px; left:10px; z-index:3; background:var(--primary); color:#fff; font-size:10px; font-weight:700; padding:4px 9px; border-radius:20px; line-height:1.1; letter-spacing:.3px; }
+.aiz-card-box .badge-custom .box{ background:transparent; padding:0; margin:0; }
+.aiz-card-box .aiz-p-hov-icon a{ display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:#fff; color:#242024; box-shadow:0 2px 8px rgba(36,32,36,.12); margin-bottom:6px; transition:background .2s ease,color .2s ease; }
+.aiz-card-box .aiz-p-hov-icon a:hover{ background:var(--primary); color:#fff; }
+.aiz-card-box h3 a{ transition:color .2s ease; }
+.aiz-card-box h3 a:hover{ color:var(--primary) !important; }
+.aiz-card-box .rating .la-star{ color:#f6a609; }
+.aiz-card-box .product-actions{ padding:0 12px 4px; }
+.aiz-card-box .product-actions.mt-1{ padding-bottom:14px; }
+.aiz-card-box .product-actions a{ display:flex; align-items:center; justify-content:center; width:100%; border-radius:9px; font-weight:600; font-size:13px; padding:9px 10px; transition:all .2s ease; text-decoration:none !important; }
+.aiz-card-box .product-actions:not(.mt-1) a{ background:var(--primary); color:#fff !important; }
+.aiz-card-box .product-actions:not(.mt-1) a:hover{ background:var(--primary-hover); box-shadow:0 6px 16px rgba(223,31,143,.28); }
+.aiz-card-box .product-actions.mt-1 a{ background:#fff; color:var(--primary) !important; border:1.5px solid var(--primary); }
+.aiz-card-box .product-actions.mt-1 a:hover{ background:var(--primary); color:#fff !important; }
