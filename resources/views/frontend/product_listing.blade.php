@@ -249,11 +249,17 @@
                                         <option value="price-desc" @isset($sort_by) @if ($sort_by == 'price-desc') selected @endif @endisset>{{ translate('Price high to low')}}</option>
                                     </select>
                                 </div>
+                                <div class="col-auto mb-3 ml-auto align-self-end">
+                                    <div class="hm-view-toggle btn-group">
+                                        <button type="button" class="btn btn-sm active" data-view="grid" title="{{ translate('Grid view') }}"><i class="las la-th-large"></i></button>
+                                        <button type="button" class="btn btn-sm" data-view="list" title="{{ translate('List view') }}"><i class="las la-list"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <input type="hidden" name="min_price" value="">
                         <input type="hidden" name="max_price" value="">
-                        <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2">
+                        <div class="row gutters-5 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-4 row-cols-md-3 row-cols-2" id="hm-product-grid">
                             @foreach ($products as $key => $product)
                                 <div class="col">
                                     @include('frontend.partials.product_box_1',['product' => $product])
@@ -276,6 +282,20 @@
         function filter(){
             $('#search-form').submit();
         }
+        // Grid / List view toggle (remembers the choice)
+        (function(){
+            var grid = document.getElementById('hm-product-grid');
+            var btns = document.querySelectorAll('.hm-view-toggle [data-view]');
+            function setView(v){
+                if(grid){ grid.classList.toggle('hm-list-view', v === 'list'); }
+                btns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-view') === v); });
+                try{ localStorage.setItem('hm_product_view', v); }catch(e){}
+            }
+            btns.forEach(function(b){ b.addEventListener('click', function(){ setView(b.getAttribute('data-view')); }); });
+            var saved = 'grid';
+            try{ saved = localStorage.getItem('hm_product_view') || 'grid'; }catch(e){}
+            setView(saved);
+        })();
         function rangefilter(arg){
             $('input[name=min_price]').val(arg[0]);
             $('input[name=max_price]').val(arg[1]);

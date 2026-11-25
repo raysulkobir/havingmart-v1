@@ -1897,3 +1897,27 @@
 .aiz-card-box .product-actions:not(.mt-1) a:hover{ background:var(--primary-hover); box-shadow:0 6px 16px rgba(223,31,143,.28); }
 .aiz-card-box .product-actions.mt-1 a{ background:#fff; color:var(--primary) !important; border:1.5px solid var(--primary); }
 .aiz-card-box .product-actions.mt-1 a:hover{ background:var(--primary); color:#fff !important; }
+
+/* HavingMart — product grid/list view toggle */
+.hm-view-toggle .btn{ border:1px solid var(--light-pink); background:#fff; color:#242024; padding:6px 13px; line-height:1; }
+.hm-view-toggle .btn.active{ background:var(--primary); color:#fff; border-color:var(--primary); }
+.hm-view-toggle .btn:first-child{ border-radius:8px 0 0 8px; }
+.hm-view-toggle .btn:last-child{ border-radius:0 8px 8px 0; }
+
+#hm-product-grid.hm-list-view > .col{ flex:0 0 100%; max-width:100%; }
+#hm-product-grid.hm-list-view .aiz-card-box{ display:flex; align-items:center; gap:18px; }
+#hm-product-grid.hm-list-view .aiz-card-box > .position-relative{ flex:0 0 180px; max-width:180px; }
+#hm-product-grid.hm-list-view .aiz-card-box .img-fit{ height:160px !important; }
+#hm-product-grid.hm-list-view .aiz-card-box > .pt-2{ flex:1 1 auto; text-align:left !important; padding:16px 18px 16px 0; }
+#hm-product-grid.hm-list-view .aiz-card-box .p-md-2{ padding:0 !important; }
+#hm-product-grid.hm-list-view .aiz-card-box h3{ font-size:16px !important; height:auto !important; -webkit-line-clamp:unset; margin-bottom:6px; }
+#hm-product-grid.hm-list-view .aiz-card-box .rating{ margin-bottom:10px; }
+#hm-product-grid.hm-list-view .aiz-card-box .product-actions{ display:inline-flex; width:auto; padding:0 10px 0 0; }
+#hm-product-grid.hm-list-view .aiz-card-box .product-actions a{ width:auto; padding:9px 24px; }
+#hm-product-grid.hm-list-view .aiz-card-box .product-actions.mt-1{ margin-top:0 !important; padding-bottom:0; }
+@media (max-width:575px){
+  #hm-product-grid.hm-list-view .aiz-card-box{ gap:10px; }
+  #hm-product-grid.hm-list-view .aiz-card-box > .position-relative{ flex:0 0 110px; max-width:110px; }
+  #hm-product-grid.hm-list-view .aiz-card-box .img-fit{ height:110px !important; }
+  #hm-product-grid.hm-list-view .aiz-card-box .product-actions a{ padding:8px 14px; }
+}
