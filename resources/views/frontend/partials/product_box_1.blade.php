@@ -67,7 +67,7 @@
         <div class="product-actions mt-1">
            <a href="javascript:void(0)" onclick="showAddToCartModal({{ $product->id }}, 'buy_now')"  data-placement="left">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2" style="vertical-align: middle;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                এখনি কিনুন
+                {{ translate("Buy Now") }}
             </a>
         </div>
         @if (addon_is_activated('club_point'))
