@@ -103,6 +103,31 @@
             font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
             letter-spacing: .2px;
         }
+        /* --- HavingMart UI guidelines: rounded cards, subtle shadow, smooth hover --- */
+        .aiz-card-box{
+            border-radius: 14px !important;
+            border-color: var(--light-pink) !important;
+            box-shadow: 0 2px 10px rgba(36, 32, 36, .05);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .aiz-card-box:hover{
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(223, 31, 143, .12);
+        }
+        /* consistent pink buttons */
+        .btn-primary{
+            background-color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 10px;
+            transition: background-color .2s ease, border-color .2s ease;
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active{
+            background-color: var(--primary-hover) !important;
+            border-color: var(--primary-hover) !important;
+        }
+        /* clean rounded inputs + soft-pink utility */
+        .form-control{ border-radius: 10px; }
+        .bg-soft-pink{ background-color: var(--soft-pink) !important; }
 
         #map{
             width: 100%;
