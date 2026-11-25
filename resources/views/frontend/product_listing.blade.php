@@ -66,11 +66,12 @@
                                                         {{ translate('All Categories')}}
                                                     </a>
                                                 </li>
-                                                @if (\App\Models\Category::find($category_id)->parent_id != 0)
+                                                @php $hm_parent = \App\Models\Category::find(optional(\App\Models\Category::find($category_id))->parent_id); @endphp
+                                                @if ($hm_parent != null)
                                                     <li class="mb-2">
-                                                        <a class="text-reset fs-14 fw-600" href="{{ route('products.category', \App\Models\Category::find(\App\Models\Category::find($category_id)->parent_id)->slug) }}">
+                                                        <a class="text-reset fs-14 fw-600" href="{{ route('products.category', $hm_parent->slug) }}">
                                                             <i class="las la-angle-left"></i>
-                                                            {{ \App\Models\Category::find(\App\Models\Category::find($category_id)->parent_id)->getTranslation('name') }}
+                                                            {{ $hm_parent->getTranslation('name') }}
                                                         </a>
                                                     </li>
                                                 @endif
