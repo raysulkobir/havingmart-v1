@@ -191,7 +191,7 @@
                     <a href="{{ route('customer_products.category', $customer_product->category->slug) }}" class="ml-auto mr-0 btn btn-primary btn-sm shadow-md">{{ translate('View More') }}</a>
                 </div>
                 <div class="p-3">
-                    <div class="aiz-carousel gutters-5 half-outside-arrow" data-items="6" data-xl-items="5" data-lg-items="4"  data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true' data-infinite='true'>
+                    <div class="aiz-carousel gutters-5 half-outside-arrow" data-items="6" data-xl-items="5" data-lg-items="4"  data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='false' data-infinite='true'>
                         @php
                             $products = \App\Models\CustomerProduct::where('category_id', $customer_product->category_id)->where('id', '!=', $customer_product->id)->where('status', '1')->where('published', '1')->limit(10)->get();
                         @endphp

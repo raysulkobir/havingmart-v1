@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AfricanPaymentGatewayController;
-use App\Http\Controllers\Payment\FlutterwaveController;
+use App\Http\Controllers\Api\V2\FlutterwaveController;
 use App\Http\Controllers\Payment\MpesaController;
 use App\Http\Controllers\Payment\PayfastController;
 

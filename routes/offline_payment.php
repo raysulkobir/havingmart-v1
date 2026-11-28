@@ -4,8 +4,8 @@ use App\Http\Controllers\CustomerPackageController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\CustomerPackagePaymentController;
 use App\Http\Controllers\ManualPaymentMethodController;
-use App\Http\Controllers\SellerPackageController;
-use App\Http\Controllers\SellerPackagePaymentController;
+use App\Http\Controllers\Api\V2\Seller\SellerPackageController;
+use App\Http\Controllers\Api\V2\Seller\SellerPackagePaymentController;
 
 /*
 |--------------------------------------------------------------------------

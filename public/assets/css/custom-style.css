@@ -1,10 +1,10 @@
 /*your custom css goes here*/
 
 :root {
-    --primary: #E22132 !important;
-    --hov-primary: #c31322 !important;
-    --soft-primary: rgba(226, 33, 50, 0.15) !important;
-    --secondary: #260A54 !important;
+    --primary: #DF1F8F !important;
+    --hov-primary: #C9177C !important;
+    --soft-primary: rgba(223, 31, 143, 0.15) !important;
+    --secondary: #C9177C !important;
 }
 
 /* ========================================
@@ -32,7 +32,7 @@
 .hm-section-title {
     font-size: 18px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: #242024;
     margin: 0;
     position: relative;
     padding-left: 14px;
@@ -45,7 +45,7 @@
     top: 2px;
     bottom: 2px;
     width: 4px;
-    background: linear-gradient(180deg, #E22132, #260A54);
+    background: linear-gradient(180deg, #DF1F8F, #C9177C);
     border-radius: 4px;
 }
 
@@ -53,7 +53,7 @@
     display: inline-flex;
     align-items: center;
     padding: 7px 18px;
-    background: linear-gradient(135deg, #E22132, #260A54);
+    background: #DF1F8F;
     color: #fff !important;
     font-size: 13px;
     font-weight: 600;
@@ -64,8 +64,9 @@
 }
 
 .hm-view-all-btn:hover {
+    background: #C9177C;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(67, 97, 238, .35);
+    box-shadow: 0 4px 14px rgba(223, 31, 143, .35);
 }
 
 .hm-view-all-light {
@@ -103,7 +104,7 @@
 }
 
 .hm-deal-header {
-    background: linear-gradient(135deg, #E22132, #260A54);
+    background: linear-gradient(135deg, #DF1F8F, #C9177C);
     padding: 14px 16px;
     display: flex;
     align-items: center;
@@ -117,7 +118,7 @@
 }
 
 .hm-deal-badge {
-    background: #f72585;
+    background: #DF1F8F;
     color: #fff;
     font-size: 11px;
     font-weight: 700;
@@ -163,7 +164,7 @@
 
 .hm-deal-price {
     font-weight: 700;
-    color: #E22132;
+    color: #DF1F8F;
     font-size: 14px;
 }
 
@@ -247,7 +248,7 @@
 
 /* Dark Section (Best Sellers) */
 .hm-dark-section {
-    background: linear-gradient(135deg, #260A54, #13032c);
+    background: linear-gradient(135deg, #C9177C, #C9177C);
 }
 
 .hm-dark-section .hm-section-header {
@@ -255,7 +256,7 @@
 }
 
 .hm-dark-section .hm-section-title::before {
-    background: #E22132;
+    background: #DF1F8F;
 }
 
 /* Seller Grid */
@@ -333,8 +334,8 @@
 }
 
 .hm-brand-card:hover {
-    border-color: #E22132;
-    box-shadow: 0 4px 12px rgba(67, 97, 238, .12);
+    border-color: #DF1F8F;
+    box-shadow: 0 4px 12px rgba(223, 31, 143, .12);
     transform: translateY(-2px);
 }
 
@@ -450,7 +451,7 @@
     display: inline-flex;
     align-items: center;
     padding: 10px 18px;
-    background: linear-gradient(135deg, #E22132, #260A54);
+    background: #DF1F8F;
     color: #fff !important;
     font-size: 13px;
     font-weight: 700;
@@ -463,7 +464,7 @@
 }
 
 .hm-catbar-all:hover {
-    background: linear-gradient(135deg, #260A54, #E22132);
+    background: linear-gradient(135deg, #C9177C, #DF1F8F);
 }
 
 .hm-catbar-item {
@@ -486,8 +487,8 @@
 
 .hm-catbar-link:hover,
 .hm-catbar-item:hover .hm-catbar-link {
-    color: #E22132 !important;
-    border-bottom-color: #E22132;
+    color: #DF1F8F !important;
+    border-bottom-color: #DF1F8F;
 }
 
 /* Dropdown Panel */
@@ -529,7 +530,7 @@
     display: block;
     font-size: 14px;
     font-weight: 700;
-    color: #1a1a2e !important;
+    color: #242024 !important;
     text-decoration: none !important;
     margin-bottom: 8px;
     padding-bottom: 6px;
@@ -538,7 +539,7 @@
 }
 
 .hm-catbar-sub-title:hover {
-    color: #E22132 !important;
+    color: #DF1F8F !important;
 }
 
 .hm-catbar-sub-list {
@@ -557,7 +558,7 @@
 }
 
 .hm-catbar-sub-list li a:hover {
-    color: #E22132 !important;
+    color: #DF1F8F !important;
     padding-left: 6px;
 }
 
@@ -638,7 +639,7 @@
 }
 
 .otp_page .otp-input:focus {
-    border-color: #377dff !important;
+    border-color: #DF1F8F !important;
     box-shadow: 0 0 0 0.1rem rgba(55, 125, 255, 0.25) !important;
     outline: none;
 }
@@ -699,7 +700,7 @@
     right: 100%;
     top: 50%;
     transform: translateY(-50%);
-    background: #377dff;
+    background: #DF1F8F;
     padding: 10px 20px;
     color: white;
     text-align: center;
@@ -793,7 +794,7 @@
 }
 
 .cart-drawer-close:hover {
-    color: #377dff;
+    color: #DF1F8F;
 }
 
 /* Cart Drawer Body */
@@ -812,7 +813,7 @@
 }
 
 .cart-drawer-body::-webkit-scrollbar-thumb {
-    background: #377dff;
+    background: #DF1F8F;
     border-radius: 3px;
 }
 
@@ -822,7 +823,7 @@
     gap: 15px;
     padding: 20px;
     margin-bottom: 15px;
-    border: 2px solid #377dff;
+    border: 2px solid #DF1F8F;
     border-radius: 15px;
     position: relative;
     background: white;
@@ -862,7 +863,7 @@
 .cart-item-price {
     font-size: 16px;
     font-weight: bold;
-    color: #377dff;
+    color: #DF1F8F;
     margin: 0 0 10px 0;
 }
 
@@ -878,7 +879,7 @@
 
 .qty-btn {
     background: white;
-    border: 1px solid #377dff;
+    border: 1px solid #DF1F8F;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -887,11 +888,11 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    color: #377dff;
+    color: #DF1F8F;
 }
 
 .qty-btn:hover:not(:disabled) {
-    background: #377dff;
+    background: #DF1F8F;
     color: white;
 }
 
@@ -924,11 +925,11 @@
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 18px;
-    color: #377dff;
+    color: #DF1F8F;
 }
 
 .cart-item-remove:hover {
-    background: #377dff;
+    background: #DF1F8F;
     color: white;
 }
 
@@ -970,14 +971,14 @@
 .cart-total-price {
     font-size: 24px;
     font-weight: bold;
-    color: #377dff;
+    color: #DF1F8F;
 }
 
 .cart-proceed-btn {
     display: block;
     width: 100%;
     padding: 15px;
-    background: linear-gradient(135deg, #377dff 0%, #2a5fd4 100%);
+    background: linear-gradient(135deg, #DF1F8F 0%, #2a5fd4 100%);
     color: white;
     text-align: center;
     border: none;
@@ -1011,7 +1012,7 @@
     width: 30px;
     height: 30px;
     border: 3px solid #f3f3f3;
-    border-top: 3px solid #377dff;
+    border-top: 3px solid #DF1F8F;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -1039,7 +1040,7 @@
 }
 
 .mobile-menu-btn:hover {
-    color: #336659;
+    color: #DF1F8F;
 }
 
 .mobile-menu-btn:focus {
@@ -1107,7 +1108,7 @@
     border: none;
     font-size: 28px;
     cursor: pointer;
-    color: #336659;
+    color: #DF1F8F;
     padding: 0;
     line-height: 1;
     transition: transform 0.3s ease;
@@ -1137,7 +1138,7 @@
 }
 
 .mobile-menu-body::-webkit-scrollbar-thumb {
-    background: #336659;
+    background: #DF1F8F;
     border-radius: 2px;
 }
 
@@ -1164,7 +1165,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #336659 0%, #d81b60 100%);
+    background: linear-gradient(135deg, #DF1F8F 0%, #d81b60 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1218,7 +1219,7 @@
 
 .mobile-category-main:hover {
     text-decoration: none;
-    color: #336659;
+    color: #DF1F8F;
 }
 
 .mobile-cat-icon {
@@ -1277,7 +1278,7 @@
 .mobile-subcategory-loading {
     text-align: center;
     padding: 20px;
-    color: #336659;
+    color: #DF1F8F;
     font-size: 24px;
 }
 
@@ -1311,7 +1312,7 @@
 }
 
 .mobile-subcategory-link:hover {
-    color: #336659;
+    color: #DF1F8F;
     text-decoration: none;
 }
 
@@ -1366,8 +1367,8 @@
 
 .mobile-subcat-item:hover {
     background: #f8f9fa;
-    color: #336659;
-    border-left-color: #336659;
+    color: #DF1F8F;
+    border-left-color: #DF1F8F;
     text-decoration: none;
 }
 
@@ -1481,7 +1482,7 @@
 .hm-beauty-cats-title {
     font-size: 20px;
     font-weight: 800;
-    color: #1a1a2e;
+    color: #242024;
     letter-spacing: 0.5px;
     text-align: center;
     text-transform: uppercase;
@@ -1498,7 +1499,7 @@
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #E22132, #260A54);
+    background: linear-gradient(90deg, #DF1F8F, #C9177C);
     border-radius: 2px;
 }
 
@@ -1590,7 +1591,7 @@
 .hm-concern-cats-title {
     font-size: 20px;
     font-weight: 800;
-    color: #1a1a2e;
+    color: #242024;
     letter-spacing: 0.5px;
     text-align: center;
     text-transform: uppercase;
@@ -1607,7 +1608,7 @@
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #E22132, #260A54);
+    background: linear-gradient(90deg, #DF1F8F, #C9177C);
     border-radius: 2px;
 }
 
@@ -1631,7 +1632,7 @@
     aspect-ratio: 1 / 1;
     -webkit-clip-path: url(#wavy-card-clip);
     clip-path: url(#wavy-card-clip);
-    background: linear-gradient(180deg, #FAD75A 0%, #EAA918 100%);
+    background: linear-gradient(180deg, #DF1F8F 0%, #C9177C 100%);
     padding: 20px 10px;
     display: flex;
     flex-direction: column;
@@ -1644,7 +1645,7 @@
     height: 80px;
     -webkit-clip-path: url(#rounded-hexagon-clip);
     clip-path: url(#rounded-hexagon-clip);
-    background: linear-gradient(180deg, #FFFFFF 0%, #FFE485 100%);
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFF3F8 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1737,7 +1738,7 @@
 }
 
 /* ==========================================================================
-   BRAND COLOR THEME (LOGO COLORS: RED #E22132 & NAVY BLUE #1B1464)
+   BRAND COLOR THEME (LOGO COLORS: RED #DF1F8F & NAVY BLUE #1B1464)
    ========================================================================== */
 
 /* --- Footer Colorization --- */
@@ -1757,7 +1758,7 @@
     transition: all 0.2s ease !important;
 }
 .footer-widget a:hover {
-    color: #E22132 !important;
+    color: #DF1F8F !important;
     text-decoration: none !important;
     padding-left: 3px;
 }
@@ -1769,12 +1770,12 @@
     transform: translateY(-2px);
 }
 .footer-widget .btn-primary {
-    background-color: #E22132 !important;
-    border-color: #E22132 !important;
+    background-color: #DF1F8F !important;
+    border-color: #DF1F8F !important;
 }
 .footer-widget .btn-primary:hover {
-    background-color: #c31322 !important;
-    border-color: #c31322 !important;
+    background-color: #C9177C !important;
+    border-color: #C9177C !important;
 }
 
 /* --- Footer Bottom (Copyright bar) --- */
@@ -1787,7 +1788,7 @@
     color: #8c8caf !important;
 }
 #footer_bottom a:hover {
-    color: #E22132 !important;
+    color: #DF1F8F !important;
 }
 #footer_bottom .social a {
     background-color: rgba(255, 255, 255, 0.05) !important;
@@ -1795,7 +1796,7 @@
     transition: all 0.2s ease;
 }
 #footer_bottom .social a:hover {
-    background-color: #E22132 !important;
+    background-color: #DF1F8F !important;
     transform: translateY(-2px);
 }
 
@@ -1807,7 +1808,7 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary, #E22132), #260A54);
+    background: linear-gradient(135deg, var(--primary, #DF1F8F), #C9177C);
     color: #ffffff;
     border: none;
     outline: none;
@@ -1837,8 +1838,8 @@
 }
 
 .scroll-to-top-btn:hover {
-    background: linear-gradient(135deg, #260A54, var(--primary, #E22132));
-    box-shadow: 0 8px 25px rgba(226, 33, 50, 0.45);
+    background: linear-gradient(135deg, #C9177C, var(--primary, #DF1F8F));
+    box-shadow: 0 8px 25px rgba(223, 31, 143, 0.45);
     transform: translateY(-5px) scale(1.08);
 }
 
@@ -1869,3 +1870,81 @@
         transform: translateY(-3px) scale(1.05);
     }
 }
+/* HavingMart — Shop by Category tiles */
+.hm-cat-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:16px;}
+.hm-cat-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px 10px;background:#FFF3F8;border:1px solid #FCE4F0;border-radius:16px;text-decoration:none !important;text-align:center;transition:transform .25s ease,box-shadow .25s ease,background .25s ease,border-color .25s ease;}
+.hm-cat-tile:hover{transform:translateY(-5px);background:#fff;border-color:#DF1F8F;box-shadow:0 12px 26px rgba(223,31,143,.15);}
+.hm-cat-tile-icon{width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;color:#DF1F8F;font-size:30px;box-shadow:0 4px 12px rgba(223,31,143,.12);transition:background .25s ease,color .25s ease;}
+.hm-cat-tile:hover .hm-cat-tile-icon{background:#DF1F8F;color:#fff;}
+.hm-cat-tile-name{font-weight:600;font-size:14px;color:#242024;line-height:1.3;}
+@media (max-width:991px){.hm-cat-grid{grid-template-columns:repeat(4,1fr);}}
+@media (max-width:575px){.hm-cat-grid{grid-template-columns:repeat(2,1fr);gap:12px;}}
+
+
+/* HavingMart — premium product card */
+.aiz-card-box .img-fit{ padding:12px; }
+.aiz-card-box .badge-custom{ position:absolute; top:10px; left:10px; z-index:3; background:var(--primary); color:#fff; font-size:10px; font-weight:700; padding:4px 9px; border-radius:20px; line-height:1.1; letter-spacing:.3px; }
+.aiz-card-box .badge-custom .box{ background:transparent; padding:0; margin:0; }
+.aiz-card-box .aiz-p-hov-icon a{ display:flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:#fff; color:#242024; box-shadow:0 2px 8px rgba(36,32,36,.12); margin-bottom:6px; transition:background .2s ease,color .2s ease; }
+.aiz-card-box .aiz-p-hov-icon a:hover{ background:var(--primary); color:#fff; }
+.aiz-card-box h3 a{ transition:color .2s ease; }
+.aiz-card-box h3 a:hover{ color:var(--primary) !important; }
+.aiz-card-box .rating .la-star{ color:#f6a609; }
+.aiz-card-box .product-actions{ padding:0 12px 4px; background:transparent !important; gap:8px; }
+.aiz-card-box .product-actions.mt-1{ padding-bottom:14px; }
+.aiz-card-box .product-actions a{ display:flex; align-items:center; justify-content:center; width:100%; border-radius:10px; font-weight:600; font-size:13px; letter-spacing:.2px; padding:9px 10px; transition:all .25s ease; text-decoration:none !important; background:transparent; }
+.aiz-card-box .product-actions a svg{ transition:transform .25s ease; }
+/* Add to Cart — soft pink outline, gentle fill + lift on hover */
+.aiz-card-box .product-actions:not(.mt-1) a{ color:var(--primary) !important; border:1.5px solid rgba(223,31,143,.35); }
+.aiz-card-box .product-actions:not(.mt-1) a:hover{ color:var(--hov-primary) !important; border-color:var(--primary); background:linear-gradient(135deg, rgba(223,31,143,.12), rgba(223,31,143,.04)); box-shadow:0 6px 16px rgba(223,31,143,.15); transform:translateY(-2px); }
+.aiz-card-box .product-actions:not(.mt-1) a:hover svg{ transform:scale(1.12); }
+/* Buy Now — clean ghost text, pink accent on hover */
+.aiz-card-box .product-actions.mt-1 a{ color:#242024 !important; border:1.5px solid transparent; }
+.aiz-card-box .product-actions.mt-1 a:hover{ color:var(--primary) !important; background:rgba(223,31,143,.06); }
+.aiz-card-box .product-actions.mt-1 a:hover svg{ transform:translateX(3px); }
+
+/* HavingMart — product grid/list view toggle */
+.hm-view-toggle .btn{ border:1px solid var(--light-pink); background:#fff; color:#242024; padding:6px 13px; line-height:1; }
+.hm-view-toggle .btn.active{ background:var(--primary); color:#fff; border-color:var(--primary); }
+.hm-view-toggle .btn:first-child{ border-radius:8px 0 0 8px; }
+.hm-view-toggle .btn:last-child{ border-radius:0 8px 8px 0; }
+
+#hm-product-grid.hm-list-view > .col{ flex:0 0 100%; max-width:100%; }
+#hm-product-grid.hm-list-view .aiz-card-box{ display:flex; align-items:center; gap:18px; }
+#hm-product-grid.hm-list-view .aiz-card-box > .position-relative{ flex:0 0 180px; max-width:180px; }
+#hm-product-grid.hm-list-view .aiz-card-box .img-fit{ height:160px !important; }
+#hm-product-grid.hm-list-view .aiz-card-box > .pt-2{ flex:1 1 auto; text-align:left !important; padding:16px 18px 16px 0; }
+#hm-product-grid.hm-list-view .aiz-card-box .p-md-2{ padding:0 !important; }
+#hm-product-grid.hm-list-view .aiz-card-box h3{ font-size:16px !important; height:auto !important; -webkit-line-clamp:unset; margin-bottom:6px; }
+#hm-product-grid.hm-list-view .aiz-card-box .rating{ margin-bottom:10px; }
+#hm-product-grid.hm-list-view .aiz-card-box .product-actions{ display:inline-flex; width:auto; padding:0 10px 0 0; }
+#hm-product-grid.hm-list-view .aiz-card-box .product-actions a{ width:auto; padding:9px 24px; }
+#hm-product-grid.hm-list-view .aiz-card-box .product-actions.mt-1{ margin-top:0 !important; padding-bottom:0; }
+@media (max-width:575px){
+  #hm-product-grid.hm-list-view .aiz-card-box{ gap:10px; }
+  #hm-product-grid.hm-list-view .aiz-card-box > .position-relative{ flex:0 0 110px; max-width:110px; }
+  #hm-product-grid.hm-list-view .aiz-card-box .img-fit{ height:110px !important; }
+  #hm-product-grid.hm-list-view .aiz-card-box .product-actions a{ padding:8px 14px; }
+}
+
+/* HavingMart — attractive cosmetic product image frame + hover zoom */
+.aiz-card-box > .position-relative > a.d-block{ display:block; background:linear-gradient(160deg,#FFF3F8 0%,#FCE4F0 100%); border-radius:12px; overflow:hidden; margin:8px 8px 0; }
+.aiz-card-box .img-fit{ transition:transform .55s cubic-bezier(.2,.7,.2,1); }
+.aiz-card-box:hover .img-fit{ transform:scale(1.07); }
+.aiz-card-box .aiz-p-hov-icon{ opacity:0; transform:translateX(6px); transition:opacity .25s ease, transform .25s ease; }
+.aiz-card-box:hover .aiz-p-hov-icon{ opacity:1; transform:translateX(0); }
+.aiz-card-box .fs-15 del{ color:var(--text-secondary); font-size:12px; }
+.aiz-card-box .fs-15 .text-primary{ font-size:16px; }
+
+/* HavingMart — premium product card: badges, brand, reviews, stock */
+.hm-card-badges{ position:absolute; top:10px; left:10px; z-index:4; display:flex; flex-direction:column; gap:5px; align-items:flex-start; }
+.hm-badge{ font-size:10px; font-weight:700; padding:4px 9px; border-radius:20px; line-height:1; letter-spacing:.3px; color:#fff; }
+.hm-badge-off{ background:var(--primary); }
+.hm-badge-best{ background:#242024; }
+.hm-badge-new{ background:#2e7d50; }
+.hm-card-brand{ font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:var(--text-secondary); margin-bottom:2px; transition:color .2s ease; }
+.hm-card-brand:hover{ color:var(--primary) !important; }
+.hm-review-count{ font-size:11px; color:var(--text-secondary); margin-left:4px; }
+.hm-stock{ font-size:11px; font-weight:600; margin-top:6px; }
+.hm-stock.is-in{ color:#2e7d50; }
+.hm-stock.is-out{ color:#bd3a30; }

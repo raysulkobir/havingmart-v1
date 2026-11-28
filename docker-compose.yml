@@ -1,0 +1,52 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: havingmart-app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      # Keep vendor/ inside a fast container volume (shadows the host's PHP-8 vendor)
+      - havingmart_vendor:/var/www/html/vendor
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: mariadb:10.11
+    container_name: havingmart-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_ecommerce
+    ports:
+      - "3307:3306"
+    volumes:
+      - havingmart_db:/var/lib/mysql
+      # Auto-imported only on first initialization of an empty data volume
+      - ./db/loc_havingmart_update.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    container_name: havingmart-pma
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 256M
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  havingmart_db:
+  havingmart_vendor:

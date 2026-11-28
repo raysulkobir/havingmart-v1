@@ -323,21 +323,7 @@
         </div>
     </div>
 
-    @if ( get_setting('header_menu_labels') !=  null )
-        <div class="bd-dazlea border-top border-gray-200">
-            <div class="container">
-                <ul class="list-inline mb-0 pl-0 mobile-hor-swipe text-center text-white">
-                    @foreach (json_decode( get_setting('header_menu_labels'), true) as $key => $value)
-                    <li class="list-inline-item mr-0">
-                        <a href="{{ url('/').json_decode( get_setting('header_menu_links'), true)[$key] }}" class="fs-14 px-3 py-1 d-inline-block fw-600 hov-opacity-90 text-reset">
-                            {{ translate($value) }}
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    @endif
+    {{-- Secondary menu bar removed: merged into the single category bar above --}}
 </header>
 
 <div class="modal fade" id="order_details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

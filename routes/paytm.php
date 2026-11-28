@@ -2,7 +2,7 @@
 
 //Paytm
 
-use App\Http\Controllers\Payment\PaytmController;
+use App\Http\Controllers\Api\V2\PaytmController;
 use App\Http\Controllers\Payment\ToyyibpayController;
 
 

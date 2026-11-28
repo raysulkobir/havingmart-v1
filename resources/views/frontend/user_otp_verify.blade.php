@@ -90,7 +90,7 @@
 
                                                 <!-- Resend OTP -->
                                                 <div class="text-center mb-4 mt-3">
-                                                    <a href="#" class="text-decoration-none fw-600" style="color: #377dff;" id="resend-otp">
+                                                    <a href="#" class="text-decoration-none fw-600" style="color: #DF1F8F;" id="resend-otp">
                                                         Resend OTP (<span id="timer">28</span>)
                                                     </a>
                                                 </div>

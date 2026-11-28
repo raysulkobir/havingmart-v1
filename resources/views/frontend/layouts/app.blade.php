@@ -74,16 +74,60 @@
         }
     </script>
 
+    {{-- HavingMart premium brand typography --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        body{
-            font-family: 'Open Sans', sans-serif;
-            font-weight: 400;
-        }
         :root{
-            --primary: {{ get_setting('base_color', '#e62d04') }};
-            --hov-primary: {{ get_setting('base_hov_color', '#c52907') }};
-            --soft-primary: {{ hex2rgba(get_setting('base_color','#e62d04'),.15) }};
+            --primary: {{ get_setting('base_color', '#DF1F8F') }};
+            --hov-primary: {{ get_setting('base_hov_color', '#C9177C') }};
+            --soft-primary: {{ hex2rgba(get_setting('base_color','#DF1F8F'),.15) }};
+            /* HavingMart design-system palette */
+            --primary-hover: #C9177C;
+            --soft-pink: #FFF3F8;
+            --light-pink: #FCE4F0;
+            --secondary: #FFF3F8;
+            --bg: #FFFFFF;
+            --text: #242024;
+            --text-secondary: #777777;
         }
+        body{
+            font-family: 'Jost', 'Open Sans', sans-serif;
+            font-weight: 400;
+            color: var(--text);
+            background: var(--bg);
+        }
+        /* elegant, feminine headings */
+        h1, h2, h3, .h1, .h2, .h3{
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            letter-spacing: .2px;
+        }
+        /* --- HavingMart UI guidelines: rounded cards, subtle shadow, smooth hover --- */
+        .aiz-card-box{
+            border-radius: 14px !important;
+            border-color: var(--light-pink) !important;
+            box-shadow: 0 2px 10px rgba(36, 32, 36, .05);
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .aiz-card-box:hover{
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(223, 31, 143, .12);
+        }
+        /* consistent pink buttons */
+        .btn-primary{
+            background-color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 10px;
+            transition: background-color .2s ease, border-color .2s ease;
+        }
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active{
+            background-color: var(--primary-hover) !important;
+            border-color: var(--primary-hover) !important;
+        }
+        /* clean rounded inputs + soft-pink utility */
+        .form-control{ border-radius: 10px; }
+        .bg-soft-pink{ background-color: var(--soft-pink) !important; }
 
         #map{
             width: 100%;
