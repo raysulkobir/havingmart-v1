@@ -1890,13 +1890,18 @@
 .aiz-card-box h3 a{ transition:color .2s ease; }
 .aiz-card-box h3 a:hover{ color:var(--primary) !important; }
 .aiz-card-box .rating .la-star{ color:#f6a609; }
-.aiz-card-box .product-actions{ padding:0 12px 4px; }
+.aiz-card-box .product-actions{ padding:0 12px 4px; background:transparent !important; gap:8px; }
 .aiz-card-box .product-actions.mt-1{ padding-bottom:14px; }
-.aiz-card-box .product-actions a{ display:flex; align-items:center; justify-content:center; width:100%; border-radius:9px; font-weight:600; font-size:13px; padding:9px 10px; transition:all .2s ease; text-decoration:none !important; }
-.aiz-card-box .product-actions:not(.mt-1) a{ background:var(--primary); color:#fff !important; }
-.aiz-card-box .product-actions:not(.mt-1) a:hover{ background:var(--primary-hover); box-shadow:0 6px 16px rgba(223,31,143,.28); }
-.aiz-card-box .product-actions.mt-1 a{ background:#fff; color:var(--primary) !important; border:1.5px solid var(--primary); }
-.aiz-card-box .product-actions.mt-1 a:hover{ background:var(--primary); color:#fff !important; }
+.aiz-card-box .product-actions a{ display:flex; align-items:center; justify-content:center; width:100%; border-radius:10px; font-weight:600; font-size:13px; letter-spacing:.2px; padding:9px 10px; transition:all .25s ease; text-decoration:none !important; background:transparent; }
+.aiz-card-box .product-actions a svg{ transition:transform .25s ease; }
+/* Add to Cart — soft pink outline, gentle fill + lift on hover */
+.aiz-card-box .product-actions:not(.mt-1) a{ color:var(--primary) !important; border:1.5px solid rgba(223,31,143,.35); }
+.aiz-card-box .product-actions:not(.mt-1) a:hover{ color:var(--hov-primary) !important; border-color:var(--primary); background:linear-gradient(135deg, rgba(223,31,143,.12), rgba(223,31,143,.04)); box-shadow:0 6px 16px rgba(223,31,143,.15); transform:translateY(-2px); }
+.aiz-card-box .product-actions:not(.mt-1) a:hover svg{ transform:scale(1.12); }
+/* Buy Now — clean ghost text, pink accent on hover */
+.aiz-card-box .product-actions.mt-1 a{ color:#242024 !important; border:1.5px solid transparent; }
+.aiz-card-box .product-actions.mt-1 a:hover{ color:var(--primary) !important; background:rgba(223,31,143,.06); }
+.aiz-card-box .product-actions.mt-1 a:hover svg{ transform:translateX(3px); }
 
 /* HavingMart — product grid/list view toggle */
 .hm-view-toggle .btn{ border:1px solid var(--light-pink); background:#fff; color:#242024; padding:6px 13px; line-height:1; }
